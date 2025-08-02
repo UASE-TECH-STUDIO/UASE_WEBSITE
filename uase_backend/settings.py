@@ -1,23 +1,23 @@
 """
 Django settings for uase_backend project.
 """
-
+import os
+import dj_database_url
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
-
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-iq5_3ck3n187y$x62f3#6ma4l29oe)vvn7n0+bpgub=5#0tmr='
+# Use an environment variable for the secret key in production.
+SECRET_KEY = os.environ.get('SECRET_KEY', 'default_django_insecure_key')
 
 # SECURITY WARNING: don't run with debug on in production!
-DEBUG = True
+# Use environment variable to set DEBUG to False in production.
+DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
-ALLOWED_HOSTS = []
+# Add your domain names here for production.
+ALLOWED_HOSTS = ['uase.tech', 'www.uase.tech', 'uase-website.onrender.com']
 
 
 # Application definition
@@ -34,6 +34,8 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    # Add WhiteNoiseMiddleware to serve static files efficiently in production.
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -64,14 +66,20 @@ WSGI_APPLICATION = 'uase_backend.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+# Use dj_database_url to parse the DATABASE_URL environment variable provided by Render.
+if not DEBUG:
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=os.environ.get('DATABASE_URL')
+        )
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 # Password validation
@@ -106,13 +114,12 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.2/howto/static-files/
-
-STATIC_URL = '/static/' # This is correct and standard
+# Use Whitenoise for static files in production.
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles' # This is where 'collectstatic' will place all static files.
 STATICFILES_DIRS = [
-    BASE_DIR / 'core/static' # This tells Django to look for static files directly in core/static
+    BASE_DIR / 'core/static'
 ]
-STATIC_ROOT = BASE_DIR / 'staticfiles' # Good for production, but not strictly needed for dev server
 
 
 # Media files (user uploads)
@@ -130,8 +137,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'uasetechstudio@gmail.com'
-EMAIL_HOST_PASSWORD = 'eqwzgkjxihwkqxwg' # REMEMBER TO USE ENVIRONMENT VARIABLE FOR PRODUCTION
+# Use environment variables for email credentials.
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 # Authentication URLs
