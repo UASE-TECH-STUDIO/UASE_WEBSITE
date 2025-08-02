@@ -1,0 +1,97 @@
+{% extends 'core/layout.html' %}
+{% load static %}
+
+{% block title %}Our Portfolio | UASE Tech Studio - Innovative Projects & Solutions{% endblock %}
+
+{% block content %}
+<section class="hero-section position-relative overflow-hidden text-white py-5">
+    <div class="overlay position-absolute top-0 start-0 w-100 h-100"></div>
+    <div class="container position-relative z-1 text-center py-5">
+        <h1 class="display-3 fw-bold animate__animated animate__fadeInDown">Our Work Speaks for Us: Digital Gallery of Success</h1>
+        <p class="lead mt-4 animate__animated animate__fadeInUp animate__delay-1s">Welcome to our digital gallery of success. At UASE TECH-STUDIO, every project is a problem solved, a skill showcased, and a story of innovation. Filter by category or browse through everything we’ve built.</p>
+    </div>
+</section>
+
+<section class="container my-5 py-5">
+    <div class="row text-center mb-5">
+        <div class="col-lg-10 offset-lg-1">
+            <h2 class="fw-bold text-primary mb-4">Explore Our Diverse Projects</h2>
+            <p class="lead text-muted">Dive into our innovative solutions, built for a variety of clients and challenges.</p>
+
+            {# Filter Buttons Section - Added ID for easier JS selection #}
+            <div id="filter-buttons-container" class="d-flex flex-wrap justify-content-center gap-2 mt-4">
+                <button type="button" class="btn btn-outline-primary active" data-filter="all">All Projects</button>
+                <button type="button" class="btn btn-outline-primary" data-filter="web-apps">🌐 Web Apps</button>
+                <button type="button" class="btn btn-outline-primary" data-filter="mobile-apps">📱 Mobile Apps</button>
+                <button type="button" class="btn btn-outline-primary" data-filter="training">🎓 Training Projects</button>
+                <button type="button" class="btn btn-outline-primary" data-filter="ui-ux">🎨 UI/UX Designs</button>
+                <button type="button" class="btn btn-outline-primary" data-filter="others">🛠️ Others (Data Entry, Analysis, Tools)</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" id="portfolio-grid">
+        {# Projects will be dynamically filtered here by JavaScript, or by Django context if implemented server-side #}
+        {% for project_slug, project in projects.items %}
+        <div class="col animate__animated animate__fadeInUp" data-category="{{ project.category }}">
+            <div class="card h-100 shadow-sm project-card">
+                {% if project.thumbnail %}
+                    <img src="{% static 'core/images/'|add:project.thumbnail %}" class="card-img-top" alt="{{ project.title }} Thumbnail">
+                {% else %}
+                    <img src="{% static 'core/images/placeholder_project.jpg' %}" class="card-img-top" alt="Placeholder Image">
+                {% endif %}
+                <div class="card-body d-flex flex-column p-4">
+                    <h3 class="h5 fw-bold mb-2 text-primary">{{ project.title }}</h3>
+                    <p class="text-muted small mb-3">{{ project.tagline }}</p>
+                    <div class="d-flex flex-wrap gap-2 mb-3">
+                        {% for tech in project.technologies|slice:":3" %} {# Display up to 3 technologies #}
+                            <span class="badge bg-secondary">{{ tech }}</span>
+                        {% endfor %}
+                        {% if project.technologies|length > 3 %}
+                            <span class="badge bg-light text-dark">...</span>
+                        {% endif %}
+                    </div>
+                    <a href="{% url 'project_detail' project_slug=project_slug %}" class="btn btn-sm btn-outline-primary mt-auto">View Project <i class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="text-center mt-5">
+        <h4 class="fw-bold mb-3">Ready to Start Your Project?</h4>
+        <a href="{% url 'contact' %}" class="btn btn-primary btn-lg px-5 py-3 animate__animated animate__pulse animate__infinite">Get a Free Consultation</a>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Correctly select buttons by their container ID
+        const filterButtons = document.querySelectorAll('#filter-buttons-container button');
+        const portfolioItems = document.querySelectorAll('#portfolio-grid .col');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                this.classList.add('active');
+
+                const filter = this.dataset.filter;
+
+                portfolioItems.forEach(item => {
+                    const category = item.dataset.category;
+                    if (filter === 'all' || category === filter) {
+                        item.style.display = 'block'; // Ensure it displays correctly
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+    });
+</script>
+{% endblock %}

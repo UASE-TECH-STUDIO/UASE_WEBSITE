@@ -1,0 +1,120 @@
+{% extends 'core/layout.html' %}
+{% load static %}
+
+{% block title %}Contact Us | UASE Tech Studio - Let's Connect{% endblock %}
+
+{% block content %}
+<section class="hero-section position-relative overflow-hidden text-white py-5">
+    <div class="overlay position-absolute top-0 start-0 w-100 h-100"></div>
+    <div class="container position-relative z-1 text-center py-5">
+        <h1 class="display-3 fw-bold animate__animated animate__fadeInDown">Get in Touch with UASE TECH-STUDIO</h1>
+        <p class="lead mt-4 animate__animated animate__fadeInUp animate__delay-1s">Have a project in mind, a question about our services, or just want to say hello? We'd love to hear from you!</p>
+    </div>
+</section>
+
+<section class="container my-5 py-5">
+    <div class="row">
+        {# Contact Information Column #}
+        <div class="col-lg-5 mb-4 mb-lg-0">
+            <h2 class="fw-bold text-primary mb-4">Contact Information</h2>
+            <p class="lead text-muted">Reach out to us through your preferred method:</p>
+            
+            <div class="mb-3">
+                <h5 class="fw-bold text-dark"><i class="bi bi-envelope-fill me-2"></i>Email Addresses:</h5>
+                <ul class="list-unstyled">
+                    <li><a href="mailto:ustyventures@gmail.com" class="text-decoration-none text-secondary">ustyventures@gmail.com</a></li>
+                    <li><a href="mailto:uasetechstudio@gmail.com" class="text-decoration-none text-secondary">uasetechstudio@gmail.com</a></li>
+                </ul>
+            </div>
+
+            <div class="mb-3">
+                <h5 class="fw-bold text-dark"><i class="bi bi-whatsapp me-2"></i>WhatsApp:</h5>
+                <p class="text-secondary">+2349133549399</p>
+            </div>
+
+            <div class="mb-4">
+                <h5 class="fw-bold text-dark"><i class="bi bi-share-fill me-2"></i>Connect on Social Media:</h5>
+                <div class="d-flex gap-3">
+                    <a href="https://facebook.com/UASETECHSTUDIO" target="_blank" class="text-primary fs-3" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+                    <a href="https://twitter.com/UASETECHSTUDIO" target="_blank" class="text-info fs-3" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
+                    <a href="https://linkedin.com/company/uase-tech-studio" target="_blank" class="text-primary fs-3" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+                    <a href="https://instagram.com/UASETECHSTUDIO" target="_blank" class="text-danger fs-3" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+                    <a href="https://github.com/UASE-TECH-STUDIO" target="_blank" class="text-dark fs-3" aria-label="GitHub"><i class="bi bi-github"></i></a>
+                </div>
+            </div>
+        </div>
+
+        {# Contact Form Column #}
+        <div class="col-lg-7">
+            <h2 class="fw-bold text-primary mb-4">Send Us a Message</h2>
+            <p class="text-muted">Fill out the form below and we'll get back to you as soon as possible.</p>
+            <form id="contactForm" method="post" novalidate>
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="id_name" class="form-label">Full Name</label>
+                    <input type="text" name="name" id="id_name" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="id_email" class="form-label">Email Address</label>
+                    <input type="email" name="email" id="id_email" class="form-control" required>
+                </div>
+
+                {# Adding a Subject field #}
+                <div class="mb-3">
+                    <label for="id_subject" class="form-label">Subject</label>
+                    <input type="text" name="subject" id="id_subject" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="id_message" class="form-label">Your Message</label>
+                    <textarea name="message" id="id_message" rows="5" class="form-control" required></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <div class="g-recaptcha" data-sitekey="6LebklMrAAAAAJkzWLHS1WrCUY8DACIAlFxkFsz3"></div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Send Message</button>
+            </form>
+            <div id="formResponse" class="mt-3"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Google reCAPTCHA -->
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const form = document.getElementById("contactForm");
+        const responseDiv = document.getElementById("formResponse");
+
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+            const formData = new FormData(form);
+
+            fetch("{% url 'contact' %}", {
+                method: "POST",
+                headers: {
+                    'X-CSRFToken': form.csrfmiddlewaretoken.value,
+                },
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    responseDiv.innerHTML = `<div class="alert alert-success">✅ ${data.message}</div>`;
+                    form.reset();
+                    grecaptcha.reset();
+                } else {
+                    responseDiv.innerHTML = `<div class="alert alert-danger">❌ ${data.message}</div>`;
+                }
+            })
+            .catch(() => {
+                responseDiv.innerHTML = `<div class="alert alert-danger">❌ Something went wrong. Please try again.</div>`;
+            });
+        });
+    });
+</script>
+{% endblock %}

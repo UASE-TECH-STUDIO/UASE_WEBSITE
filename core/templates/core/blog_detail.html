@@ -1,0 +1,66 @@
+{% extends 'core/layout.html' %}
+{% load static %}
+
+{% block title %}{{ post.title }} | UASE Tech Studio Blog{% endblock %}
+
+{% block content %}
+<section class="hero-section position-relative overflow-hidden text-white py-5">
+    <div class="overlay position-absolute top-0 start-0 w-100 h-100"></div>
+    <div class="container position-relative z-1 text-center py-5">
+        <h1 class="display-3 fw-bold animate__animated animate__fadeInDown">{{ post.title }}</h1>
+        <p class="lead mt-4 animate__animated animate__fadeInUp animate__delay-1s">By {{ post.author.username }} on {{ post.created_on|date:"F d, Y" }} | Last Updated: {{ post.updated_on|date:"F d, Y" }}</p>
+    </div>
+</section>
+
+<section class="container my-5 py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <article class="blog-post">
+                {% if post.image %}
+                    <img src="{{ post.image.url }}" class="img-fluid rounded mb-4" alt="{{ post.title }}">
+                {% endif %}
+                <div class="lead text-dark mb-5">
+                    {{ post.content|safe|linebreaksbr }} {# Use |safe and |linebreaksbr if content might contain HTML or needs line breaks #}
+                </div>
+            </article>
+
+            {# Comments Section #}
+            <hr class="my-5">
+            <h3 class="fw-bold text-primary mb-4">Comments ({{ comments.count }})</h3>
+            
+            {% for comment in comments %}
+            <div class="card mb-3 shadow-sm">
+                <div class="card-body">
+                    <h6 class="card-title fw-bold">{{ comment.author.username }} <small class="text-muted ms-2">{{ comment.created_on|timesince }} ago</small></h6>
+                    <p class="card-text">{{ comment.content|linebreaksbr }}</p>
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-muted">No comments yet. Be the first to comment!</p>
+            {% endfor %}
+
+            {# Comment Form #}
+            <div class="mt-5">
+                {% if user.is_authenticated %}
+                    <h4 class="fw-bold text-primary mb-3">Leave a Comment</h4>
+                    <form method="post" class="shadow p-4 rounded bg-light">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="{{ comment_form.content.id_for_label }}" class="form-label">Your Comment</label>
+                            {{ comment_form.content }}
+                            {% if comment_form.content.errors %}
+                                <div class="text-danger small">{{ comment_form.content.errors }}</div>
+                            {% endif %}
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit Comment</button>
+                    </form>
+                {% else %}
+                    <div class="alert alert-info text-center">
+                        <p class="mb-0">Please <a href="{% url 'login' %}?next={{ request.path }}" class="alert-link">login</a> to leave a comment.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

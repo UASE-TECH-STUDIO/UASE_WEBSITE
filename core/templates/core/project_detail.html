@@ -1,0 +1,143 @@
+{% extends 'core/layout.html' %}
+{% load static %}
+
+{% block title %}{{ project.title }} - UASE Tech Studio Portfolio{% endblock %}
+
+{% block content %}
+<section class="container my-5 py-5">
+    <div class="row justify-content-center mb-5">
+        <div class="col-lg-10 text-center">
+            <h1 class="display-4 fw-bold text-primary mb-3">{{ project.title }}</h1>
+            <p class="lead text-muted">{{ project.client_type }}</p>
+            {% if project.live_demo_link %}
+                <a href="{{ project.live_demo_link }}" target="_blank" class="btn btn-success btn-lg me-3 mb-2 animate__animated animate__pulse animate__infinite">
+                    <i class="bi bi-box-arrow-up-right me-2"></i> View Live Demo
+                </a>
+            {% endif %}
+            {% if project.github_link %}
+                <a href="{{ project.github_link }}" target="_blank" class="btn btn-dark btn-lg mb-2">
+                    <i class="bi bi-github me-2"></i> GitHub Repo
+                </a>
+            {% endif %}
+        </div>
+    </div>
+
+    {# ADDITION START: Project Overview Section #}
+    {% if project.overview %}
+    <div class="row mb-5">
+        <div class="col-lg-10 offset-lg-1">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="h4 mb-0 fw-bold"><i class="bi bi-info-circle-fill me-2"></i>Project Overview</h2>
+                </div>
+                <div class="card-body p-4">
+                    <p class="card-text text-dark">{{ project.overview }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {# ADDITION END: Project Overview Section #}
+
+    {% if project.screenshots %}
+    <div class="row mb-5">
+        <div class="col-lg-10 offset-lg-1">
+            <h2 class="h3 fw-bold mb-4 text-center">Project Screenshots</h2>
+            <div id="projectScreenshotsCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    {% for screenshot in project.screenshots %}
+                        <button type="button" data-bs-target="#projectScreenshotsCarousel" data-bs-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}" aria-current="{% if forloop.first %}true{% else %}false{% endif %}" aria-label="Slide {{ forloop.counter }}"></button>
+                    {% endfor %}
+                </div>
+                <div class="carousel-inner rounded-3 shadow-lg">
+                    {% for screenshot in project.screenshots %}
+                        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                            <img src="{% static 'core/images/'|add:screenshot %}" class="d-block w-100" alt="Screenshot {{ forloop.counter }}">
+                        </div>
+                    {% endfor %}
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#projectScreenshotsCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#projectScreenshotsCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="row">
+        <div class="col-lg-6 mb-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body p-4">
+                    <h3 class="fw-bold text-secondary mb-3"><i class="bi bi-code-slash me-2"></i>Technologies Used</h3>
+                    <div class="d-flex flex-wrap gap-2">
+                        {% for tech in project.technologies %}
+                            <span class="badge bg-primary fs-6 py-2 px-3">{{ tech }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 mb-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body p-4">
+                    <h3 class="fw-bold text-success mb-3"><i class="bi bi-list-check me-2"></i>Key Features</h3>
+                    <ul class="list-unstyled">
+                        {% for feature in project.features %}
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i>{{ feature }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if project.problem_solution %}
+    <div class="row mt-5">
+        <div class="col-lg-10 offset-lg-1">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0 fw-bold"><i class="bi bi-patch-question-fill me-2"></i>Problem & Solution</h3>
+                </div>
+                <div class="card-body p-4">
+                    <div class="mb-4">
+                        <h4 class="fw-bold text-danger"><i class="bi bi-exclamation-triangle-fill me-2"></i>The Challenge:</h4>
+                        <p class="text-muted">{{ project.problem_solution.problem }}</p>
+                    </div>
+                    <div>
+                        <h4 class="fw-bold text-success"><i class="bi bi-check-circle-fill me-2"></i>Our Solution:</h4>
+                        <p class="text-muted">{{ project.problem_solution.solution }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if project.downloads %}
+    <div class="row mt-5">
+        <div class="col-lg-10 offset-lg-1 text-center">
+            <h3 class="fw-bold mb-4"><i class="bi bi-download me-2"></i>Downloads</h3>
+            <div class="list-group">
+                {% for download in project.downloads %}
+                    {# FINAL FIX: Construct the URL using MEDIA_URL from context and the file_url #}
+                    <a href="{{ MEDIA_URL }}{{ download.file_url }}" target="_blank" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" download>
+                        {{ download.name }} <i class="bi bi-cloud-arrow-down-fill ms-2"></i>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="text-center mt-5 pt-4 border-top">
+        <h4 class="fw-bold mb-3">Inspired by Our Work?</h4>
+        <a href="{% url 'contact' %}" class="btn btn-warning btn-lg px-5 py-3 animate__animated animate__pulse animate__infinite">Let's Discuss Your Project</a>
+    </div>
+
+</section>
+{% endblock %}

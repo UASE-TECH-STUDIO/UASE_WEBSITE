@@ -1,0 +1,30 @@
+{% extends 'core/layout.html' %}
+{% block title %}Upload File{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">Upload File</h2>
+    
+    {% if success %}
+        <div class="alert alert-success" role="alert">
+            Upload successful!
+        </div>
+    {% endif %}
+    
+    <form method="post" enctype="multipart/form-data" novalidate>
+        {% csrf_token %}
+        
+        <div class="mb-3">
+            <label for="name" class="form-label">File Name</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+        
+        <div class="mb-3">
+            <label for="file" class="form-label">Choose File</label>
+            <input type="file" class="form-control" id="file" name="file" required>
+        </div>
+        
+        <button type="submit" class="btn btn-success">Upload</button>
+    </form>
+</div>
+{% endblock %}

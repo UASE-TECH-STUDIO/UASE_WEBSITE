@@ -1,0 +1,141 @@
+{% extends 'core/layout.html' %}
+{% load static %}
+
+{% block title %}Our Expertise & Services | UASE Tech Studio{% endblock %}
+
+{% block content %}
+<section class="hero-section position-relative overflow-hidden text-white py-5">
+    {# The background-image and overlay styles are now handled exclusively in static/core/css/style.css #}
+    <div class="overlay position-absolute top-0 start-0 w-100 h-100"></div>
+    <div class="container position-relative z-1 text-center py-5">
+        <h1 class="display-3 fw-bold animate__animated animate__fadeInDown">Empowering Your Vision with Cutting-Edge Solutions</h1>
+        <p class="lead mt-4 animate__animated animate__fadeInUp animate__delay-1s">At UASE Tech Studio, we bring innovation to your fingertips. Our wide range of professional services empowers students, entrepreneurs, businesses, and tech enthusiasts with smart digital solutions. From web development to academic support, we ensure excellence, efficiency, and clarity in every task.</p>
+    </div>
+</section>
+
+<section class="container my-5 py-5">
+    <div class="row text-center mb-5">
+        <div class="col-lg-8 offset-lg-2">
+            <h2 class="fw-bold text-primary mb-4">Our Core Services</h2>
+            <p class="lead text-muted">Each service below is clickable to learn more.</p>
+        </div>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {# Web Development #}
+        <div class="col animate__animated animate__fadeInUp">
+            <div class="card h-100 shadow-sm service-card">
+                <div class="card-body p-4 text-center">
+                    <i class="bi bi-globe display-4 text-warning mb-3"></i>
+                    <h3 class="h5 fw-bold mb-2">Web Development</h3>
+                    <p class="text-muted small">Front-end & responsive websites using modern stacks.</p>
+                    <a href="{% url 'service_detail' service_slug='web-development' %}" class="btn btn-sm btn-outline-primary mt-3">Learn More <i class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+        {# Software Development (general) #}
+        <div class="col animate__animated animate__fadeInUp animate__delay-0-2s">
+            <div class="card h-100 shadow-sm service-card">
+                <div class="card-body p-4 text-center">
+                    <i class="bi bi-code-slash display-4 text-success mb-3"></i>
+                    <h3 class="h5 fw-bold mb-2">Software Development</h3>
+                    <p class="text-muted small">Custom applications, enterprise solutions, and robust software tailored to your unique needs.</p>
+                    <a href="{% url 'service_detail' service_slug='software-development' %}" class="btn btn-sm btn-outline-primary mt-3">Learn More <i class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+        {# Mobile App Development (distinct from general software) #}
+        <div class="col animate__animated animate__fadeInUp animate__delay-0-4s">
+            <div class="card h-100 shadow-sm service-card">
+                <div class="card-body p-4 text-center">
+                    <i class="bi bi-phone display-4 text-info mb-3"></i>
+                    <h3 class="h5 fw-bold mb-2">Mobile App Development</h3>
+                    <p class="text-muted small">Cross-platform and native mobile apps that provide seamless user experiences on any device.</p>
+                    <a href="{% url 'service_detail' service_slug='mobile-app-development' %}" class="btn btn-sm btn-outline-primary mt-3">Learn More <i class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+        {# Data Entry & Virtual Assistance #}
+        <div class="col animate__animated animate__fadeInUp animate__delay-0-6s">
+            <div class="card h-100 shadow-sm service-card">
+                <div class="card-body p-4 text-center">
+                    <i class="bi bi-person-workspace display-4 text-primary mb-3"></i>
+                    <h3 class="h5 fw-bold mb-2">Data Entry & Virtual Assistance</h3>
+                    <p class="text-muted small">Accurate, secure, and fast data handling & remote admin help.</p>
+                    <a href="{% url 'service_detail' service_slug='data-entry-virtual-assistance' %}" class="btn btn-sm btn-outline-primary mt-3">Learn More <i class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+        {# Student Project Support #}
+        <div class="col animate__animated animate__fadeInUp animate__delay-0-8s">
+            <div class="card h-100 shadow-sm service-card">
+                <div class="card-body p-4 text-center">
+                    <i class="bi bi-journal-check display-4 text-info mb-3"></i>
+                    <h3 class="h5 fw-bold mb-2">Student Project & Academic Support</h3>
+                    <p class="text-muted small">SIWES, final year projects, research assistance, academic writing.</p>
+                    <a href="{% url 'service_detail' service_slug='student-projects-academic-support' %}" class="btn btn-sm btn-outline-primary mt-3">Learn More <i class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+        {# Tech Skills Training #}
+        <div class="col animate__animated animate__fadeInUp animate__delay-1s">
+            <div class="card h-100 shadow-sm service-card">
+                <div class="card-body p-4 text-center">
+                    <i class="bi bi-mortarboard display-4 text-success mb-3"></i>
+                    <h3 class="h5 fw-bold mb-2">Tech Skills Training</h3>
+                    <p class="text-muted small">Web dev, UI/UX, basic coding & ICT bootcamps.</p>
+                    <a href="{% url 'service_detail' service_slug='tech-skills-training' %}" class="btn btn-sm btn-outline-primary mt-3">Learn More <i class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+        {# ICT & Tech Problem-Solving #}
+        <div class="col animate__animated animate__fadeInUp animate__delay-1-2s">
+            <div class="card h-100 shadow-sm service-card">
+                <div class="card-body p-4 text-center">
+                    <i class="bi bi-tools display-4 text-secondary mb-3"></i>
+                    <h3 class="h5 fw-bold mb-2">ICT & Tech Problem-Solving</h3>
+                    <p class="text-muted small">We troubleshoot, debug, optimize, and consult.</p>
+                    <a href="{% url 'service_detail' service_slug='ict-tech-problem-solving' %}" class="btn btn-sm btn-outline-primary mt-3">Learn More <i class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+        {# Data Analysis & Reports #}
+        <div class="col animate__animated animate__fadeInUp animate__delay-1-4s">
+            <div class="card h-100 shadow-sm service-card">
+                <div class="card-body p-4 text-center">
+                    <i class="bi bi-bar-chart-line display-4 text-danger mb-3"></i>
+                    <h3 class="h5 fw-bold mb-2">Data Analysis & Reports</h3>
+                    <p class="text-muted small">Excel, SPSS, SQL – for business, research, or projects.</p>
+                    <a href="{% url 'service_detail' service_slug='data-analysis-reports' %}" class="btn btn-sm btn-outline-primary mt-3">Learn More <i class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+        {# Graphics & Media Design #}
+        <div class="col animate__animated animate__fadeInUp animate__delay-1-6s">
+            <div class="card h-100 shadow-sm service-card">
+                <div class="card-body p-4 text-center">
+                    <i class="bi bi-vector-pen display-4 text-warning mb-3"></i>
+                    <h3 class="h5 fw-bold mb-2">Graphics & Media Design</h3>
+                    <p class="text-muted small">Flyers, logos, social media content, brand visuals.</p>
+                    <a href="{% url 'service_detail' service_slug='graphics-media-design' %}" class="btn btn-sm btn-outline-primary mt-3">Learn More <i class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+        {# Lead Generation & Online Growth #}
+        <div class="col animate__animated animate__fadeInUp animate__delay-1-8s">
+            <div class="card h-100 shadow-sm service-card">
+                <div class="card-body p-4 text-center">
+                    <i class="bi bi-graph-up display-4 text-primary mb-3"></i>
+                    <h3 class="h5 fw-bold mb-2">Lead Generation & Online Growth</h3>
+                    <p class="text-muted small">Boost your brand visibility with strategic online techniques.</p>
+                    <a href="{% url 'service_detail' service_slug='lead-generation-online-growth' %}" class="btn btn-sm btn-outline-primary mt-3">Learn More <i class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+{% endblock %}

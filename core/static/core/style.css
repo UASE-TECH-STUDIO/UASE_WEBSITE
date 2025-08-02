@@ -1,0 +1,355 @@
+/* core/static/core/css/style.css */
+
+/* General Body & Layout Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* More modern font */
+    margin: 0;
+    padding: 0;
+    color: #333; /* Softer default text color for light backgrounds */
+    background-color: #f8f9fa; /* Light background for the page where dark text is common */
+}
+
+header {
+    background: #1a1a1a; /* Dark header for good contrast with white nav links */
+    color: white; /* Ensures text directly in header (like brand name) is white */
+    padding: 1.5rem 0; /* More padding */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+header .h3 {
+    font-weight: 700; /* Bold logo text */
+}
+
+nav a {
+    margin: 0 8px; /* Slightly less margin for tighter nav */
+    color: white; /* White text on dark header for navigation links */
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem; /* Bootstrap button border-radius */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+nav a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+main {
+    padding-top: 0; /* Remove top padding as hero has its own */
+    padding-bottom: 3rem;
+}
+
+footer {
+    background: #2a2a2a; /* Dark footer for good contrast with white text */
+    color: white; /* Ensures text in footer is white */
+    text-align: center;
+    padding: 2rem 0;
+}
+
+/* --- Hero Section Styles (Applied to both Home and About if using similar class structure) --- */
+.hero-section {
+    /* Removed background-size/position here as they are on .overlay */
+    /* background-size: cover; */
+    /* background-position: center; */
+    
+    /* Adjusted height for a more balanced look */
+    min-height: 380px; /* A bit shorter, adjust as needed */
+    padding-top: 80px; /* Add vertical padding for content */
+    padding-bottom: 80px; /* Add vertical padding for content */
+    
+    position: relative;
+    overflow: hidden;
+    color: white; /* Ensures hero text is white for contrast */
+    text-shadow: 0 2px 6px rgba(0,0,0,0.8); /* Stronger text shadow for better readability over image */
+
+    /* Ensure flexbox properties for centering content */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+/* Overlay for the hero section background image - Now with a faint color overlay */
+.hero-section .overlay {
+    background-color: rgba(0, 0, 0, 0.6); /* Adjusted to 0.6 for better text contrast, fine-tune as needed */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; /* This z-index is correct for the overlay to sit below the text/container */
+
+    /* Animation for the hero image */
+    animation: zoom-pan-animation 20s infinite alternate ease-in-out;
+}
+
+/* Specific image for the About page hero */
+.about-page .hero-section .overlay {
+    background-image: url('../images/about_hero_banner.jpg');
+}
+
+/* Specific image for the Home page hero */
+/* IMPORTANT: Based on your screenshots, it looks like 'uase_logo_white.png' is the LOGO
+   that is placed *inside* the hero content, not the background image.
+   If you want a *separate background image* for the home page hero (similar to about_hero_banner.jpg),
+   you need to specify that path here.
+   
+   If 'uase_logo_white.png' *is* intended to be the background, then its current
+   placement in the HTML as an `<img>` tag is incorrect. It should be applied via CSS
+   to the .overlay or .hero-section itself, and you'd likely need a much more subtle
+   logo or a different approach.
+
+   ASSUMING you have a dedicated background image for the homepage (e.g., home_abstract_bg.jpg):
+*/
+.home-page .hero-section .overlay {
+    background-image: url('../images/home_abstract_bg.jpg'); /* <--- REPLACE THIS WITH YOUR ACTUAL BACKGROUND IMAGE PATH for HOME PAGE */
+    /* If you don't have a specific background image, consider using a subtle pattern or just the overlay color */
+}
+
+/* Styling for the logo *within* the Home page hero section, if it's meant to be a foreground element */
+.home-page .hero-section .hero-logo-style {
+    max-height: 120px; /* Adjust as needed */
+    width: auto; /* Maintain aspect ratio */
+    border-radius: 15px; /* Increased border-radius for more curvature */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle white border */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* Softer, more pronounced shadow */
+    padding: 8px; /* Slightly increased padding to accommodate border/shadow */
+    background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent background for contrast */
+    /* Ensure this is positioned correctly if needed, but flexbox in .hero-section usually handles it */
+    position: relative; /* Ensure it's above overlay */
+    z-index: 2; /* Ensure logo is above the overlay */
+}
+
+/* Optional subtle background pattern - sits behind the main content and overlay */
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml;utf8,<svg width="100%" height="100%" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 L 0 10" fill="none" stroke="rgba(255,255,255,0.02)" stroke-width="0.5"/></pattern><rect width="100%" height="100%" fill="url(%23grid)"/></svg>') repeat;
+    opacity: 0.5; /* Reduced opacity to be very subtle behind the image */
+    z-index: 0; /* Ensure it's behind the overlay and content */
+}
+
+.hero-section .container {
+    z-index: 2; /* Ensure content is above overlay and pattern */
+    position: relative; /* Important for z-index to work against siblings like .overlay */
+}
+
+.hero-section h1 {
+    font-size: 3.5rem;
+}
+
+.featurette-heading {
+    font-size: 2.5rem;
+}
+
+
+/* --- About Usty - image styling --- */
+.img-fluid.rounded-3 { /* Targeting the specific images in your HTML */
+    border: 5px solid #fff; /* White border for the headshot */
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+
+
+/* --- Service Cards --- */
+.service-icon {
+    font-size: 3.5rem; /* Larger icons */
+    margin-bottom: 1rem;
+}
+.card.transform-on-hover {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card.transform-on-hover:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+/* --- Testimonials --- */
+.testimonial {
+    background-color: #ffffff; /* White background for testimonial card - default body text color #333 is fine here */
+    padding: 1.5rem; /* More padding */
+    border-radius: 10px;
+    margin-bottom: 1.5rem; /* More space between testimonials */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08); /* Stronger, softer shadow */
+    border: none; /* Remove default border */
+}
+.testimonial p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+/* --- Contact CTA Section - Adjusted for clarity --- */
+.call-to-action-bg {
+    background: linear-gradient(45deg, #28a745, #218838); /* Green gradient */
+    color: white; /* Crucial: Ensures all text within this section is white */
+    padding: 4rem; /* More padding */
+}
+.call-to-action-bg .btn {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.call-to-action-bg .btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+}
+
+
+/* --- Timeline Styles (Robust Version) --- */
+.timeline {
+    position: relative;
+    max-width: 900px; /* Adjust max width as needed */
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+/* The vertical line */
+.timeline::after {
+    content: '';
+    position: absolute;
+    width: 4px; /* Thinner line */
+    background-color: var(--bs-primary);
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    margin-left: -2px; /* Center the line */
+    z-index: 0;
+}
+
+.timeline-item {
+    padding: 10px 0;
+    position: relative;
+    width: 100%; /* Items take full width */
+    margin-bottom: 20px; /* Space between items */
+    z-index: 1; /* Ensure content is above the line */
+}
+
+/* Point indicators on the line */
+.timeline-item::after {
+    content: '';
+    position: absolute;
+    width: 18px; /* Smaller circle */
+    height: 18px;
+    background-color: white; /* White circle background */
+    border: 3px solid var(--bs-primary); /* Thinner border */
+    border-radius: 50%;
+    top: 25px; /* Vertically align with card top */
+    z-index: 1;
+}
+
+.timeline-item:nth-child(odd)::after { /* Alternating left/right for visual */
+    left: 50%;
+    transform: translateX(-50%) translateX(-250px); /* Push left for visual offset */
+}
+.timeline-item:nth-child(even)::after {
+    left: 50%;
+    transform: translateX(-50%) translateX(250px); /* Push right for visual offset */
+}
+
+.timeline-content {
+    background-color: var(--bs-body-bg); /* Uses Bootstrap's default light background */
+    position: relative;
+    border-radius: .5rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    padding: 20px 30px;
+}
+
+/* Adjust content positioning around the line */
+.timeline-item:nth-child(odd) .timeline-content {
+    margin-right: 50%;
+    text-align: right; /* Content aligns to the right for odd items */
+}
+
+.timeline-item:nth-child(even) .timeline-content {
+    margin-left: 50%;
+    text-align: left; /* Content aligns to the left for even items */
+}
+
+
+/* --- Animate.css Integration & General Spacing --- */
+.animate__animated {
+    visibility: hidden; /* Hide elements initially before animation plays */
+}
+/* These specific animation classes make elements visible when applied by Animate.css */
+.animate__animated.animate__fadeInUp,
+.animate__animated.animate__fadeInDown,
+.animate__animated.animate__pulse,
+.animate__animated.animate__fadeInLeft,
+.animate__animated.animate__fadeInRight {
+    visibility: visible;
+}
+
+
+/* General spacing for sections */
+section {
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+}
+.py-5 { padding-top: 3rem !important; padding-bottom: 3rem !important; }
+.my-5 { margin-top: 3rem !important; margin-bottom: 3rem !important; }
+
+/* --- Media Queries for Responsiveness --- */
+@media (max-width: 768px) {
+    .hero-section h1 {
+        font-size: 2.5rem;
+    }
+    .hero-section .lead {
+        font-size: 1rem;
+    }
+    .hero-section .btn-lg {
+        font-size: 1rem;
+        padding: 0.75rem 1.5rem;
+    }
+    .testimonial p {
+        font-size: 1rem;
+    }
+    .service-icon {
+        font-size: 2.5rem;
+    }
+
+    /* Stack timeline items vertically for small screens */
+    .timeline::after {
+        left: 18px; /* Move the vertical line to the left for small screens */
+        margin-left: 0;
+    }
+
+    .timeline-item {
+        width: 100%; /* Full width */
+        padding-left: 50px; /* Make space for the line and indicator */
+        padding-right: 15px; /* Add some right padding */
+    }
+
+    .timeline-item::after {
+        left: 0; /* Align indicator to the new line position */
+        transform: translateX(0); /* Remove previous transforms */
+        top: 25px; /* Keep vertical alignment */
+    }
+
+    .timeline-item:nth-child(odd) .timeline-content,
+    .timeline-item:nth-child(even) .timeline-content {
+        margin-right: 0; /* Remove side margins */
+        margin-left: 0;
+        text-align: left; /* All content aligns left */
+    }
+}
+
+
+/* --- Keyframe Animations --- */
+@keyframes zoom-pan-animation {
+    0% {
+        background-size: 105%;
+        background-position: 0% 0%;
+    }
+    50% {
+        background-size: 115%;
+        background-position: 100% 100%;
+    }
+    100% {
+        background-size: 105%;
+        background-position: 0% 0%;
+    }
+}
