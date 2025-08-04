@@ -4,18 +4,15 @@
 {% block title %}UASE Tech Studio - Crafting Digital Excellence{% endblock %}
 
 {% block content %}
-{# ADD THIS <main> TAG WITH THE APPROPRIATE CLASS #}
 <main class="home-page"> 
 
     <section class="hero-section text-white text-center py-5 mb-5 d-flex align-items-center justify-content-center">
-        {# IMPORTANT: Re-introduce the overlay div here! #}
-        {# Your current home.html doesn't have the <div class="overlay">. The CSS targets this for the background image. #}
         <div class="overlay"></div> 
-        <div class="container position-relative z-1"> {# Added position-relative and z-1 to container to ensure content is above overlay #}
+        <div class="container position-relative z-1">
             <div class="row justify-content-center">
                 <div class="col-lg-10">
-                    {# Logo Styling: Centered with margin, slightly adjusted max-height and width #}
-                    <img src="{% static 'core/images/uase_logo_white.png' %}" alt="UASE Tech Studio Logo" class="img-fluid mb-4 mx-auto d-block hero-logo-style">
+                    {# Added a subtle pulse animation to the logo for more engagement #}
+                    <img src="{% static 'core/images/uase_logo_white.png' %}" alt="UASE Tech Studio Logo" class="img-fluid mb-4 mx-auto d-block hero-logo-style animate__animated animate__pulse animate__infinite animate__slow">
                     <h1 class="display-3 fw-bold mb-3 animate__animated animate__fadeInDown">Crafting Tomorrow's Digital Experiences, Today.</h1>
                     <p class="lead mb-4 animate__animated animate__fadeInUp animate__delay-1s">Innovating bespoke web, mobile, and software solutions that drive growth and empower your vision.</p>
                     <div class="d-grid gap-3 d-sm-flex justify-content-sm-center animate__animated animate__fadeInUp animate__delay-2s">
@@ -60,7 +57,8 @@
             <div class="col">
                 <div class="card h-100 shadow-sm border-0 transform-on-hover">
                     <div class="card-body p-4">
-                        <i class="bi bi-browser-chrome service-icon display-4 text-primary mb-3"></i> {# Placeholder icon #}
+                        {# Updated icon to a more specific one for web development #}
+                        <i class="bi bi-code-slash service-icon display-4 text-primary mb-3"></i>
                         <h5 class="card-title fw-bold">Web Application Development</h5>
                         <p class="card-text text-muted">Building dynamic, scalable, and secure web platforms with technologies like Django, Node.js, React.js, PHP, and modern frontend frameworks.</p>
                         <a href="{% url 'service_detail' 'web-development' %}" class="btn btn-sm btn-outline-primary mt-3">Learn More</a>
@@ -70,7 +68,8 @@
             <div class="col">
                 <div class="card h-100 shadow-sm border-0 transform-on-hover">
                     <div class="card-body p-4">
-                        <i class="bi bi-phone service-icon display-4 text-success mb-3"></i> {# Placeholder icon #}
+                        {# Updated icon to a more specific one for mobile apps #}
+                        <i class="bi bi-phone-fill service-icon display-4 text-success mb-3"></i>
                         <h5 class="card-title fw-bold">Mobile App Development</h5>
                         <p class="card-text text-muted">Creating intuitive and high-performing Android applications, including converting web apps to native APKs using Capacitor.</p>
                         <a href="{% url 'service_detail' 'mobile-app-development' %}" class="btn btn-sm btn-outline-success mt-3">Learn More</a>
@@ -80,17 +79,19 @@
             <div class="col">
                 <div class="card h-100 shadow-sm border-0 transform-on-hover">
                     <div class="card-body p-4">
-                        <i class="bi bi-gear service-icon display-4 text-info mb-3"></i> {# Placeholder icon #}
+                        {# Updated icon to a more specific one for software solutions #}
+                        <i class="bi bi-gear-wide-connected service-icon display-4 text-info mb-3"></i>
                         <h5 class="card-title fw-bold">Custom Software Solutions</h5>
                         <p class="card-text text-muted">Developing robust, custom software with Python, Node.js, Java, and C++ to automate processes, enhance efficiency, and solve unique challenges.</p>
-                        <a href="{% url 'service_detail' 'software-development' %}" class="btn btn-sm btn-outline-info mt-3">Learn More</a> {# Changed to 'software-development' to align with the slug in views.py #}
+                        <a href="{% url 'service_detail' 'software-development' %}" class="btn btn-sm btn-outline-info mt-3">Learn More</a>
                     </div>
                 </div>
             </div>
             <div class="col">
                 <div class="card h-100 shadow-sm border-0 transform-on-hover">
                     <div class="card-body p-4">
-                        <i class="bi bi-tools service-icon display-4 text-warning mb-3"></i> {# Changed icon for IT support #}
+                        {# Updated icon for IT support #}
+                        <i class="bi bi-headset service-icon display-4 text-warning mb-3"></i>
                         <h5 class="card-title fw-bold">IT Support & System Administration</h5>
                         <p class="card-text text-muted">Providing expert technical assistance, proactive system maintenance, network diagnostics, and user support to ensure seamless operations.</p>
                         <a href="{% url 'service_detail' 'ict-tech-problem-solving' %}" class="btn btn-sm btn-outline-warning mt-3">Learn More</a>
@@ -242,7 +243,7 @@
         <a href="{% url 'contact' %}" class="btn btn-warning btn-lg px-5 py-3 animate__animated animate__pulse animate__infinite">Get a Free Consultation</a>
     </section>
 
-</main> {# CLOSE THE <main> TAG #}
+</main>
 {% endblock %}
 
 {% block scripts %}
