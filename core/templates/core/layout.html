@@ -4,19 +4,74 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}UASE Tech Studio{% endblock %}</title>
+    <title>{% block title %}UASE TECH-STUDIO | Global ICT, Software Development & Training{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
+    <!-- ✅ SEO Meta Tags -->
+    <meta name="description" content="UASE TECH-STUDIO — founded by Muhammedmustapha Abdullahi (Usty) — offers world-class ICT services, software development, web design, data entry, virtual assistance, and professional technical training in Abuja, Nigeria, and globally. Empowering learners and businesses with modern digital solutions.">
+
+    <meta name="keywords" content="UASE, UASE TECH-STUDIO, UASE TECH, UASE-TECH, uase tech, UASE Tech, UASE TECH STUDIO, Usty, usty, USTY, UASE Abuja, UASE Nigeria, Muhammedmustapha Abdullahi, muhammedmustapha abdullahi, Muhammed Mustapha Abdullahi, muhammed mustapha abdullahi, ICT Training, ICT School in Abuja, Tech School Abuja, Tech School Nigeria, Abuja Tech Company, Tech Company in Nigeria, Web Development, Software Development, Web Design Abuja, Software Engineer, Frontend Developer, Full Stack Developer, Freelancer Abuja, Freelancer Nigeria, UASE TECH-STUDIO Training, UASE-TECH Solutions, UASE Tech Studio, UASE Lifecamp, UASE Asokoro, Tech Studio, UASE TECH Global, Web Developers Nigeria, Tech Services Abuja, Digital Skills, Programming Training, ICT Support, Virtual Assistance, Data Entry Services, UI/UX Design, App Development, Online Learning, Web Apps, ICT Consultancy, Technology Training, UASE Brand, UASE Company, UASE Tech Academy, UASE TECH Brand, Remote Tech Services, Learn Coding, Learn Web Development, Global Tech Training, ICT Institute, Tech School Africa, Abuja Technology Hub, Freelance Web Developer, ICT Freelancer, Tech Training Nigeria, Web Development School">
+
+    <meta name="author" content="UASE TECH-STUDIO | Muhammedmustapha Abdullahi (Usty)">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    <meta name="revisit-after" content="3 days">
+    <meta name="distribution" content="global">
+
+    <!-- ✅ Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="UASE TECH-STUDIO | ICT & Web Development Training by Usty">
+    <meta property="og:description" content="Learn web development, ICT skills, and software development at UASE TECH-STUDIO. Founded by Muhammedmustapha Abdullahi (Usty), delivering tech education and digital solutions worldwide.">
+    <meta property="og:image" content="{% static 'images/about_journey.jpg' %}">
+    <meta property="og:url" content="https://uase.tech">
+    <meta property="og:site_name" content="UASE TECH-STUDIO">
+
+    <!-- ✅ Twitter Meta -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="UASE TECH-STUDIO | ICT & Software Development School">
+    <meta name="twitter:description" content="UASE TECH-STUDIO provides software development, ICT training, virtual assistance, and web design services worldwide.">
+    <meta name="twitter:image" content="{% static 'images/about_journey.jpg' %}">
+    <meta name="twitter:site" content="@ustyalhaji">
+
+    <!-- ✅ Favicon -->
+    <link rel="icon" href="{% static 'images/uase_logo.png' %}" type="image/png">
+
+    <!-- ✅ Structured Data / Schema.org -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "UASE TECH-STUDIO",
+      "alternateName": ["UASE TECH", "UASE-TECH", "UASE", "Usty", "UASE Tech Studio", "UASE TECH GLOBAL"],
+      "url": "https://uase.tech",
+      "logo": "{% static 'images/uase_logo.png' %}",
+      "founder": {
+        "@type": "Person",
+        "name": "Muhammedmustapha Abdullahi",
+        "alternateName": ["Usty", "UASE Founder", "UASE TECH-STUDIO Founder"],
+        "jobTitle": "Tech Entrepreneur & Software Developer"
+      },
+      "sameAs": [
+        "https://github.com/UASE-TECH-STUDIO",
+        "https://www.linkedin.com/in/muhammedmustapha-abdullahi-bb897a309/",
+        "https://www.youtube.com/@UASE_TECH-STUDIOS",
+        "https://twitter.com/ustyalhaji",
+        "https://www.instagram.com/ustyalhajiserviceslimited/",
+        "https://facebook.com/ustyalhaji"
+      ],
+      "description": "UASE TECH-STUDIO offers global ICT solutions, web and software development, data entry, virtual assistance, and digital training services for learners and businesses worldwide."
+    }
+    </script>
+
+    <!-- ✅ External Libraries -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    
     <link rel="stylesheet" href="{% static 'core/style.css' %}">
 </head>
+
 <body>
-    {# Fixed header that stays visible on scroll #}
+    <!-- ✅ Fixed header -->
     <header class="bg-dark text-white py-3 sticky-top" style="z-index: 1030;"> 
         <div class="container d-flex justify-content-between align-items-center flex-wrap">
             <h1 class="h3 m-0">UASE TECH-STUDIO</h1>
@@ -26,7 +81,7 @@
                 <a href="{% url 'services' %}" class="btn btn-outline-light btn-sm me-2 mb-1">Services</a>
                 <a href="{% url 'portfolio' %}" class="btn btn-outline-light btn-sm me-2 mb-1">Portfolio</a>
                 <a href="{% url 'resources' %}" class="btn btn-outline-light btn-sm me-2 mb-1">Resources</a>
-                <a href="{% url 'blog_list' %}" class="btn btn-outline-light btn-sm me-2 mb-1">Blog</a> {# New Blog button #}
+                <a href="{% url 'blog_list' %}" class="btn btn-outline-light btn-sm me-2 mb-1">Blog</a>
                 <a href="{% url 'contact' %}" class="btn btn-outline-light btn-sm me-2 mb-1">Contact</a>
 
                 {% if user.is_authenticated %}
@@ -42,21 +97,22 @@
         </div>
     </header>
 
+    <!-- ✅ Main Content -->
     <main class="container">
         {% block content %}
         {% endblock %}
     </main>
 
+    <!-- ✅ Footer -->
     <footer class="bg-light text-center py-4 mt-5">
         <div class="container">
             <p class="mb-0">&copy; 2025 UASE TECH-STUDIO. All rights reserved.</p>
         </div>
     </footer>
 
+    <!-- ✅ Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    
     <script src="{% static 'core/scripts.js' %}"></script>
-    
     {% block scripts %}{% endblock %}
 </body>
 </html>
