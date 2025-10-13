@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'core',
     'uase_nigeria',
+    'django.contrib.sitemaps',
 ]
 
 MIDDLEWARE = [
