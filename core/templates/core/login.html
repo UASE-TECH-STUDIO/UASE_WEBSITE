@@ -4,63 +4,133 @@
 
 {% block content %}
 <style>
-     /* Full-page background */
-    .auth-page {
-        background: url("{% static 'core/images/about_journey.jpg' %}") no-repeat center center fixed;
-        background-size: cover;
-        min-height: 100vh;
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+/* Full-page background (Centering is here) */
+.auth-page {
+    background: url("{% static 'core/images/about_journey.jpg' %}") no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-    /* Card styling */
-    .auth-card {
-        background: rgba(255, 255, 255, 0.9);
-        border-radius: 15px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        padding: 40px;
-        max-width: 400px;
-        width: 100%;
-        transition: transform 0.3s ease;
-    }
+/* Card styling */
+.auth-card {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    padding: 40px;
+    max-width: 420px; /* Slightly wider for better form look */
+    width: 100%;
+    transition: transform 0.3s ease, background-color 0.4s ease, box-shadow 0.4s ease;
+}
 
-    .auth-card:hover {
-        transform: translateY(-5px);
-    }
+.auth-card:hover {
+    transform: translateY(-5px);
+}
 
-    .auth-card h2 {
-        font-weight: 700;
-        color: #0d6efd;
-        margin-bottom: 25px;
-    }
+.auth-card h2 {
+    font-weight: 700;
+    color: #0d6efd;
+    margin-bottom: 25px;
+    transition: color 0.4s ease;
+}
 
-    /* Techy neon button */
-    .btn-techy {
-        background: linear-gradient(45deg, #00bfff, #007bff);
-        border: none;
-        color: white;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        box-shadow: 0 0 10px rgba(0, 191, 255, 0.5);
-    }
+/* Django Form Field Styling (for better structure) */
+.auth-card form p {
+    margin-bottom: 1rem;
+}
+.auth-card input[type="text"],
+.auth-card input[type="password"],
+.auth-card input[type="email"] {
+    display: block;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.5rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.auth-card input:focus {
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
 
-    .btn-techy:hover {
-        box-shadow: 0 0 25px rgba(0, 191, 255, 0.9);
-        transform: scale(1.05);
-    }
+/* Techy neon button */
+.btn-techy {
+    background: linear-gradient(45deg, #00bfff, #007bff);
+    border: none;
+    color: white;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 191, 255, 0.5);
+}
 
-    /* Text links */
-    .auth-link a {
-        color: #007bff;
-        font-weight: 500;
-        text-decoration: none;
-    }
+.btn-techy:hover {
+    box-shadow: 0 0 25px rgba(0, 191, 255, 0.9);
+    transform: scale(1.05);
+}
 
-    .auth-link a:hover {
-        text-decoration: underline;
-    }
+/* Text links */
+.auth-link a {
+    color: #007bff;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.4s ease;
+}
+
+.auth-link a:hover {
+    text-decoration: underline;
+}
+
+/* ========================================= */
+/* 🌙 DARK MODE OVERRIDES */
+/* ========================================= */
+
+/* 1. Remove background image and set solid dark background */
+body.dark-mode .auth-page {
+    background: #0d1117 !important;
+}
+
+/* 2. Style the card for dark mode */
+body.dark-mode .auth-card {
+    background: #161b22 !important;
+    box-shadow: 0 0 18px rgba(88, 166, 255, 0.15) !important;
+    border: 1px solid #30363d;
+}
+
+/* 3. Style the input fields for dark mode */
+body.dark-mode .auth-card input {
+    background-color: #0d1117 !important;
+    border-color: #30363d !important;
+    color: #c9d1d9 !important;
+}
+body.dark-mode .auth-card input:focus {
+    box-shadow: 0 0 0 0.25rem rgba(88, 166, 255, 0.25) !important;
+}
+
+/* 4. Style the heading for dark mode */
+body.dark-mode .auth-card h2 {
+    color: #58a6ff !important;
+}
+
+/* 5. Style links and regular text for dark mode */
+body.dark-mode .auth-card p,
+body.dark-mode .auth-card label,
+body.dark-mode .auth-card .text-center {
+    color: #c9d1d9 !important;
+}
+
+/* 6. Style the link color specifically */
+body.dark-mode .auth-link a {
+    color: #58a6ff !important;
+}
 </style>
 
 <div class="auth-page">
@@ -69,7 +139,7 @@
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <div class="d-grid">
+            <div class="d-grid mt-4">
                 <button type="submit" class="btn btn-techy btn-lg">Login</button>
             </div>
         </form>

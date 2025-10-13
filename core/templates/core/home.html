@@ -1,4 +1,3 @@
-
 {% extends 'core/layout.html' %}
 {% load static %}
 
@@ -61,6 +60,35 @@
     .call-to-action-bg {
         /* A dark/techy gradient for the CTA */
         background: linear-gradient(135deg, #0d6efd, #00bfff); 
+    }
+
+    /* ========================================================== */
+    /* 🔴 DARK MODE FIX FOR TESTIMONIALS (Specific Overrides) */
+    /* ========================================================== */
+
+    /* Override the outer container with bg-light */
+    body.dark-mode section.bg-light {
+        background-color: #161b22 !important; /* Secondary dark color */
+        border-color: #30363d !important;
+    }
+
+    /* Override the individual testimonial card with bg-white */
+    body.dark-mode .testimonial.bg-white {
+        background-color: #0d1117 !important; /* Primary dark background */
+        border: 1px solid #30363d !important;
+        box-shadow: 0 6px 16px rgba(88, 166, 255, 0.08) !important;
+    }
+
+    /* Ensure text within the testimonial is visible */
+    body.dark-mode .testimonial.bg-white p,
+    body.dark-mode .testimonial.bg-white strong,
+    body.dark-mode .testimonial.bg-white span {
+        color: #c9d1d9 !important; /* Light text color */
+    }
+
+    /* Re-apply the primary color to the author name if needed */
+    body.dark-mode .testimonial.bg-white strong.text-primary {
+        color: #58a6ff !important;
     }
     
 </style>
@@ -154,7 +182,7 @@
                         <i class="bi bi-tools service-icon display-4 text-warning mb-3"></i> {# Changed icon for IT support #}
                         <h5 class="card-title fw-bold">IT Support & System Administration</h5>
                         <p class="card-text text-muted">Providing expert technical assistance, proactive system maintenance, network diagnostics, and user support to ensure seamless operations.</p>
-                        <a href="{% url 'service_detail' 'ict-tech-problem-solving' %}" class="btn btn-sm btn-outline-warning mt-3">Learn More</a>
+                        <a href="{% url 'service_detail' 'it-support-administration' %}" class="btn btn-sm btn-outline-warning mt-3">Learn More</a>
                     </div>
                 </div>
             </div>
@@ -274,8 +302,11 @@
                 <div class="testimonials">
                     {% for testimonial in testimonials %}
                         <div class="testimonial border p-4 mb-4 rounded shadow-sm text-start bg-white">
-                            <p class="lead mb-3 fst-italic">"{{ testimonial.message }}"</p>
-                            <strong class="text-primary">- {{ testimonial.name }}{% if testimonial.role %}, <span class="text-muted">{{ testimonial.role }}</span>{% endif %}</strong>
+                            
+                            {# 🔴 Ensure you use the corrected template variables here: .content, .author_name, .author_title #}
+                            <p class="lead mb-3 fst-italic">"{{ testimonial.content }}"</p>
+                            
+                            <strong class="text-primary">- {{ testimonial.author_name }}{% if testimonial.author_title %}, <span class="text-muted">{{ testimonial.author_title }}</span>{% endif %}</strong>
                         </div>
                     {% empty %}
                         <p class="text-muted">No testimonials yet. Be the first to share your experience!</p>
