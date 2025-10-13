@@ -1,0 +1,22 @@
+{% extends 'uase_nigeria/base_nigeria.html' %}
+{% load static %}
+
+{% block content %}
+<section class="partnerships-section py-5 text-center bg-dark text-white">
+    <div class="container">
+        <h2 class="display-5 fw-bold mb-3">Global Design, Local Delivery</h2>
+        <p class="lead mb-4">We combine the strength of <strong>UASE Tech Studio (USA)</strong> and <strong>UASE Technology (Nigeria)</strong> while opening doors for <span class="text-warning">tech professionals, designers, developers, IT specialists, and companies</span> to collaborate with us.</p>
+        
+        <div class="row text-center g-4">
+            <div class="col-md-3"><i class="fas fa-globe fa-2x mb-2 text-warning"></i><p>Global Standards</p></div>
+            <div class="col-md-3"><i class="fas fa-check-circle fa-2x mb-2 text-warning"></i><p>Local Compliance</p></div>
+            <div class="col-md-3"><i class="fas fa-users fa-2x mb-2 text-warning"></i><p>Collaboration Opportunities</p></div>
+            <div class="col-md-3"><i class="fas fa-tools fa-2x mb-2 text-warning"></i><p>On-Site Support</p></div>
+        </div>
+
+        <div class="mt-5">
+            <a href="{% url 'nigeria_contact' %}" class="btn btn-warning btn-lg rounded-pill">Join Our Partnership Network</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

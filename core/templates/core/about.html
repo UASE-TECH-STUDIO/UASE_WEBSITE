@@ -5,8 +5,8 @@
 
 {% block content %}
 <section class="hero-section position-relative overflow-hidden text-white py-5">
-    {# The background-image and overlay styles are now handled exclusively in static/core/css/style.css #}
-    <div class="overlay position-absolute top-0 start-0 w-100 h-100"></div> {# Removed inline style here! #}
+    
+    <div class="overlay position-absolute top-0 start-0 w-100 h-100"></div> 
     <div class="container position-relative z-1 text-center py-5">
         <h1 class="display-3 fw-bold animate__animated animate__fadeInDown">UASE Tech Studio: Crafting Digital Futures with Expertise & Vision</h1>
         <p class="lead mt-4 animate__animated animate__fadeInUp animate__delay-1s">We go beyond building software, creating innovative solutions that fuel growth, tackle real-world challenges, and empower the next generation of tech talent. Explore our journey, our passion, and what makes us your perfect technology partner.</p>
@@ -51,10 +51,18 @@
             <p>My passion lies in leveraging technology to simplify complexities and empower individuals and businesses. I firmly believe that well-crafted software is a powerful tool for positive change. This philosophy is embedded in every UASE Tech Studio project, ensuring our solutions are not just functional but also intuitive, secure, scalable, and designed for long-term success. Whether architecting complex backend systems, designing engaging user interfaces, or providing insightful IT consulting, I bring a comprehensive skill set and an unwavering dedication to quality and client satisfaction.</p>
 
             <h4 class="fw-bold text-secondary mt-4">Connect with Usty:</h4>
-            <div class="d-flex gap-3">
-                <a href="https://www.linkedin.com/in/muhammedmustapha-abdullahi-bb897a309/" target="_blank" class="btn btn-primary btn-lg"><i class="bi bi-linkedin me-2"></i>LinkedIn</a>
-                <a href="YOUR_ACTUAL_YOUTUBE_CHANNEL_URL" target="_blank" class="btn btn-danger btn-lg"><i class="bi bi-youtube me-2"></i>YouTube</a> {# REMEMBER TO UPDATE THIS LINK! #}
-            </div>
+<div class="d-flex flex-wrap gap-3">
+    <a href="https://www.linkedin.com/in/muhammedmustapha-abdullahi-bb897a309/" target="_blank" class="btn btn-primary btn-lg">
+        <i class="bi bi-linkedin me-2"></i>LinkedIn
+    </a>
+    <a href="https://www.youtube.com/@UASE_TECH-STUDIOS" target="_blank" class="btn btn-danger btn-lg">
+        <i class="bi bi-youtube me-2"></i>YouTube
+    </a>
+    <a href="https://wa.me/2349133549399" target="_blank" class="btn btn-success btn-lg">
+        <i class="bi bi-whatsapp me-2"></i>WhatsApp
+    </a>
+</div>
+
         </div>
         <div class="col-md-5 animate__animated animate__fadeInLeft">
             <img class="img-fluid rounded-3 shadow-lg" src="{% static 'core/images/about_founder_usty.jpg' %}" alt="Usty - Founder of UASE Tech Studio">

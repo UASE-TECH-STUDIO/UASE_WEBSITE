@@ -1,16 +1,81 @@
 {% extends 'core/layout.html' %}
+{% load static %}
 {% block title %}Login{% endblock %}
 
 {% block content %}
-<div class="container mt-4" style="max-width: 400px;">
-    <h2>Login</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Login</button>
-    </form>
-    <p class="mt-3">
-        Don't have an account? <a href="{% url 'register' %}">Register here</a>.
-    </p>
+<style>
+     /* Full-page background */
+    .auth-page {
+        background: url("{% static 'core/images/about_journey.jpg' %}") no-repeat center center fixed;
+        background-size: cover;
+        min-height: 100vh;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Card styling */
+    .auth-card {
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        padding: 40px;
+        max-width: 400px;
+        width: 100%;
+        transition: transform 0.3s ease;
+    }
+
+    .auth-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .auth-card h2 {
+        font-weight: 700;
+        color: #0d6efd;
+        margin-bottom: 25px;
+    }
+
+    /* Techy neon button */
+    .btn-techy {
+        background: linear-gradient(45deg, #00bfff, #007bff);
+        border: none;
+        color: white;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 0 10px rgba(0, 191, 255, 0.5);
+    }
+
+    .btn-techy:hover {
+        box-shadow: 0 0 25px rgba(0, 191, 255, 0.9);
+        transform: scale(1.05);
+    }
+
+    /* Text links */
+    .auth-link a {
+        color: #007bff;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    .auth-link a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<div class="auth-page">
+    <div class="auth-card">
+        <h2 class="text-center">Login</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="d-grid">
+                <button type="submit" class="btn btn-techy btn-lg">Login</button>
+            </div>
+        </form>
+        <p class="text-center mt-3 auth-link">
+            Don't have an account? <a href="{% url 'register' %}">Register here</a>.
+        </p>
+    </div>
 </div>
 {% endblock %}

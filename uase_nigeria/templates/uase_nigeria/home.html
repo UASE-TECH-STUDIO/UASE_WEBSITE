@@ -1,0 +1,78 @@
+{% extends 'uase_nigeria/base_nigeria.html' %}
+{% block title %}Home{% endblock %}
+{% load static %}
+
+{% block content %}
+<!-- HERO -->
+<section class="hero-section text-white d-flex align-items-center" style="background: linear-gradient(90deg,#0f172a 0%, #063b3f 100%); min-height: 70vh;">
+  <div class="container py-7 text-center">
+    <h1 class="display-4 fw-bold">Solving IT Problems. Powering Innovation.</h1>
+    <p class="lead text-light mt-3">Your trusted IT consultancy partner in Nigeria — in collaboration with UASE Tech Studio (USA).</p>
+    <div class="mt-4">
+      <a href="{% url 'nigeria_services' %}" class="btn btn-primary btn-lg me-2">Consult Us Today</a>
+      <a href="{% url 'home' %}" class="btn btn-outline-light btn-lg">Partner with UASE Tech Studio</a>
+    </div>
+  </div>
+</section>
+
+<!-- WHO WE ARE -->
+<section class="py-6 bg-light">
+  <div class="container">
+    <div class="row align-items-center g-4">
+      <div class="col-md-7">
+        <h2 class="h3 fw-bold">Who We Are</h2>
+        <p class="text-muted">UASE Technology is the Nigerian arm of the UASE family. We provide practical IT consultancy, local implementation, and training while partnering with UASE Tech Studio (USA) for design and development.</p>
+      </div>
+      <div class="col-md-5 text-center">
+        <img src="{% static 'uase_nigeria/images/about_preview.jpg' %}" alt="About preview" class="img-fluid rounded shadow">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CORE OFFERINGS -->
+<section class="py-6">
+  <div class="container">
+    <h3 class="text-center fw-bold mb-4">Core Offerings</h3>
+    <div class="row g-4">
+      <!-- IT Consultancy -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100 border-0 shadow-sm p-4">
+          <div class="d-flex align-items-start gap-3">
+            <div class="icon-circle bg-primary text-white"><i class="fa-solid fa-lightbulb"></i></div>
+            <div>
+              <h5 class="fw-bold mb-1">IT Consultancy & Advisory</h5>
+              <p class="mb-0 text-muted">Strategy, audits, digital transformation, and technical roadmaps tailored to your business.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Problem-Solving -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100 border-0 shadow-sm p-4">
+          <div class="d-flex align-items-start gap-3">
+            <div class="icon-circle bg-success text-white"><i class="fa-solid fa-tools"></i></div>
+            <div>
+              <h5 class="fw-bold mb-1">Technical Problem-Solving</h5>
+              <p class="mb-0 text-muted">Software debugging, hardware troubleshooting, and on-site remediation.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Software Development -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100 border-0 shadow-sm p-4">
+          <div class="d-flex align-items-start gap-3">
+            <div class="icon-circle bg-warning text-dark"><i class="fa-solid fa-code"></i></div>
+            <div>
+              <h5 class="fw-bold mb-1">Software & Systems Development</h5>
+              <p class="mb-0 text-muted">Built with our USA partner — web apps, mobile apps (APK), and enterprise systems.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Add more offerings if needed -->
+    </div>
+  </div>
+</section>
+{% endblock %}

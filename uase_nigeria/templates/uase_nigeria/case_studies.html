@@ -1,0 +1,64 @@
+{% extends 'uase_nigeria/base_nigeria.html' %}
+{% load static %}
+
+{% block content %}
+<section class="case-studies-section py-5">
+    <div class="container px-5">
+        <div class="row gx-5">
+            <div class="col-lg-12 text-center mb-5">
+                <h2 class="display-4">Our Case Studies</h2>
+                <p class="lead">We solve complex IT problems. Here are some examples of how we've helped our clients achieve their goals.</p>
+            </div>
+        </div>
+        
+        <div class="row gx-5 mb-5 case-study-item">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <img class="img-fluid rounded" src="{% static 'uase_nigeria/images/case_study_network.jpg' %}" alt="Network Infrastructure Upgrade">
+            </div>
+            <div class="col-lg-6">
+                <h3>Network Infrastructure Upgrade for Abuja Firm</h3>
+                <p class="text-muted"><strong>Type:</strong> Consultancy / Technical Solutions</p>
+                <p><strong>Problem:</strong> A corporate client in Abuja was experiencing slow internet speeds, frequent disconnections, and major security vulnerabilities in their office network, affecting team productivity.</p>
+                <p><strong>Solution:</strong> We conducted a full network audit, identified the bottlenecks, and then designed and deployed a new, secure, and high-speed network system using enterprise-grade hardware. We also configured firewalls and monitoring tools to enhance security.</p>
+                <div class="card bg-light p-3 mt-4">
+                    <h5 class="card-title">Outcome</h5>
+                    <p class="card-text">"We successfully improved their internet speed and reduced network downtime by 70%, resulting in a more efficient and secure working environment for their entire team."</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row gx-5 mb-5 case-study-item">
+            <div class="col-lg-6 order-lg-2 mb-4 mb-lg-0">
+                <img class="img-fluid rounded" src="{% static 'uase_nigeria/images/case_study_siwes.jpg' %}" alt="SIWES Project Guidance">
+            </div>
+            <div class="col-lg-6 order-lg-1">
+                <h3>Student SIWES Project Guidance (Biochemistry Dept., Abuja)</h3>
+                <p class="text-muted"><strong>Type:</strong> Training / Academic Support</p>
+                <p><strong>Problem:</strong> Students from a biochemistry department lacked direction and technical expertise for their final-year projects, which required software development and data analysis components. They needed professional guidance and mentorship.</p>
+                <p><strong>Solution:</strong> UASE Technology provided hands-on project guidance and mentorship. With direct support from our partners at UASE Tech Studio (USA), we helped the students structure their projects, provided coding assistance, and taught them how to use the necessary digital tools.</p>
+                <div class="card bg-light p-3 mt-4">
+                    <h5 class="card-title">Outcome</h5>
+                    <p class="card-text">"The students successfully completed their projects, with several receiving high grades due to the robust technical implementation and clear project structure we helped them achieve."</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row gx-5 mb-5 case-study-item">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <img class="img-fluid rounded" src="{% static 'uase_nigeria/images/case_study_ngo.jpg' %}" alt="NGO Digital Transformation">
+            </div>
+            <div class="col-lg-6">
+                <h3>NGO Digital Transformation</h3>
+                <p class="text-muted"><strong>Type:</strong> IT Consultancy / Cloud Services</p>
+                <p><strong>Problem:</strong> A non-profit organization relied on outdated, paper-based record-keeping and insecure local servers. They needed to modernize their operations and secure sensitive donor data to comply with regulations.</p>
+                <p><strong>Solution:</strong> We conducted a comprehensive IT audit, migrated their data to a secure cloud-based platform, and implemented a robust cybersecurity framework. We also provided tailored training to their team on the new systems.</p>
+                <div class="card bg-light p-3 mt-4">
+                    <h5 class="card-title">Outcome</h5>
+                    <p class="card-text">"The organization now operates more efficiently with a secure digital system, which has reduced operational costs and significantly enhanced data protection, increasing trust with donors and partners."</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+{% endblock %}

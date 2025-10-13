@@ -237,7 +237,7 @@ services_data = {
             'MS Office Suite (Word, Excel, PowerPoint, Outlook)',
             'Networking (TCP/IP, DNS, DHCP, Router Configuration, LAN/WAN Diagnostics)',
             'Virtual Assisting Tools (e.g., Calendar Management, Email Management, Task Management Software)',
-            'Graphic Editing Tools (e.g., CorelDRAW, Basic Photoshop for IT-related graphics/documentation)',
+            'Graphic Editing Tools (e231.g., CorelDRAW, Basic Photoshop for IT-related graphics/documentation)',
         ],
         'benefits': [
             'Rapid resolution of technical issues, minimizing downtime.',
@@ -356,120 +356,12 @@ services_data = {
 }
 
 projects_data = {
-    'uase-tech-studio-website': {
-        'title': 'UASE Tech Studio Official Website',
-        'tagline': 'Building a robust digital presence for UASE Tech Studio itself.',
-        'client_type': 'Internal Project',
-        'category': 'web-apps',
-        'live_demo_link': '/',
-        'github_link': 'https://github.com/UASE-TECH-STUDIO',
-        'thumbnail': 'projects/uase_website_thumbnail.jpg',
-        'screenshots': [
-            'projects/uase_website_screenshot_1.jpg',
-            'projects/uase_website_screenshot_2.jpg',
-            'projects/uase_website_screenshot_3.jpg',
-        ],
-        'overview': 'This website serves as the primary digital hub for UASE Tech Studio, showcasing our services, portfolio, and expertise. It\'s built to be responsive, user-friendly, and highly performant, reflecting our commitment to quality in web development.',
-        'technologies': ['Django', 'Python', 'HTML5', 'CSS3', 'JavaScript', 'Bootstrap', 'SQLite'],
-        'features': [
-            'Fully responsive design for desktop and mobile.',
-            'Dynamic content management for services and portfolio.',
-            'Contact form with reCAPTCHA integration.',
-            'Clean and intuitive user interface.',
-            'Performance optimized for fast loading times.',
-        ],
-        'problem_solution': {
-            'problem': 'To establish a professional and comprehensive online presence that effectively communicates UASE Tech Studio\'s brand, services, and portfolio to potential clients and students.',
-            'solution': 'Developed a custom Django-powered website featuring detailed service pages, a dynamic portfolio, a contact form, and an engaging "About Us" section. The site is designed for easy navigation and optimal user experience, acting as a central point for all business interactions.'
-        },
-        'downloads': []
-    },
-    'student-age-calculator-web-app': {
-        'title': 'Student Age Calculator Web App',
-        'tagline': 'A simple, interactive web tool to calculate age from birthdate.',
-        'client_type': 'Educational / Personal Project',
-        'category': 'web-apps',
-        'live_demo_link': 'https://your-live-demo-link.com/age-calculator',
-        'github_link': 'https://github.com/UASE-TECH-STUDIO',
-        'thumbnail': 'projects/age_calculator_thumbnail.jpg',
-        'screenshots': [
-            'projects/age_calculator_screenshot_1.jpg',
-            'projects/age_calculator_screenshot_2.jpg',
-        ],
-        'overview': 'This project is a straightforward web application that allows users to input their birthdate and instantly see their current age. It showcases fundamental JavaScript DOM manipulation and basic web design principles, making it an excellent learning tool.',
-        'technologies': ['HTML5', 'CSS3', 'JavaScript'],
-        'features': [
-            'User-friendly input for birthdate.',
-            'Instant age calculation (years, months, days).',
-            'Responsive design for various screen sizes.',
-            'Clear error handling for invalid inputs.',
-        ],
-        'problem_solution': {
-            'problem': 'The need for a simple, quick, and accessible tool for students or general users to calculate age without complex software installations.',
-            'solution': 'Developed a lightweight, client-side web application using pure HTML, CSS, and JavaScript. The application runs directly in the browser, providing immediate results with a clean interface, ideal for quick calculations or educational demonstrations.'
-        },
-        'downloads': []
-    },
-    'online-portfolio-react': {
-        'title': 'React-Based Personal Portfolio',
-        'tagline': 'A dynamic and modern personal portfolio built with React.js.',
-        'client_type': 'Personal Branding / Freelancer',
-        'category': 'web-apps',
-        'live_demo_link': 'https://your-live-demo-link.com/react-portfolio',
-        'github_link': 'https://github.com/UASE-TECH-STUDIO',
-        'thumbnail': 'projects/react_portfolio_thumbnail.jpg',
-        'screenshots': [
-            'projects/react_portfolio_screenshot_1.jpg',
-            'projects/react_portfolio_screenshot_2.jpg',
-            'projects/react_portfolio_screenshot_3.jpg',
-        ],
-        'overview': 'This project is a sleek, single-page application (SPA) built using React.js, designed to showcase personal projects, skills, and experience in an interactive and visually appealing manner. It emphasizes modern UI/UX principles and efficient component-based architecture.',
-        'technologies': ['React.js', 'JavaScript', 'HTML5', 'CSS3', 'Bootstrap', 'Vercel (Deployment)'],
-        'features': [
-            'Component-based architecture for maintainability.',
-            'Smooth animations and transitions.',
-            'Dedicated sections for About, Skills, Portfolio, and Contact.',
-            'Fully responsive design for mobile and desktop.',
-        ],
-        'problem_solution': {
-            'problem': 'Traditional static portfolios can lack interactivity and dynamic content updates. A modern developer needs a showcase that highlights their expertise in current frontend frameworks.',
-            'solution': 'Built a dynamic portfolio using React.js, allowing for efficient content updates and a more engaging user experience. The SPA approach ensures fast transitions between sections, providing a fluid browsing experience.'
-        },
-        'downloads': []
-    },
-    'palatables-restaurant-concept': {
-        'title': 'Palatables Restaurant Concept Site UI',
-        'tagline': 'A modern UI/UX prototype for a hypothetical restaurant "Taste Haven by Jilong".',
-        'client_type': 'Concept / UI/UX Design Study',
-        'category': 'ui-ux',
-        'live_demo_link': 'https://www.figma.com/proto/your-figma-link',
-        'github_link': None,
-        'thumbnail': 'projects/palatables_thumbnail.jpg',
-        'screenshots': [
-            'projects/palatables_screenshot_1.jpg',
-            'projects/palatables_screenshot_2.jpg',
-            'projects/palatables_screenshot_3.jpg',
-        ],
-        'overview': 'This project focuses purely on the UI/UX design aspect of a modern restaurant website. It features an elegant layout, intuitive navigation, and visually appealing elements designed to enhance the online dining experience for "Taste Haven by Jilong".',
-        'technologies': ['Figma', 'Adobe XD', 'UI/UX Principles'],
-        'features': [
-            'Interactive menu display with high-quality images.',
-            'Online reservation system concept.',
-            'Responsive design for tablet and mobile viewing.',
-            'Consistent branding and visual hierarchy.',
-            'Smooth user flow for browsing and ordering.',
-        ],
-        'problem_solution': {
-            'problem': 'Many restaurant websites are outdated or offer poor user experiences, hindering customer engagement and online ordering processes.',
-            'solution': 'Designed a clean, modern, and highly intuitive UI/UX prototype for a hypothetical restaurant. The design prioritizes visual appeal, easy navigation, and seamless interaction, aiming to convert online visitors into actual diners.'
-        },
-        'downloads': []
-    },
-    'food-ordering-app': {
+     'food-ordering-app': {
         'title': 'Deliciously Simple: The Food Ordering Application (Web + Android APK)',
         'tagline': 'A full-stack food ordering platform with web and native Android APK access.',
         'client_type': 'Restaurant / Food Delivery Startup',
         'category': 'mobile-apps',
+        'thumbnail': 'projects/food_thumbnail.jpg',
         'overview': (
             "The 'Deliciously Simple' Food Ordering Application is a comprehensive digital platform designed to revolutionize how customers order and manage their favorite meals. This full-stack solution, accessible via both a modern web interface and a native Android APK, empowers users to browse menus, customize orders, and make secure payments from the comfort of their homes. "
             "Customers can track their orders in real-time, view their complete order history, and even request modifications or cancellations (within defined parameters). "
@@ -525,6 +417,7 @@ projects_data = {
         'category': 'web-apps',
         'overview': "The Crime Tracking System is a robust web-based application designed to modernize and streamline the reporting and management of criminal activities. It provides law enforcement agencies with a powerful tool to efficiently record incidents, track their status, and analyze crime patterns. This system enhances public safety by enabling faster response times and more strategic deployment of resources through real-time data and comprehensive administrative controls.",
         'technologies': ['HTML', 'CSS', 'JavaScript', 'jQuery', 'PHP', 'MySQL', 'Bootstrap', 'Figma (for UI)'],
+        'thumbnail': 'projects/crime_thumbnail.jpg',
         'expertise': [
             'Building secure multi-user authentication and role-based admin access with PHP and MySQL.',
             'Implementing comprehensive CRUD operations for crime reports, alerts, and user management using PHP for backend logic.',
@@ -565,102 +458,7 @@ projects_data = {
             {'name': 'User Guide', 'file_url': 'crime_tracking_system_user_guide.pdf'},
         ],
     },
-    '3-month-training-website': {
-        'title': 'Empowering Futures: The 3-Month Training Platform',
-        'tagline': 'An engaging landing page for a skill acquisition training program.',
-        'client_type': 'Educational Institution / Skill Development Program',
-        'category': 'training',
-        'overview': "This project involved creating an engaging and informative landing page for a 3-month skill acquisition training program. The platform is designed to provide prospective students with all necessary details about the curriculum, schedule, and benefits, encouraging sign-ups. Its user-friendly interface and clear calls to action streamline the enrollment process, making essential information easily accessible.",
-        'technologies': ['HTML5', 'CSS3', 'JavaScript', 'Bootstrap', 'MS Office Suite (for content preparation)'],
-        'expertise': [
-            'Designing responsive, mobile-first layouts using Bootstrap and custom CSS for broad accessibility and optimal viewing on any device.',
-            'Creating user-experience focused UIs with clear calls to action (CTAs) and smooth scrolling navigation to guide users effectively.',
-            'Implementing simple yet effective JavaScript interactivity for engaging animations and client-side form validation, enhancing user input quality.',
-            'Structuring engaging and easily digestible content for effective knowledge transfer and high user retention in an educational context.'
-        ],
-        'features': [
-            'Detailed training curriculum and schedule presentation.',
-            'Engaging UI designed to drive registrations and inquiries through clear information display.',
-            'Informational landing pages providing a comprehensive overview of the course.',
-            'Prominent calls to action for easy enrollment.'
-        ],
-        'screenshots': [
-            'training_website_screenshot_1.jpg',
-            'training_website_screenshot_2.jpg',
-        ],
-        'live_demo_link': 'https://3days-website-training.vercel.app/',
-        'github_link': 'https://github.com/UASE-TECH-STUDIO',
-        'problem_solution': {
-            'problem': 'Existing training programs lacked a structured, engaging, and accessible online platform for students to learn and track their progress effectively, particularly for a short, intensive course.',
-            'solution': 'Developed a comprehensive e-learning landing page that offers structured course delivery and interactive content, designed to attract and inform prospective students about the 3-month skill acquisition program, facilitating effective enrollment and learning.'
-        },
-        'downloads': [],
-    },
-    '3-days-training-registration': {
-        'title': 'Seamless Enrollment: 3-Days Training Registration Form',
-        'tagline': 'A clean, intuitive, and responsive online registration form.',
-        'client_type': 'Educational Program / Event Registration',
-        'category': 'training',
-        'overview': "This project focused on developing a clean, intuitive, and responsive online registration form for a short-term training program. Designed for efficient data capture, it incorporates robust client-side validation to ensure data accuracy and improve user experience. The form is built to be easily integrated with various backend systems or third-party form handling services, providing a seamless registration process for attendees.",
-        'technologies': ['HTML', 'CSS', 'JavaScript', 'MS Office Suite (for data handling)', 'CorelDRAW (for form design elements)'],
-        'expertise': [
-            'Designing user-friendly and intuitive forms for efficient and accurate data collection.',
-            'Implementing robust client-side input validation for improved data quality and enhanced user experience.',
-            'Crafting clean and semantic HTML structure for superior accessibility and long-term maintainability.',
-            'Applying responsive CSS for optimal display and usability across various devices, from desktops to mobile phones.',
-            'Utilizing graphic design tools like CorelDRAW for visual elements and branding within forms.'
-        ],
-        'features': [
-            'Efficient and secure collection of participant information.',
-            'Real-time client-side validation to provide immediate feedback and guide users.',
-            'Clean and minimalistic design for a straightforward and frictionless registration process.',
-            'Integration-ready form for seamless backend processing or connection with third-party form handling services (e.g., Formspark).'
-        ],
-        'screenshots': [
-            'training_registration_form_screenshot_1.jpg',
-        ],
-        'live_demo_link': 'https://3days-training-registration.vercel.app/',
-        'github_link': 'https://github.com/UASE-TECH-STUDIO',
-        'problem_solution': {
-            'problem': 'The training program needed a dedicated, user-friendly, and reliable method for participants to register online, ensuring smooth data collection.',
-            'solution': 'Developed a standalone, responsive registration form with robust client-side validation, ensuring efficient and secure collection of participant information, ready for backend integration.'
-        },
-        'downloads': [],
-    },
-    'ecommerce-cart-system': {
-        'title': 'Efficient Online Shopping: E-commerce Cart System (Backend Logic)',
-        'tagline': 'Core backend logic for a robust e-commerce shopping cart.',
-        'client_type': 'Internship Assessment / E-commerce Backend Foundation',
-        'category': 'others',
-        'overview': "This project demonstrates the core backend logic for a robust e-commerce shopping cart system. Developed as a foundational component, it showcases advanced Object-Oriented Programming (OOP) principles and efficient algorithms for managing product additions, quantity updates, removals, and precise total calculations. This system is designed for scalability and seamless integration into larger e-commerce platforms, ensuring accurate inventory and order processing.",
-        'technologies': ['Python', 'Django/Flask', 'SQLite/PostgreSQL', 'Object-Oriented Programming (OOP)', 'REST APIs (Conceptual)'],
-        'expertise': [
-            'Designing and implementing core e-commerce backend logic for product and shopping cart management.',
-            'Applying Object-Oriented Programming (OOP) principles for modular, scalable, and maintainable code structure.',
-            'Developing robust algorithms for dynamic cart calculations (additions, quantity updates, removals, and precise total calculations).',
-            'Implementing efficient database interaction for managing product inventory, user sessions, and cart states, ensuring data integrity.',
-            'Focusing on foundational backend architecture suitable for integration into larger e-commerce platforms.'
-        ],
-        'features': [
-            'Functionality to seamlessly add products to a shopping cart.',
-            'Ability to update product quantities within the cart dynamically and in real-time.',
-            'Option to effortlessly remove products from the cart.',
-            'Accurate and real-time calculation of total cart value, including taxes or discounts (if applicable).',
-            'Basic product inventory management to track availability.',
-            'Demonstrates fundamental backend logic crucial for robust e-commerce operations.'
-        ],
-        'screenshots': [
-            'ecommerce_cart_screenshot_1.jpg',
-        ],
-        'live_demo_link': 'https://food-ordering-app-llk4.vercel.app/',
-        'github_link': 'https://github.com/UASE-TECH-STUDIO',
-        'problem_solution': {
-            'problem': 'The assessment required demonstrating proficiency in core e-commerce backend logic and data manipulation, which is fundamental for any online store.',
-            'solution': 'Developed a robust and efficient cart system that accurately handles product additions, quantity updates, removals, and total calculations. This project showcased strong logical and OOP capabilities essential for building scalable e-commerce foundations.'
-        },
-        'downloads': [],
-    },
-    'uase-tech-studio-website': {
+      'uase-tech-studio-website': {
         'title': 'UASE Tech Studio: Official Website & Portfolio (This Platform)',
         'tagline': 'Building a robust digital presence for UASE Tech Studio itself.',
         'client_type': 'Internal Project / Brand Showcase',
@@ -699,163 +497,38 @@ projects_data = {
         ],
         'downloads': [],
     },
-    # --- New Projects Added Based on User Request ---
-    'edge-meter-stock-management': {
-        'title': 'Edge Meter Stock Management System',
-        'tagline': 'An efficient data entry and tracking solution for inventory.',
-        'client_type': 'Client Project / Data Management',
-        'category': 'others',
-        'overview': 'Developed a tailored system for Edge Meter company to manage stock efficiently. This solution streamlines inventory tracking, ensuring accurate records and real-time insights into product availability and movement. It reduces manual errors and improves operational efficiency for inventory control.',
-        'technologies': ['Microsoft Excel (Advanced)', 'Google Sheets', 'Data Entry Principles', 'CSV/JSON handling (conceptual)'],
-        'expertise': [
-            'Designing and implementing robust data entry workflows for precise inventory management.',
-            'Developing customized spreadsheets with advanced formulas and macros for automated stock tracking.',
-            'Ensuring data integrity and consistency through rigorous validation processes.',
-            'Creating intuitive interfaces for easy stock input, retrieval, and reporting.',
-            'Providing comprehensive documentation and user training for seamless system adoption.',
-        ],
-        'features': [
-            'Streamlined data entry forms for new stock and outgoing items.',
-            'Automated inventory level tracking and alerts for low stock.',
-            'Comprehensive reporting on stock movement, levels, and historical data.',
-            'User-friendly interface for quick lookups and updates.',
-            'Error detection and prevention mechanisms for data accuracy.',
-        ],
-        'screenshots': [], # User will input later
-        'live_demo_link': None,
-        'github_link': None,
-        'thumbnail': 'projects/placeholder_data_entry.jpg', # Added placeholder thumbnail
-        'problem_solution': {
-            'problem': 'Edge Meter struggled with manual, error-prone stock management leading to inefficiencies and inventory discrepancies.',
-            'solution': 'Implemented a custom data management system that automates stock tracking, reduces manual input errors, and provides real-time inventory insights, significantly improving operational efficiency and accuracy.'
-        },
-        'downloads': [],
+
+    "it-consultancy": {
+    "title": "IT Consultancy Website",
+    "tagline": "Business consultancy and IT solutions for Nigerian companies.",
+    "client_type": "Corporate Project",
+    "category": "web-apps",
+    "live_demo_link": "https://uase.tech",
+    "github_link": None,
+    "thumbnail": "projects/it_consultancy_thumbnail.jpg",
+    "screenshots": [
+        "projects/it_consultancy_1.png",
+        "projects/it_consultancy_2.png",
+        "projects/it_consultancy_3.png"
+    ],
+    "overview": "A Django-based corporate consultancy website tailored to Nigerian corporate needs. The platform provides IT and business services with a responsive, professional design, backend integration, and optimized CMS features.",
+    "technologies": ["Django", "Bootstrap", "jQuery", "SQLite"],
+    "expertise": "Backend integration, CMS design, corporate website development, and SEO optimization.",
+    "features": [
+        "Service listing and detailed descriptions",
+        "Contact and inquiry forms with validation",
+        "Responsive corporate theme for all devices",
+        "SEO-optimized structure with clean URLs",
+        "Easily extendable CMS for future services"
+    ],
+    "problem_solution": {
+        "problem": "A Nigerian consultancy firm lacked an effective online presence to showcase their IT and business solutions.",
+        "solution": "We developed a Django-powered corporate site with integrated service listings, responsive design, and SEO optimization, enabling the firm to reach more clients and improve credibility."
     },
-    'edge-meter-document-applications': {
-        'title': 'Edge Meter Company Document Applications',
-        'tagline': 'Digitization and structured management of company documents.',
-        'client_type': 'Client Project / Document Management',
-        'category': 'others',
-        'overview': 'Assisted Edge Meter in digitizing and organizing their vast collection of company documents. This project involved structuring and inputting data from various physical documents into a centralized, accessible digital format, improving document retrieval and administrative efficiency.',
-        'technologies': ['Microsoft Word', 'Microsoft Excel', 'PDF Editing Tools', 'Document Scanning Software', 'Cloud Storage Principles'],
-        'expertise': [
-            'Implementing efficient document digitization processes, including scanning and OCR.',
-            'Structuring and categorizing diverse document types for easy retrieval and management.',
-            'Ensuring data accuracy during the transfer from physical to digital formats.',
-            'Developing naming conventions and folder structures for organized digital archiving.',
-            'Providing solutions for secure cloud storage and access control for sensitive documents.',
-        ],
-        'features': [
-            'Systematic digitization of various company documents.',
-            'Categorized and searchable digital document repository.',
-            'Improved access and retrieval times for critical information.',
-            'Data validation to ensure accurate transfer of information.',
-            'Scalable solution for growing document archives.',
-        ],
-        'screenshots': [], # User will input later
-        'live_demo_link': None,
-        'github_link': None,
-        'thumbnail': 'projects/placeholder_document_mgmt.jpg', # Added placeholder thumbnail
-        'problem_solution': {
-            'problem': 'Edge Meter faced challenges with disorganized physical documents, leading to slow information retrieval and operational bottlenecks.',
-            'solution': 'Implemented a robust system for digitizing and managing company documents, creating a centralized, searchable digital archive that drastically improved accessibility and efficiency.'
-        },
-        'downloads': [],
-    },
-    'edge-meter-bid-preparation': {
-        'title': 'Edge Meter Bid Preparation Applications',
-        'tagline': 'Streamlining the process of creating winning bids and proposals.',
-        'client_type': 'Client Project / Business Operations',
-        'category': 'others',
-        'overview': 'Developed tools and processes for Edge Meter to efficiently prepare detailed bids and proposals. This involves structuring critical project information, cost estimations, and service outlines into compelling and professional application documents, enhancing their success rate in securing new contracts.',
-        'technologies': ['Microsoft Word (Advanced)', 'Microsoft Excel (Formulas & Templates)', 'PDF Generation Tools', 'Data Aggregation Techniques'],
-        'expertise': [
-            'Designing standardized templates for consistent and professional bid submissions.',
-            'Developing automated tools within Excel for accurate cost estimation and proposal generation.',
-            'Implementing version control strategies for collaborative bid preparation.',
-            'Ensuring compliance with tender requirements and legal standards in document preparation.',
-            'Training teams on efficient use of bid preparation tools and best practices.',
-        ],
-        'features': [
-            'Customizable templates for various bid types and client requirements.',
-            'Automated calculations for pricing and resource allocation.',
-            'Version control and collaborative editing features.',
-            'Integrated checklists for compliance and completeness.',
-            'Export to professional PDF formats for submission.',
-        ],
-        'screenshots': [], # User will input later
-        'live_demo_link': None,
-        'github_link': None,
-        'thumbnail': 'projects/placeholder_bid_prep.jpg', # Added placeholder thumbnail
-        'problem_solution': {
-            'problem': 'Manual and inconsistent bid preparation processes led to delays and reduced competitiveness for Edge Meter.',
-            'solution': 'Introduced a streamlined system with automated tools and standardized templates for bid preparation, significantly improving efficiency, accuracy, and the overall quality of proposals.'
-        },
-        'downloads': [],
-    },
-    'sales-record-analysis': {
-        'title': 'Comprehensive Sales Record & Analysis',
-        'tagline': 'Transforming raw sales data into actionable business insights.',
-        'client_type': 'Various Businesses / Data Analysis',
-        'category': 'others',
-        'overview': 'Provided comprehensive services for collecting, organizing, and analyzing sales records from various companies. This project focuses on extracting key trends, identifying top-performing products/services, and generating insightful reports that empower businesses to make data-driven decisions and optimize sales strategies.',
-        'technologies': ['Microsoft Excel (PivotTables, Charts)', 'Google Sheets', 'SPSS (basics)', 'Data Cleaning Techniques', 'Basic SQL (for data extraction)'],
-        'expertise': [
-            'Designing robust data collection and storage methodologies for sales records.',
-            'Performing detailed data cleaning and validation to ensure accuracy.',
-            'Utilizing advanced Excel functionalities for deep sales trend analysis and forecasting.',
-            'Creating clear, impactful data visualizations and dashboards for executive reporting.',
-            'Providing actionable insights and strategic recommendations based on sales performance data.',
-        ],
-        'features': [
-            'Automated data aggregation from multiple sales channels.',
-            'Interactive sales dashboards and performance indicators.',
-            'Customer segmentation and buying pattern analysis.',
-            'Revenue forecasting and trend identification.',
-            'Customizable reports for different stakeholders.',
-        ],
-        'screenshots': [], # User will input later
-        'live_demo_link': None,
-        'github_link': None,
-        'thumbnail': 'projects/placeholder_sales_analysis.jpg', # Added placeholder thumbnail
-        'problem_solution': {
-            'problem': 'Businesses struggled to derive meaningful insights from their raw sales data, hindering strategic decision-making and growth.',
-            'solution': 'Implemented a systematic approach to sales record analysis, utilizing advanced tools to clean, organize, and visualize data. This provided clear insights into sales performance, enabling businesses to optimize strategies and identify new opportunities.'
-        },
-        'downloads': [],
-    },
-    'online-course-platform-concept': {
-        'title': 'Online Course Platform (Conceptual Design)',
-        'tagline': 'UI/UX design for a modern e-learning experience.',
-        'client_type': 'Concept / E-learning Solution',
-        'category': 'training',
-        'overview': 'Designed the user interface and experience for a conceptual online course platform. This project emphasizes intuitive navigation, engaging content presentation, and a seamless learning journey for students, aiming to make online education more accessible and effective.',
-        'technologies': ['Figma', 'Adobe XD', 'UI/UX Principles', 'Wireframing', 'Prototyping'],
-        'expertise': [
-            'Crafting user-centric UI/UX designs for optimal e-learning engagement.',
-            'Developing intuitive course navigation and progress tracking features.',
-            'Designing interactive elements for quizzes, assignments, and discussions.',
-            'Creating visually appealing layouts for diverse course content (video, text, interactive modules).',
-            'Ensuring responsive design for a consistent learning experience across all devices.',
-        ],
-        'features': [
-            'User dashboards with course progress tracking.',
-            'Interactive course modules and lecture pages.',
-            'Discussion forums and peer interaction features.',
-            'Assessment and grading system (conceptual).',
-            'Responsive design for web and mobile learning.',
-        ],
-        'screenshots': [], # User will input later
-        'live_demo_link': None,
-        'github_link': None,
-        'thumbnail': 'projects/placeholder_online_course.jpg', # Added placeholder thumbnail
-        'problem_solution': {
-            'problem': 'Many existing online learning platforms suffer from poor usability and unengaging interfaces, leading to high dropout rates.',
-            'solution': 'Designed an intuitive and visually appealing e-learning platform focusing on seamless user flow, interactive content, and clear progress tracking, aiming to enhance student engagement and course completion rates.'
-        },
-        'downloads': [],
-    },
-    'branding-identity-package': {
+    "downloads": []
+},
+
+'branding-identity-package': {
         'title': 'Brand Identity & Company Profile Design',
         'tagline': 'Crafting cohesive visual identities and professional company profiles for businesses.',
         'client_type': 'Various Businesses / Branding & Corporate Design',
@@ -884,13 +557,232 @@ projects_data = {
         'screenshots': [],
         'live_demo_link': None,
         'github_link': None,
-        'thumbnail': 'projects/placeholder_branding_design.jpg',
+        'thumbnail': 'projects/branding_design.jpg',
         'problem_solution': {
             'problem': 'New businesses often lack a strong, cohesive visual identity and struggle to present their corporate profile professionally, leading to brand recognition issues and inconsistent messaging.',
             'solution': 'Created distinct brand identity packages and designed professional company profiles, brochures, and presentations. This provided businesses with unique logos, consistent visual elements, and clear guidelines, establishing a strong and memorable brand presence while enhancing their corporate communication using tools like CorelDRAW and Photoshop.'
         },
         'downloads': [],
     },
+
+    'palatables-restaurant-concept': {
+        'title': 'Palatables Restaurant Concept Site UI',
+        'tagline': 'A modern UI/UX prototype for a hypothetical restaurant "Taste Haven by Jilong".',
+        'client_type': 'Concept / UI/UX Design Study',
+        'category': 'ui-ux',
+        'live_demo_link': 'https://www.figma.com/proto/your-figma-link',
+        'github_link': None,
+        'thumbnail': 'projects/palatables_thumbnail.jpg',
+        'screenshots': [
+            'projects/palatables_screenshot_1.jpg',
+            'projects/palatables_screenshot_2.jpg',
+            'projects/palatables_screenshot_3.jpg',
+        ],
+        'overview': 'This project focuses purely on the UI/UX design aspect of a modern restaurant website. It features an elegant layout, intuitive navigation, and visually appealing elements designed to enhance the online dining experience for "Taste Haven by Jilong".',
+        'technologies': ['Figma', 'Adobe XD', 'UI/UX Principles'],
+        'features': [
+            'Interactive menu display with high-quality images.',
+            'Online reservation system concept.',
+            'Responsive design for tablet and mobile viewing.',
+            'Consistent branding and visual hierarchy.',
+            'Smooth user flow for browsing and ordering.',
+        ],
+        'problem_solution': {
+            'problem': 'Many restaurant websites are outdated or offer poor user experiences, hindering customer engagement and online ordering processes.',
+            'solution': 'Designed a clean, modern, and highly intuitive UI/UX prototype for a hypothetical restaurant. The design prioritizes visual appeal, easy navigation, and seamless interaction, aiming to convert online visitors into actual diners.'
+        },
+        'downloads': []
+    },
+
+    '3-month-training-website': {
+        'title': 'Empowering Futures: The 3-Month Training Platform',
+        'tagline': 'An engaging landing page for a skill acquisition training program.',
+        'client_type': 'Educational Institution / Skill Development Program',
+        'category': 'training',
+        'overview': "This project involved creating an engaging and informative landing page for a 3-month skill acquisition training program. The platform is designed to provide prospective students with all necessary details about the curriculum, schedule, and benefits, encouraging sign-ups. Its user-friendly interface and clear calls to action streamline the enrollment process, making essential information easily accessible.",
+        'technologies': ['HTML5', 'CSS3', 'JavaScript', 'Bootstrap', 'MS Office Suite (for content preparation)'],
+        'thumbnail': 'projects/3-month-training_thumbnail.jpg',
+        'expertise': [
+            'Designing responsive, mobile-first layouts using Bootstrap and custom CSS for broad accessibility and optimal viewing on any device.',
+            'Creating user-experience focused UIs with clear calls to action (CTAs) and smooth scrolling navigation to guide users effectively.',
+            'Implementing simple yet effective JavaScript interactivity for engaging animations and client-side form validation, enhancing user input quality.',
+            'Structuring engaging and easily digestible content for effective knowledge transfer and high user retention in an educational context.'
+        ],
+        'features': [
+            'Detailed training curriculum and schedule presentation.',
+            'Engaging UI designed to drive registrations and inquiries through clear information display.',
+            'Informational landing pages providing a comprehensive overview of the course.',
+            'Prominent calls to action for easy enrollment.'
+        ],
+        'screenshots': [
+            'training_website_screenshot_1.jpg',
+            'training_website_screenshot_2.jpg',
+        ],
+        'live_demo_link': 'https://3days-website-training.vercel.app/',
+        'github_link': 'https://github.com/UASE-TECH-STUDIO',
+        'problem_solution': {
+            'problem': 'Existing training programs lacked a structured, engaging, and accessible online platform for students to learn and track their progress effectively, particularly for a short, intensive course.',
+            'solution': 'Developed a comprehensive e-learning landing page that offers structured course delivery and interactive content, designed to attract and inform prospective students about the 3-month skill acquisition program, facilitating effective enrollment and learning.'
+        },
+        'downloads': [],
+    },
+    '3-days-training-registration': {
+        'title': 'Seamless Enrollment: 3-Days Training Registration Form',
+        'tagline': 'A clean, intuitive, and responsive online registration form.',
+        'client_type': 'Educational Program / Event Registration',
+        'category': 'training',
+        'overview': "This project focused on developing a clean, intuitive, and responsive online registration form for a short-term training program. Designed for efficient data capture, it incorporates robust client-side validation to ensure data accuracy and improve user experience. The form is built to be easily integrated with various backend systems or third-party form handling services, providing a seamless registration process for attendees.",
+        'technologies': ['HTML', 'CSS', 'JavaScript', 'MS Office Suite (for data handling)', 'CorelDRAW (for form design elements)'],
+        'thumbnail': 'projects/3-days-training_thumbnail.jpg',
+        'expertise': [
+            'Designing user-friendly and intuitive forms for efficient and accurate data collection.',
+            'Implementing robust client-side input validation for improved data quality and enhanced user experience.',
+            'Crafting clean and semantic HTML structure for superior accessibility and long-term maintainability.',
+            'Applying responsive CSS for optimal display and usability across various devices, from desktops to mobile phones.',
+            'Utilizing graphic design tools like CorelDRAW for visual elements and branding within forms.'
+        ],
+        'features': [
+            'Efficient and secure collection of participant information.',
+            'Real-time client-side validation to provide immediate feedback and guide users.',
+            'Clean and minimalistic design for a straightforward and frictionless registration process.',
+            'Integration-ready form for seamless backend processing or connection with third-party form handling services (e.g., Formspark).'
+        ],
+        'screenshots': [
+            'training_registration_form_screenshot_1.jpg',
+        ],
+        'live_demo_link': 'https://3days-training-registration.vercel.app/',
+        'github_link': 'https://github.com/UASE-TECH-STUDIO',
+        'problem_solution': {
+            'problem': 'The training program needed a dedicated, user-friendly, and reliable method for participants to register online, ensuring smooth data collection.',
+            'solution': 'Developed a standalone, responsive registration form with robust client-side validation, ensuring efficient and secure collection of participant information, ready for backend integration.'
+        },
+        'downloads': [],
+    },
+  'student-age-calculator-web-app': {
+        'title': 'Student Age Calculator Web App',
+        'tagline': 'A simple, interactive web tool to calculate age from birthdate.',
+        'client_type': 'Educational / Personal Project',
+        'category': 'web-apps',
+        'live_demo_link': 'https://your-live-demo-link.com/age-calculator',
+        'github_link': 'https://github.com/UASE-TECH-STUDIO',
+        'thumbnail': 'projects/age_calculator_thumbnail.jpg',
+        'screenshots': [
+            'projects/age_calculator_screenshot_1.jpg',
+            'projects/age_calculator_screenshot_2.jpg',
+        ],
+        'overview': 'This project is a straightforward web application that allows users to input their birthdate and instantly see their current age. It showcases fundamental JavaScript DOM manipulation and basic web design principles, making it an excellent learning tool.',
+        'technologies': ['HTML5', 'CSS3', 'JavaScript'],
+        'features': [
+            'User-friendly input for birthdate.',
+            'Instant age calculation (years, months, days).',
+            'Responsive design for various screen sizes.',
+            'Clear error handling for invalid inputs.',
+        ],
+        'problem_solution': {
+            'problem': 'The need for a simple, quick, and accessible tool for students or general users to calculate age without complex software installations.',
+            'solution': 'Developed a lightweight, client-side web application using pure HTML, CSS, and JavaScript. The application runs directly in the browser, providing immediate results with a clean interface, ideal for quick calculations or educational demonstrations.'
+        },
+        'downloads': []
+    },
+
+    # --- New Projects Added Based on User Request ---
+ 'sales-record-analysis': {
+        'title': 'Comprehensive Sales Record & Analysis',
+        'tagline': 'Transforming raw sales data into actionable business insights.',
+        'client_type': 'Various Businesses / Data Analysis',
+        'category': 'others',
+        'overview': 'Provided comprehensive services for collecting, organizing, and analyzing sales records from various companies. This project focuses on extracting key trends, identifying top-performing products/services, and generating insightful reports that empower businesses to make data-driven decisions and optimize sales strategies.',
+        'technologies': ['Microsoft Excel (PivotTables, Charts)', 'Google Sheets', 'SPSS (basics)', 'Data Cleaning Techniques', 'Basic SQL (for data extraction)'],
+        'expertise': [
+            'Designing robust data collection and storage methodologies for sales records.',
+            'Performing detailed data cleaning and validation to ensure accuracy.',
+            'Utilizing advanced Excel functionalities for deep sales trend analysis and forecasting.',
+            'Creating clear, impactful data visualizations and dashboards for executive reporting.',
+            'Providing actionable insights and strategic recommendations based on sales performance data.',
+        ],
+        'features': [
+            'Automated data aggregation from multiple sales channels.',
+            'Interactive sales dashboards and performance indicators.',
+            'Customer segmentation and buying pattern analysis.',
+            'Revenue forecasting and trend identification.',
+            'Customizable reports for different stakeholders.',
+        ],
+        'screenshots': [], # User will input later
+        'live_demo_link': None,
+        'github_link': None,
+        'thumbnail': 'projects/sales_analysis.jpg', # Added placeholder thumbnail
+        'problem_solution': {
+            'problem': 'Businesses struggled to derive meaningful insights from their raw sales data, hindering strategic decision-making and growth.',
+            'solution': 'Implemented a systematic approach to sales record analysis, utilizing advanced tools to clean, organize, and visualize data. This provided clear insights into sales performance, enabling businesses to optimize strategies and identify new opportunities.'
+        },
+        'downloads': [],
+    },
+    
+
+    'edge-meter-stock-management': {
+        'title': 'Edge Meter Stock Management System',
+        'tagline': 'An efficient data entry and tracking solution for inventory.',
+        'client_type': 'Client Project / Data Management',
+        'category': 'others',
+        'overview': 'Developed a tailored system for Edge Meter company to manage stock efficiently. This solution streamlines inventory tracking, ensuring accurate records and real-time insights into product availability and movement. It reduces manual errors and improves operational efficiency for inventory control.',
+        'thumbnail': 'projects/stock_thumbnail.jpg',
+        'technologies': ['Microsoft Excel (Advanced)', 'Google Sheets', 'Data Entry Principles', 'CSV/JSON handling (conceptual)'],
+        'expertise': [
+            'Designing and implementing robust data entry workflows for precise inventory management.',
+            'Developing customized spreadsheets with advanced formulas and macros for automated stock tracking.',
+            'Ensuring data integrity and consistency through rigorous validation processes.',
+            'Creating intuitive interfaces for easy stock input, retrieval, and reporting.',
+            'Providing comprehensive documentation and user training for seamless system adoption.',
+        ],
+        'features': [
+            'Streamlined data entry forms for new stock and outgoing items.',
+            'Automated inventory level tracking and alerts for low stock.',
+            'Comprehensive reporting on stock movement, levels, and historical data.',
+            'User-friendly interface for quick lookups and updates.',
+            'Error detection and prevention mechanisms for data accuracy.',
+        ],
+        'screenshots': [], # User will input later
+        'live_demo_link': None,
+        'github_link': None,
+        'problem_solution': {
+            'problem': 'Edge Meter struggled with manual, error-prone stock management leading to inefficiencies and inventory discrepancies.',
+            'solution': 'Implemented a custom data management system that automates stock tracking, reduces manual input errors, and provides real-time inventory insights, significantly improving operational efficiency and accuracy.'
+        },
+        'downloads': [],
+    },
+    'edge-meter-bid-preparation': {
+        'title': 'Edge Meter Bid Preparation Applications',
+        'tagline': 'Streamlining the process of creating winning bids and proposals.',
+        'client_type': 'Client Project / Business Operations',
+        'category': 'others',
+        'overview': 'Developed tools and processes for Edge Meter to efficiently prepare detailed bids and proposals. This involves structuring critical project information, cost estimations, and service outlines into compelling and professional application documents, enhancing their success rate in securing new contracts.',
+        'technologies': ['Microsoft Word (Advanced)', 'Microsoft Excel (Formulas & Templates)', 'PDF Generation Tools', 'Data Aggregation Techniques'],
+        'expertise': [
+            'Designing standardized templates for consistent and professional bid submissions.',
+            'Developing automated tools within Excel for accurate cost estimation and proposal generation.',
+            'Implementing version control strategies for collaborative bid preparation.',
+            'Ensuring compliance with tender requirements and legal standards in document preparation.',
+            'Training teams on efficient use of bid preparation tools and best practices.',
+        ],
+        'features': [
+            'Customizable templates for various bid types and client requirements.',
+            'Automated calculations for pricing and resource allocation.',
+            'Version control and collaborative editing features.',
+            'Integrated checklists for compliance and completeness.',
+            'Export to professional PDF formats for submission.',
+        ],
+        'screenshots': [], # User will input later
+        'live_demo_link': None,
+        'github_link': None,
+        'thumbnail': 'projects/bid_prep.jpg', # Added placeholder thumbnail
+        'problem_solution': {
+            'problem': 'Manual and inconsistent bid preparation processes led to delays and reduced competitiveness for Edge Meter.',
+            'solution': 'Introduced a streamlined system with automated tools and standardized templates for bid preparation, significantly improving efficiency, accuracy, and the overall quality of proposals.'
+        },
+        'downloads': [],
+    },
+   
+    
 }
 
 resources_data = {

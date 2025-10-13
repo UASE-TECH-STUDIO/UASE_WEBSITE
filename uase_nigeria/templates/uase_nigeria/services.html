@@ -1,0 +1,58 @@
+{% extends 'uase_nigeria/base_nigeria.html' %}
+{% load static %}
+
+{% block content %}
+<section class="services-overview py-5">
+    <div class="container px-5">
+        <div class="row gx-5">
+            <div class="col-lg-12 text-center mb-5">
+                <h2 class="display-4">Our Services</h2>
+                <p class="lead">We provide a comprehensive range of IT consultancy, problem-solving, and implementation services.</p>
+            </div>
+
+            {% comment %} Service Cards {% endcomment %}
+            <div class="col-md-6 col-lg-4 mb-5">
+                <div class="service-card text-center p-4 h-100 shadow-sm rounded bg-white">
+                    <h3 class="card-title">IT Consultancy & Advisory</h3>
+                    <p>Guiding businesses on digital transformation, IT strategies, and solutions tailored to their needs.</p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4 mb-5">
+                <div class="service-card text-center p-4 h-100 shadow-sm rounded bg-white">
+                    <h3 class="card-title">Technical Problem-Solving</h3>
+                    <p>We troubleshoot and resolve IT issues across software, hardware, and networking challenges.</p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4 mb-5">
+                <div class="service-card text-center p-4 h-100 shadow-sm rounded bg-white">
+                    <h3 class="card-title">Software & Systems Development</h3>
+                    <p>We build custom applications, dynamic websites, and robust enterprise software.</p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4 mb-5">
+                <div class="service-card text-center p-4 h-100 shadow-sm rounded bg-white">
+                    <h3 class="card-title">Network & Infrastructure</h3>
+                    <p>We provide LAN/WAN setup, server deployments, and cybersecurity advisory.</p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4 mb-5">
+                <div class="service-card text-center p-4 h-100 shadow-sm rounded bg-white">
+                    <h3 class="card-title">ICT Training & Capacity Building</h3>
+                    <p>Training individuals and organizations on ICT skills and digital tools to empower teams.</p>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4 mb-5">
+                <div class="service-card text-center p-4 h-100 shadow-sm rounded bg-white">
+                    <h3 class="card-title">Project & Academic Support</h3>
+                    <p>We guide students and organizations with SIWES, academic projects, and technical mentorship.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

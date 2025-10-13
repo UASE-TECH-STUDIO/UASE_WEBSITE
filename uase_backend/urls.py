@@ -6,11 +6,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 # Import custom error handling views
-from core import views as core_views 
+from core import views as core_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('core.urls')), # Include your app's URLs
+    path('', include('core.urls')),  
+    path('nigeria/', include('uase_nigeria.urls')),  
 ]
 
 # Serve static and media files during development

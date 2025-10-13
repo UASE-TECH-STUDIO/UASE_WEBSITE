@@ -5,14 +5,73 @@
 {% block title %}UASE Tech Studio - Crafting Digital Excellence{% endblock %}
 
 {% block content %}
+<style>
+    /* 1. STYLES FOR THE HERO SECTION BACKGROUND AND HEIGHT */
+    .hero-section {
+        /* Set the background image and positioning */
+        background: url("{% static 'core/images/about_journey.jpg' %}") no-repeat center center;
+        background-size: cover;
+        /* Ensure the hero section takes up a good portion of the screen */
+        min-height: 80vh; /* 80% of the viewport height */
+        /* Make the section use flexbox to center content */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        /* Set position to relative so the absolutely positioned overlay respects its bounds */
+        position: relative;
+        overflow: hidden; /* Important for clean edges */
+        padding-top: 5rem !important; /* Ensure content isn't under the navbar */
+        padding-bottom: 5rem !important;
+    }
+
+    /* 2. STYLES FOR THE DARK OVERLAY */
+    .hero-section .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        /* Add a semi-transparent dark tint */
+        background-color: rgba(0, 0, 0, 0.65); 
+        z-index: 0; /* Ensures the overlay is behind the content */
+    }
+    
+    /* 3. STYLES FOR HERO CONTENT (optional, based on your design) */
+    .hero-section h1, .hero-section p {
+        /* Ensure text is above the overlay */
+        z-index: 1;
+        position: relative; 
+    }
+
+    .hero-logo-style {
+        max-height: 80px;
+        width: auto;
+    }
+
+    /* Additional styles for sections */
+    .transform-on-hover {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .transform-on-hover:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1) !important;
+    }
+    
+    /* Style for the CTA section background */
+    .call-to-action-bg {
+        /* A dark/techy gradient for the CTA */
+        background: linear-gradient(135deg, #0d6efd, #00bfff); 
+    }
+    
+</style>
+
 {# ADD THIS <main> TAG WITH THE APPROPRIATE CLASS #}
 <main class="home-page"> 
 
     <section class="hero-section text-white text-center py-5 mb-5 d-flex align-items-center justify-content-center">
-        {# IMPORTANT: Re-introduce the overlay div here! #}
-        {# Your current home.html doesn't have the <div class="overlay">. The CSS targets this for the background image. #}
+        
         <div class="overlay"></div> 
-        <div class="container position-relative z-1"> {# Added position-relative and z-1 to container to ensure content is above overlay #}
+        <div class="container position-relative z-1">
             <div class="row justify-content-center">
                 <div class="col-lg-10">
                     {# Logo Styling: Centered with margin, slightly adjusted max-height and width #}
@@ -28,7 +87,8 @@
         </div>
     </section>
 
-    {# Your other home page content #}
+    {# Rest of your content... #}
+
     <section class="container py-5 my-5 text-center">
         <div class="row justify-content-center">
             <div class="col-lg-8">

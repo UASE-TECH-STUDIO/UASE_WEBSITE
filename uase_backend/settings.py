@@ -10,14 +10,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # Use an environment variable for the secret key in production.
-SECRET_KEY = os.environ.get('SECRET_KEY', 'default_django_insecure_key')
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-default-key-for-dev')
 
 # SECURITY WARNING: don't run with debug on in production!
-# Use environment variable to set DEBUG to False in production.
-DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
+# For local development, we set this to True.
+# IMPORTANT: CHANGE THIS TO False IN PRODUCTION!
+DEBUG = True
 
 # Add your domain names here for production.
+# MODIFIED: When DEBUG is True, we allow all hosts.
 ALLOWED_HOSTS = ['uase.tech', 'www.uase.tech', 'uase-website.onrender.com']
+if DEBUG:
+    ALLOWED_HOSTS += ['127.0.0.1', 'localhost']
+    # A wildcard is often used for local development, but adding specific hosts is more secure.
+    # If you still get a DisallowedHost error, you can use:
+    # ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -30,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core',
+    'uase_nigeria',
 ]
 
 MIDDLEWARE = [
@@ -116,7 +124,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # Use Whitenoise for static files in production.
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles' # This is where 'collectstatic' will place all static files.
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [
     BASE_DIR / 'core/static'
 ]
