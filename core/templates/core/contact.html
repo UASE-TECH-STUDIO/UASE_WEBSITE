@@ -22,24 +22,24 @@
             <div class="mb-3">
                 <h5 class="fw-bold text-dark"><i class="bi bi-envelope-fill me-2"></i>Email Addresses:</h5>
                 <ul class="list-unstyled">
-                    <li><a href="mailto:ustyventures@gmail.com" class="text-decoration-none text-secondary">ustyventures@gmail.com</a></li>
                     <li><a href="mailto:uasetechstudio@gmail.com" class="text-decoration-none text-secondary">uasetechstudio@gmail.com</a></li>
+                    <li><a href="mailto:ustyventures@gmail.com" class="text-decoration-none text-secondary">ustyventures@gmail.com</a></li>
                 </ul>
             </div>
 
             <div class="mb-3">
-                <h5 class="fw-bold text-dark"><i class="bi bi-whatsapp me-2"></i>WhatsApp:</h5>
-                <p class="text-secondary">+2349133549399</p>
+                <h5 class="fw-bold text-dark"><i class="bi bi-whatsapp me-2"></i>WhatsApp / Phone:</h5>
+                <p class="text-secondary">+1 213-557-9828</p>
             </div>
 
             <div class="mb-4">
                 <h5 class="fw-bold text-dark"><i class="bi bi-share-fill me-2"></i>Connect on Social Media:</h5>
                 <div class="d-flex gap-3">
-                    <a href="https://facebook.com/UASETECHSTUDIO" target="_blank" class="text-primary fs-3" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
-                    <a href="https://twitter.com/UASETECHSTUDIO" target="_blank" class="text-info fs-3" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
-                    <a href="https://www.linkedin.com/in/muhammedmustapha-abdullahi-bb897a309/" target="_blank" class="text-primary fs-3" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
-                    <a href="https://instagram.com/UASETECHSTUDIO" target="_blank" class="text-danger fs-3" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
-                    <a href="https://github.com/UASE-TECH-STUDIO" target="_blank" class="text-dark fs-3" aria-label="GitHub"><i class="bi bi-github"></i></a>
+                    <a href="https://www.facebook.com/profile.php?id=61583526124519" target="_blank" class="text-primary fs-3" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+                    <a href="https://x.com/uasetechstudio" target="_blank" class="text-info fs-3" aria-label="X"><i class="bi bi-twitter"></i></a>
+                    <a href="https://www.linkedin.com/in/muhammedmustapha-abdullahi-bb897a309" target="_blank" class="text-primary fs-3" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+                    <a href="https://www.instagram.com/uase_tech_studio/" target="_blank" class="text-danger fs-3" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+                    <a href="https://www.youtube.com/@UASE_TECH-STUDIOS" target="_blank" class="text-danger fs-3" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
                 </div>
             </div>
         </div>
@@ -60,7 +60,6 @@
                     <input type="email" name="email" id="id_email" class="form-control" required>
                 </div>
 
-                {# Adding a Subject field #}
                 <div class="mb-3">
                     <label for="id_subject" class="form-label">Subject</label>
                     <input type="text" name="subject" id="id_subject" class="form-control" required>
@@ -86,35 +85,35 @@
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const form = document.getElementById("contactForm");
-        const responseDiv = document.getElementById("formResponse");
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("contactForm");
+    const responseDiv = document.getElementById("formResponse");
 
-        form.addEventListener("submit", function (e) {
-            e.preventDefault();
-            const formData = new FormData(form);
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const formData = new FormData(form);
 
-            fetch("{% url 'contact' %}", {
-                method: "POST",
-                headers: {
-                    'X-CSRFToken': form.csrfmiddlewaretoken.value,
-                },
-                body: formData
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success) {
-                    responseDiv.innerHTML = `<div class="alert alert-success">✅ ${data.message}</div>`;
-                    form.reset();
-                    grecaptcha.reset();
-                } else {
-                    responseDiv.innerHTML = `<div class="alert alert-danger">❌ ${data.message}</div>`;
-                }
-            })
-            .catch(() => {
-                responseDiv.innerHTML = `<div class="alert alert-danger">❌ Something went wrong. Please try again.</div>`;
-            });
+        fetch("{% url 'contact' %}", {
+            method: "POST",
+            headers: {
+                'X-CSRFToken': form.csrfmiddlewaretoken.value,
+            },
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                responseDiv.innerHTML = `<div class="alert alert-success">✅ ${data.message}</div>`;
+                form.reset();
+                if (typeof grecaptcha !== "undefined") grecaptcha.reset();
+            } else {
+                responseDiv.innerHTML = `<div class="alert alert-danger">❌ ${data.message}</div>`;
+            }
+        })
+        .catch(() => {
+            responseDiv.innerHTML = `<div class="alert alert-danger">❌ Something went wrong. Please try again.</div>`;
         });
     });
+});
 </script>
 {% endblock %}
