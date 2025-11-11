@@ -355,86 +355,28 @@ services_data = {
 }
 
 projects_data = {
-
-  'food-ordering-&-delevering-app': {
-    'title': 'Deliciously Simple: The Food Ordering Application (Web + Android APK)',
-    'tagline': 'A full-stack food ordering platform with web and native Android APK access.',
-    'client_type': 'Restaurant / Food Delivery Startup',
-    'category': 'mobile-apps',
-    'thumbnail': 'projects/food_thumbnail.jpg',
-    'overview': (
-      "The 'Deliciously Simple' Food Ordering Application is a comprehensive digital platform designed to revolutionize how customers order and manage their favorite meals. This full-stack solution, accessible via both a modern web interface and a native Android APK, empowers users to browse menus, customize orders, and make secure payments from the comfort of their homes. "
-      "Customers can track their orders in real-time, view their complete order history, and even request modifications or cancellations (within defined parameters). "
-      "For restaurant management, the application provides a powerful backend system to effortlessly edit and add menu items, control inventory, and manage user accounts. A standout feature is the integrated live chat system, allowing management to communicate directly with customers. This includes a pre-programmed bot for instant first replies, ensuring immediate customer engagement until a human representative takes over. "
-      "Management can also efficiently oversee order fulfillment, adjust delivery times, and update order statuses, with all changes instantly reflected on the customer's order history page. "
-      "Furthermore, the system includes robust user management capabilities, enabling administrators to edit user details upon request, block or delete users for policy violations, and control overall user access. "
-      "A built-in newsletter subscription feature allows customers to opt-in for exclusive discounts and updates, fostering loyalty and driving repeat business. This application represents a seamless, intuitive, and feature-rich experience for both diners and food service providers."
-    ),
-    'technologies': [
-      'React.js', 'Next.js', 'TypeScript', 'Tailwind CSS',
-      'Node.js', 'Express.js', 'MongoDB', 'Capacitor',
-      'Axios', 'Stripe API'
-    ],
-    'expertise': [
-      'Building a scalable React & Next.js frontend with responsive Tailwind CSS styling for a modern, engaging UI.',
-      'Managing complex state using React Hooks and Context API for seamless user interactions and efficient data flow.',
-      'Designing and implementing robust RESTful APIs in Node.js and integrating MongoDB for flexible, schema-less data storage tailored for dynamic food menus and orders.',
-      'Implementing secure payment processing with Stripe API integration for real-time, multi-option credit card payments and efficient checkout flows.',
-      'Developing comprehensive user management with secure authentication, profile management, and role-based access control.',
-      'Creating an advanced order management system with real-time updates for both customers and restaurant administrators.',
-      'Implementing dynamic menu management functionalities for administrators (add/update/delete dishes, categories, and pricing).',
-      'Utilizing Capacitor for mobile app packaging and deployment, converting the web application into a native Android APK with equivalent features and smooth performance, enabling offline support and native mobile functionalities.'
-    ],
-    'features': [
-      'User-friendly interface to browse menus, add items to cart, and place orders efficiently.',
-      'Dedicated Admin panel with comprehensive order management, menu management (add/edit/delete items), and user management controls.',
-      'Secure payment and checkout flow seamlessly integrated with Stripe.',
-      'Fully responsive design for optimal viewing and interaction on desktop and mobile browsers.',
-      'Native Android APK app offering equivalent features and a smooth, integrated mobile experience.',
-      'Real-time order tracking and status updates for customers.',
-      'User profile management and order history.'
-    ],
-    'screenshots': [
-      'unilag-food-app1.jpeg',
-      'unilag-food-app2.jpeg',
-      'unilag-food-app3.jpeg',
-      'unilag-food-app4.jpeg',
-      'unilag-food-app5.jpeg',
-      'unilag-food-app6.jpeg',
-      'unilag-food-app7.jpeg',
-      'unilag-food-app8.jpeg',
-      'unilag-food-app9.jpeg',
-      'unilag-food-app10.jpeg',
-      'unilag-food-app11.jpeg',
-      'unilag-food-app12.jpeg',
-    ],
-    'live_demo_link': 'https://unilag-foodapp.vercel.app/',
-    'github_link': 'https://github.com/UASE-TECH-STUDIO',
-    'problem_solution': {
-      'problem': 'Many restaurants lacked a modern, efficient, and mobile-friendly way for customers to order food online, leading to missed sales and customer inconvenience, especially on mobile devices.',
-      'solution': 'Developed a user-friendly web and native Android application that provides a smooth ordering experience, secure payments via Stripe, and real-time tracking. The use of React/Next.js and Capacitor ensured a high-performance, cross-platform solution, enhancing customer satisfaction and boosting restaurant sales.'
-    },
-    'downloads': [
-      {'name': 'Download Android APK', 'file_url': ''}
-    ],
-  },
-}
-
-     'food-ordering-app': {
+    'food-ordering-&-delevering-app': {
         'title': 'Deliciously Simple: The Food Ordering Application (Web + Android APK)',
         'tagline': 'A full-stack food ordering platform with web and native Android APK access.',
         'client_type': 'Restaurant / Food Delivery Startup',
         'category': 'mobile-apps',
         'thumbnail': 'projects/food_thumbnail.jpg',
         'overview': (
-            "The 'Deliciously Simple' Food Ordering Application is a comprehensive digital platform designed to revolutionize how customers order and manage their favorite meals. This full-stack solution, accessible via both a modern web interface and a native Android APK, empowers users to browse menus, customize orders, and make secure payments from the comfort of their homes. "
+            "The 'Deliciously Simple' Food Ordering Application is a comprehensive digital platform designed to revolutionize how customers order and manage their favorite meals. "
+            "This full-stack solution, accessible via both a modern web interface and a native Android APK, empowers users to browse menus, customize orders, and make secure payments from the comfort of their homes. "
             "Customers can track their orders in real-time, view their complete order history, and even request modifications or cancellations (within defined parameters). "
-            "For restaurant management, the application provides a powerful backend system to effortlessly edit and add menu items, control inventory, and manage user accounts. A standout feature is the integrated live chat system, allowing management to communicate directly with customers. This includes a pre-programmed bot for instant first replies, ensuring immediate customer engagement until a human representative takes over. "
+            "For restaurant management, the application provides a powerful backend system to effortlessly edit and add menu items, control inventory, and manage user accounts. A standout feature is the integrated live chat system, allowing management to communicate directly with customers. "
+            "This includes a pre-programmed bot for instant first replies, ensuring immediate customer engagement until a human representative takes over. "
             "Management can also efficiently oversee order fulfillment, adjust delivery times, and update order statuses, with all changes instantly reflected on the customer's order history page. "
             "Furthermore, the system includes robust user management capabilities, enabling administrators to edit user details upon request, block or delete users for policy violations, and control overall user access. "
-            "A built-in newsletter subscription feature allows customers to opt-in for exclusive discounts and updates, fostering loyalty and driving repeat business. This application represents a seamless, intuitive, and feature-rich experience for both diners and food service providers."
+            "A built-in newsletter subscription feature allows customers to opt-in for exclusive discounts and updates, fostering loyalty and driving repeat business. "
+            "This application represents a seamless, intuitive, and feature-rich experience for both diners and food service providers."
         ),
-        'technologies': ['React.js', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Node.js', 'Express.js', 'MongoDB', 'Capacitor', 'Axios', 'Stripe API'],
+        'technologies': [
+            'React.js', 'Next.js', 'TypeScript', 'Tailwind CSS',
+            'Node.js', 'Express.js', 'MongoDB', 'Capacitor',
+            'Axios', 'Stripe API'
+        ],
         'expertise': [
             'Building a scalable React & Next.js frontend with responsive Tailwind CSS styling for a modern, engaging UI.',
             'Managing complex state using React Hooks and Context API for seamless user interactions and efficient data flow.',
@@ -455,24 +397,38 @@ projects_data = {
             'User profile management and order history.'
         ],
         'screenshots': [
-            'food_ordering_app_screenshot_1.jpg',
-            'food_ordering_app_screenshot_2.jpg',
-            'food_ordering_app_screenshot_3.jpg',
-            'food_ordering_app_screenshot_4.jpg',
-            'food_ordering_app_screenshot_5.jpg',
-            'food_ordering_app_screenshot_6.jpg',
-            'food_ordering_app_screenshot_7.jpg',
-            'food_ordering_app_screenshot_8.jpg',
+            'unilag-food-app1.jpeg', 'unilag-food-app2.jpeg', 'unilag-food-app3.jpeg',
+            'unilag-food-app4.jpeg', 'unilag-food-app5.jpeg', 'unilag-food-app6.jpeg',
+            'unilag-food-app7.jpeg', 'unilag-food-app8.jpeg', 'unilag-food-app9.jpeg',
+            'unilag-food-app10.jpeg', 'unilag-food-app11.jpeg', 'unilag-food-app12.jpeg',
         ],
-        'live_demo_link': 'https://food-ordering-app-llk4.vercel.app/',
+        'live_demo_link': 'https://unilag-foodapp.vercel.app/',
         'github_link': 'https://github.com/UASE-TECH-STUDIO',
         'problem_solution': {
             'problem': 'Many restaurants lacked a modern, efficient, and mobile-friendly way for customers to order food online, leading to missed sales and customer inconvenience, especially on mobile devices.',
             'solution': 'Developed a user-friendly web and native Android application that provides a smooth ordering experience, secure payments via Stripe, and real-time tracking. The use of React/Next.js and Capacitor ensured a high-performance, cross-platform solution, enhancing customer satisfaction and boosting restaurant sales.'
         },
-        'downloads': [
-            {'name': 'Download Android APK', 'file_url': 'food_ordering_app.apk'}
+        'downloads': [{'name': 'Download Android APK', 'file_url': ''}],
+    },
+
+    'food-ordering-app': {
+        'title': 'Deliciously Simple: The Food Ordering Application (Web + Android APK)',
+        'tagline': 'A full-stack food ordering platform with web and native Android APK access.',
+        'client_type': 'Restaurant / Food Delivery Startup',
+        'category': 'mobile-apps',
+        'thumbnail': 'projects/food_thumbnail.jpg',
+        'overview': (
+            "The 'Deliciously Simple' Food Ordering Application is a comprehensive digital platform designed to revolutionize how customers order and manage their favorite meals..."
+        ),
+        'technologies': ['React.js', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Node.js', 'Express.js', 'MongoDB', 'Capacitor', 'Axios', 'Stripe API'],
+        'features': [
+            'User-friendly menu browsing and secure checkout.',
+            'Admin panel for menu and user management.',
+            'Real-time order tracking and status updates.',
         ],
+        'live_demo_link': 'https://food-ordering-app-llk4.vercel.app/',
+        'github_link': 'https://github.com/UASE-TECH-STUDIO',
+        'downloads': [{'name': 'Download Android APK', 'file_url': 'food_ordering_app.apk'}],
     },
 
     'film-house-cinema': {
@@ -482,69 +438,22 @@ projects_data = {
         'category': 'web-apps',
         'thumbnail': 'projects/filmhouse_thumbnail.jpg',
         'overview': (
-            "The 'Film House Cinema Booking System' is a full-stack web application designed to streamline movie ticket bookings and cinema management operations. "
-            "Built using Next.js 15, Prisma ORM, and a modern TypeScript stack, it enables users to explore movie listings, view showtimes, and make secure online bookings with dynamic seat selection and live total calculations. "
-            "Administrators benefit from a powerful backend dashboard that provides real-time control over movie schedules, user management, and message handling from customers. "
-            "With NextAuth v5 for secure authentication and role-based access control, the system ensures a clear separation between user and admin functionalities. "
-            "It also includes a contact system that allows users to send inquiries, which administrators can mark as handled directly from the dashboard. "
-            "The platform leverages a scalable Prisma + PostgreSQL database architecture, optimized for deployment on Vercel, providing high performance, reliability, and an elegant dark-themed UI for a premium cinematic experience."
+            "The 'Film House Cinema Booking System' is a full-stack web application designed to streamline movie ticket bookings and cinema management operations..."
         ),
         'technologies': [
-            'Next.js 15',
-            'React.js',
-            'TypeScript',
-            'Prisma ORM',
-            'PostgreSQL',
-            'NextAuth v5',
-            'Tailwind CSS',
-            'Node.js',
-            'bcryptjs'
-        ],
-        'expertise': [
-            'Architecting a full-stack Next.js application with App Router, Prisma ORM, and NextAuth v5 integration.',
-            'Building secure authentication using Credentials Provider with encrypted passwords via bcrypt and JWT-based sessions.',
-            'Designing a relational database schema in Prisma for users, bookings, movies, and contact messages.',
-            'Implementing an admin dashboard for managing movies, viewing messages, and marking inquiries as resolved.',
-            'Creating dynamic client-side booking pages with React state hooks and server communication through API routes.',
-            'Using Tailwind CSS for a visually appealing, responsive, and cinematic dark-mode UI.',
-            'Deploying the application on Vercel with environment variable configurations for database and authentication secrets.'
+            'Next.js 15', 'React.js', 'TypeScript', 'Prisma ORM', 'PostgreSQL', 'NextAuth v5', 'Tailwind CSS', 'Node.js', 'bcryptjs'
         ],
         'features': [
-            'User registration and login via secure NextAuth credentials-based authentication.',
-            'Interactive movie listing with showtime selection and seat quantity adjustment.',
-            'Dynamic total calculation for seat bookings with confirmation summary.',
-            'Admin dashboard for viewing and managing user messages and movie details.',
-            'Contact message handling system — admins can mark messages as replied.',
-            'Responsive design optimized for desktop, tablet, and mobile viewing.',
-            'Real-time error and booking validation feedback to enhance user experience.'
-        ],
-        'screenshots': [
-            'film-house3.jpg',
-            'film-house4.jpg',
-            'film-house5.jpg',
-            'film-house6.jpg',
-            'film-house7.jpg',
-            'film-house8.jpg',
-            'film-house9.jpg',
-            'film-house10.jpg',
-            'film-house11.jpg',
-            'film-house12.jpg',
-            'film-house13.jpg',
+            'Secure login system via NextAuth.',
+            'Dynamic seat selection and total calculation.',
+            'Admin dashboard for managing movies and messages.',
         ],
         'live_demo_link': 'https://film-house-eight.vercel.app/',
         'github_link': 'https://github.com/Mr-Usty/film-house',
-        'problem_solution': {
-            'problem': 'Traditional cinema ticketing systems often lack online accessibility, dynamic seat selection, and secure authentication, causing inefficiencies for both users and administrators.',
-            'solution': (
-                "Developed a responsive, secure, and user-friendly cinema booking platform using Next.js, Prisma, and PostgreSQL. "
-                "The system allows users to easily browse movies, select showtimes, and confirm bookings with real-time total calculation, while admins can manage operations and messages seamlessly from the dashboard."
-            )
-        },
         'downloads': [],
     },
 
-
-    'crime-tracking-system': {
+    'crime-tracking-system': { 
         'title': 'Crime Tracking System Web App',
         'tagline': 'A robust web-based application for efficient crime reporting and management.',
         'client_type': 'Internal Project (Prototype) / Law Enforcement / Public Sector',
@@ -1289,11 +1198,3 @@ try:
 except Exception as e:
     print("Email sending error:", e)
 
-recipient_list = [settings.CONTACT_RECIPIENT_EMAIL, 'ustyventures@gmail.com']
-send_mail(
-    subject=f'New Contact Message from UASE Website: {subject}',
-    message=admin_full_message,
-    from_email=settings.DEFAULT_FROM_EMAIL,
-    recipient_list=recipient_list,
-    fail_silently=False,
-)
