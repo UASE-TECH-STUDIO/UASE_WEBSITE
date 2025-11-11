@@ -14,7 +14,6 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from django import forms  # <--- Essential for using forms.Textarea
 from django.forms import ModelForm # For CommentForm
-
 # A simple form for comments (add this to forms.py later if you want)
 # For now, we'll define it here for simplicity in views.py
 class CommentForm(ModelForm):
@@ -957,12 +956,14 @@ def upload_file(request):
     return render(request, 'core/upload.html')
 
 
+
 @csrf_exempt
 def contact(request):
-    if request.method == 'POST' and request.headers.get('x-requested-with') == 'XMLHttpRequest':
+    if request.method == 'POST':
         form = ContactForm(request.POST)
         recaptcha_token = request.POST.get('g-recaptcha-response')
 
+        # --- Verify reCAPTCHA ---
         recaptcha_secret = settings.RECAPTCHA_SECRET_KEY
         recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify'
         recaptcha_data = {
@@ -970,65 +971,84 @@ def contact(request):
             'response': recaptcha_token,
             'remoteip': request.META.get('REMOTE_ADDR')
         }
+
         try:
             recaptcha_response = requests.post(recaptcha_url, data=recaptcha_data, timeout=5)
             recaptcha_response.raise_for_status()
             recaptcha_result = recaptcha_response.json()
-        except requests.exceptions.RequestException as e:
-            print(f"reCAPTCHA API request failed: {e}")
-            return JsonResponse({'success': False, 'message': '❌ reCAPTCHA verification failed due to network error.'})
-        except json.JSONDecodeError:
-            print("reCAPTCHA API returned invalid JSON.")
-            return JsonResponse({'success': False, 'message': '❌ reCAPTCHA verification failed due to invalid response.'})
+        except Exception as e:
+            print(f"reCAPTCHA API error: {e}")
+            return JsonResponse({'success': False, 'message': '❌ reCAPTCHA verification failed. Please try again.'})
 
         if not recaptcha_result.get('success'):
-            print(f"reCAPTCHA verification failed: {recaptcha_result.get('error-codes')}")
+            print(f"reCAPTCHA failed: {recaptcha_result.get('error-codes')}")
             return JsonResponse({'success': False, 'message': '❌ reCAPTCHA failed. Please try again.'})
 
+        # --- Process form ---
         if form.is_valid():
             name = form.cleaned_data['name']
             email = form.cleaned_data['email']
-            message = form.cleaned_data.get('message', 'No Subject Provided') # Corrected to get 'message' as default
             subject = form.cleaned_data.get('subject', 'No Subject Provided')
+            message = form.cleaned_data.get('message', 'No Message Provided')
 
-            # Get the user if authenticated
             user_instance = request.user if request.user.is_authenticated else None
-            
-            ContactMessage.objects.create(name=name, email=email, subject=subject, message=message, user=user_instance)
 
-            admin_full_message = f"Name: {name}\nEmail: {email}\nSubject: {subject}\n\nMessage:\n{message}"
+            # Save message to database
+            contact_instance = ContactMessage.objects.create(
+                name=name, email=email, subject=subject, message=message, user=user_instance
+            )
+
+            # --- Prepare admin email ---
+            admin_message = f"Name: {name}\nEmail: {email}\nSubject: {subject}\n\nMessage:\n{message}"
             if user_instance:
-                admin_full_message += f"\nSubmitted by (Logged-in User): {user_instance.username} (ID: {user_instance.id})"
+                admin_message += f"\nSubmitted by: {user_instance.username} (ID: {user_instance.id})"
 
+            # --- Send email to admin ---
+            admin_email_success = True
             try:
                 send_mail(
-                    subject=f'New Contact Message from UASE Website: {subject}',
-                    message=admin_full_message,
+                    subject=f'New Contact Message: {subject}',
+                    message=admin_message,
                     from_email=settings.DEFAULT_FROM_EMAIL,
                     recipient_list=[settings.CONTACT_RECIPIENT_EMAIL],
-                    fail_silently=False,
+                    fail_silently=False
                 )
             except Exception as e:
-                print(f"Error sending email to admin: {e}")
-                return JsonResponse({'success': False, 'message': '❌ Message sent, but there was an error sending confirmation email to admin.'})
+                print(f"Error sending admin email: {e}")
+                admin_email_success = False
 
+            # --- Send confirmation email to user ---
+            user_email_success = True
             try:
                 send_mail(
                     subject='We received your message at UASE TECH-STUDIO',
-                    message=f"Hi {name},\n\nThanks for reaching out! We’ve received your message and will reply soon.\n\nYour message:\n{message}",
+                    message=f"Hi {name},\n\nThanks for reaching out! We received your message:\n\n{message}",
                     from_email=settings.DEFAULT_FROM_EMAIL,
                     recipient_list=[email],
-                    fail_silently=False,
+                    fail_silently=False
                 )
             except Exception as e:
-                print(f"Error sending confirmation email to user: {e}")
+                print(f"Error sending user email: {e}")
+                user_email_success = False
 
-            return JsonResponse({'success': True, 'message': '✅ Message sent successfully. We will reply shortly.'})
+            # --- Prepare response message ---
+            if admin_email_success:
+                response_message = '✅ Message sent successfully! We will reply shortly.'
+                if not user_email_success:
+                    response_message += ' (User confirmation email could not be sent.)'
+            else:
+                response_message = '❌ Message saved but there was an error sending the email to admin. Please contact us directly.'
+
+            return JsonResponse({'success': True if admin_email_success else False, 'message': response_message})
+
         else:
+            # Form invalid
             return JsonResponse({'success': False, 'message': '❌ Please fill out all fields correctly.', 'errors': form.errors})
+
     else:
         form = ContactForm()
         return render(request, 'core/contact.html', {'form': form})
+
 
 
 def resume(request):
@@ -1122,3 +1142,14 @@ def custom_404(request, exception):
 
 def custom_500(request):
     return render(request, 'core/500.html', {}, status=500)
+
+try:
+    send_mail(
+        subject='Test Email',
+        message='Hello, this is a test.',
+        from_email=settings.DEFAULT_FROM_EMAIL,
+        recipient_list=[settings.CONTACT_RECIPIENT_EMAIL],
+        fail_silently=False,
+    )
+except Exception as e:
+    print("Email sending error:", e)
