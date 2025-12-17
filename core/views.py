@@ -355,7 +355,59 @@ services_data = {
 }
 
 projects_data = {
-    'food-ordering-&-delevering-app': {
+    'recipe-management-app': {
+    'title': 'Smart Recipe Management Application',
+    'tagline': 'A modern recipe creation, management, and discovery platform.',
+    'client_type': 'Food Creators / Home Cooks / Restaurants',
+    'category': 'web-apps',
+    'thumbnail': 'projects/recipe_app_thumbnail.jpg',
+    'overview': (
+        'A full-stack recipe management platform that allows users to create, update, view, and manage recipes '
+        'with ingredients, cooking steps, images, and optional video guides. The application supports dynamic '
+        'recipe categorization, search, and filtering for easy discovery.'
+    ),
+    'technologies': [
+        'Next.js', 'React.js', 'TypeScript', 'Tailwind CSS',
+        'Node.js', 'Express.js', 'MongoDB', 'Mongoose'
+    ],
+    'features': [
+        'Create, update, and delete recipes',
+        'Ingredient and step-based cooking instructions',
+        'Recipe image and video support',
+        'Search and category filtering',
+        'Responsive UI for all devices',
+    ],
+    'live_demo_link': None,
+    'github_link': 'https://github.com/UASE-TECH-STUDIO',
+    'downloads': [],
+},
+'blood-donor-management-system': {
+    'title': 'Blood Donor Management System',
+    'tagline': 'Connecting blood donors, recipients, and hospitals efficiently.',
+    'client_type': 'Healthcare / NGOs / Blood Banks',
+    'category': 'web-apps',
+    'thumbnail': 'projects/blood_donor_thumbnail.jpg',
+    'overview': (
+        'A web-based blood donor management system that enables donors to register, beneficiaries to request blood, '
+        'and administrators to manage approvals, requests, and donor data dynamically.'
+    ),
+    'technologies': [
+        'Next.js', 'React.js', 'TypeScript', 'Tailwind CSS',
+        'Node.js', 'MongoDB', 'Mongoose'
+    ],
+    'features': [
+        'Donor and beneficiary registration',
+        'Blood request and approval workflow',
+        'Admin dashboard with full visibility',
+        'Request status tracking',
+        'Secure role-based access',
+    ],
+    'live_demo_link': None,
+    'github_link': 'https://github.com/UASE-TECH-STUDIO',
+    'downloads': [],
+},
+
+    'food-ordering-app': {
         'title': 'Deliciously Simple: The Food Ordering Application (Web + Android APK)',
         'tagline': 'A full-stack food ordering platform with web and native Android APK access.',
         'client_type': 'Restaurant / Food Delivery Startup',
@@ -411,25 +463,31 @@ projects_data = {
         'downloads': [{'name': 'Download Android APK', 'file_url': ''}],
     },
 
-    'food-ordering-app': {
-        'title': 'Deliciously Simple: The Food Ordering Application (Web + Android APK)',
-        'tagline': 'A full-stack food ordering platform with web and native Android APK access.',
-        'client_type': 'Restaurant / Food Delivery Startup',
-        'category': 'mobile-apps',
-        'thumbnail': 'projects/food_thumbnail.jpg',
-        'overview': (
-            "The 'Deliciously Simple' Food Ordering Application is a comprehensive digital platform designed to revolutionize how customers order and manage their favorite meals..."
-        ),
-        'technologies': ['React.js', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Node.js', 'Express.js', 'MongoDB', 'Capacitor', 'Axios', 'Stripe API'],
-        'features': [
-            'User-friendly menu browsing and secure checkout.',
-            'Admin panel for menu and user management.',
-            'Real-time order tracking and status updates.',
-        ],
-        'live_demo_link': 'https://food-ordering-app-llk4.vercel.app/',
-        'github_link': 'https://github.com/UASE-TECH-STUDIO',
-        'downloads': [{'name': 'Download Android APK', 'file_url': 'food_ordering_app.apk'}],
-    },
+    'campus-food-delivery-app': {
+    'title': 'Campus Food Delivery Application',
+    'tagline': 'Food ordering and delivery tailored for university campuses.',
+    'client_type': 'Universities / Campus Vendors',
+    'category': 'mobile-apps',
+    'thumbnail': 'projects/campus_food_thumbnail.jpg',
+    'overview': (
+        'A campus-restricted food delivery platform that allows students to order meals from on-campus vendors, '
+        'track deliveries, and access services via web and Android APK.'
+    ),
+    'technologies': [
+        'React.js', 'Next.js', 'TypeScript', 'Tailwind CSS',
+        'Node.js', 'MongoDB', 'Capacitor'
+    ],
+    'features': [
+        'Student-based authentication',
+        'Campus vendor listings',
+        'Real-time order tracking',
+        'Android APK support',
+    ],
+    'live_demo_link': None,
+    'github_link': 'https://github.com/UASE-TECH-STUDIO',
+    'downloads': [],
+},
+
 
     'film-house-cinema': {
         'title': 'Film House Cinema Booking System (Full-Stack Web Application)',
@@ -452,6 +510,54 @@ projects_data = {
         'github_link': 'https://github.com/Mr-Usty/film-house',
         'downloads': [],
     },
+'student-clearance-system': {
+    'title': 'Student Clearance Management System',
+    'tagline': 'Digitizing academic and administrative clearance processes.',
+    'client_type': 'Universities / Polytechnics',
+    'category': 'web-apps',
+    'thumbnail': 'projects/clearance_thumbnail.jpg',
+    'overview': (
+        'A centralized clearance management system that automates student clearance workflows across departments, '
+        'reducing paperwork, delays, and administrative bottlenecks.'
+    ),
+    'technologies': [
+        'Next.js', 'React.js', 'TypeScript',
+        'Node.js', 'MongoDB'
+    ],
+    'features': [
+        'Student clearance request submission',
+        'Departmental approval workflow',
+        'Admin oversight dashboard',
+        'Status tracking and notifications',
+    ],
+    'live_demo_link': None,
+    'github_link': 'https://github.com/UASE-TECH-STUDIO',
+    'downloads': [],
+},
+'medical-resource-procurement-system': {
+    'title': 'Medical Resource Procurement System',
+    'tagline': 'Efficient sourcing and tracking of medical supplies.',
+    'client_type': 'Hospitals / Health Institutions',
+    'category': 'web-apps',
+    'thumbnail': 'projects/medical_procurement_thumbnail.jpg',
+    'overview': (
+        'A digital procurement system designed to manage medical supplies, vendor requests, approvals, '
+        'and inventory tracking for healthcare institutions.'
+    ),
+    'technologies': [
+        'Next.js', 'React.js', 'TypeScript',
+        'Node.js', 'MongoDB'
+    ],
+    'features': [
+        'Medical supply request handling',
+        'Vendor and inventory tracking',
+        'Approval workflows',
+        'Procurement reporting',
+    ],
+    'live_demo_link': None,
+    'github_link': 'https://github.com/UASE-TECH-STUDIO',
+    'downloads': [],
+},
 
     'crime-tracking-system': { 
         'title': 'Crime Tracking System Web App',
