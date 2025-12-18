@@ -357,55 +357,102 @@ services_data = {
 projects_data = {
     'recipe-management-app': {
     'title': 'Smart Recipe Management Application',
-    'tagline': 'A modern recipe creation, management, and discovery platform.',
+    'tagline': 'A feature-rich platform for creating, managing, and discovering recipes.',
     'client_type': 'Food Creators / Home Cooks / Restaurants',
     'category': 'web-apps',
     'thumbnail': 'projects/recipe_app_thumbnail.jpg',
     'overview': (
-        'A full-stack recipe management platform that allows users to create, update, view, and manage recipes '
-        'with ingredients, cooking steps, images, and optional video guides. The application supports dynamic '
-        'recipe categorization, search, and filtering for easy discovery.'
+        'The Smart Recipe Management Application is a full-stack web platform designed to help users '
+        'create, organize, and discover cooking recipes in a structured and visually engaging way. '
+        'Users can add detailed recipes including ingredients, step-by-step cooking instructions, '
+        'images, and optional video references. Recipes can be categorized, searched, and filtered '
+        'to improve discoverability and user experience.\n\n'
+        'The system includes a robust administrative backend for managing recipe content, moderating '
+        'user submissions, and organizing categories. Its responsive design ensures seamless usage '
+        'across desktop, tablet, and mobile devices, making it suitable for both personal and '
+        'professional culinary use.'
     ),
     'technologies': [
         'Next.js', 'React.js', 'TypeScript', 'Tailwind CSS',
         'Node.js', 'Express.js', 'MongoDB', 'Mongoose'
     ],
-    'features': [
-        'Create, update, and delete recipes',
-        'Ingredient and step-based cooking instructions',
-        'Recipe image and video support',
-        'Search and category filtering',
-        'Responsive UI for all devices',
+    'expertise': [
+        'Designing scalable RESTful APIs for recipe and category management.',
+        'Implementing dynamic frontend interfaces with React and Tailwind CSS.',
+        'Structuring flexible MongoDB schemas for ingredients, steps, and media assets.',
+        'Handling file uploads and media presentation securely.',
+        'Building responsive and accessible UI components.'
     ],
-    'live_demo_link': None,
+    'features': [
+        'Create, edit, and delete recipes',
+        'Ingredient lists with measurements',
+        'Step-by-step cooking instructions',
+        'Recipe images and optional video links',
+        'Search, filter, and category-based discovery',
+        'Admin moderation and content control',
+        'Fully responsive user interface'
+    ],
+    'screenshots': [
+        'recipe0.jpg', 'recipe1.jpg', 'recipe2.jpg', 'recipe3.jpg', 'recipe4.jpg', 'recipe5.jpg', 'recipe6.jpg',
+        'recipe7.jpg', 'recipe8.jpg', 'recipe9.jpg' 'recipe10.jpg', 'recipe11.jpg', 'recipe12.jpg', 'recipe13.jpg',
+        'recipe14.jpg', 'recipe15.jpg', 'recipe16.jpg', 'recipe17.jpg', 'recipe18.jpg', 'recipe19.jpg'
+    ],
+    'live_demo_link': 'https://recipes-one-alpha.vercel.app/',
     'github_link': 'https://github.com/UASE-TECH-STUDIO',
+    'problem_solution': {
+        'problem': 'Many recipe platforms are cluttered, difficult to manage, or lack structured content organization.',
+        'solution': 'This application provides a clean, structured, and scalable recipe management system with intuitive navigation and powerful content organization.'
+    },
     'downloads': [],
 },
+
 'blood-donor-management-system': {
     'title': 'Blood Donor Management System',
-    'tagline': 'Connecting blood donors, recipients, and hospitals efficiently.',
+    'tagline': 'Connecting blood donors, recipients, and healthcare institutions efficiently.',
     'client_type': 'Healthcare / NGOs / Blood Banks',
     'category': 'web-apps',
     'thumbnail': 'projects/blood_donor_thumbnail.jpg',
     'overview': (
-        'A web-based blood donor management system that enables donors to register, beneficiaries to request blood, '
-        'and administrators to manage approvals, requests, and donor data dynamically.'
+        'The Blood Donor Management System is a life-impacting web application designed to bridge the gap '
+        'between blood donors, beneficiaries, and healthcare institutions. Donors can register their '
+        'blood groups and availability, while beneficiaries can submit blood requests during emergencies.\n\n'
+        'Administrators have full control over donor verification, request approvals, and request tracking. '
+        'The system improves response time during critical situations and ensures transparency in blood '
+        'donation processes.'
     ),
     'technologies': [
         'Next.js', 'React.js', 'TypeScript', 'Tailwind CSS',
         'Node.js', 'MongoDB', 'Mongoose'
     ],
-    'features': [
-        'Donor and beneficiary registration',
-        'Blood request and approval workflow',
-        'Admin dashboard with full visibility',
-        'Request status tracking',
-        'Secure role-based access',
+    'expertise': [
+        'Designing multi-role systems (donor, beneficiary, admin).',
+        'Implementing request approval workflows.',
+        'Secure handling of sensitive health-related data.',
+        'Building scalable dashboards for real-time monitoring.'
     ],
-    'live_demo_link': None,
+    'features': [
+        'Donor registration and profile management',
+        'Blood request submission and tracking',
+        'Admin approval and rejection workflows',
+        'Request status updates',
+        'Role-based access control',
+        'Responsive dashboard interfaces'
+    ],
+    'screenshots': [
+        'blood0.jpg', 'blood1.jpg', 'blood2.jpg', 'blood3.jpg', 'blood4.jpg', 'blood5.jpg', 'blood6.jpg',
+        'blood7.jpg', 'blood8.jpg', 'blood9.jpg', 'blood10.jpg', 'blood11.jpg','blood12.jpg', 'blood13.jpg',
+        'blood14.jpg', 'blood15.jpg', 'blood16.jpg', 'blood17.jpg', 'blood18.jpg', 'blood19.jpg', 'blood20.jpg',
+        'blood21.jpg', 'blood22.jpg',
+    ],
+    'live_demo_link': 'https://blood-donor-app-pied.vercel.app/',
     'github_link': 'https://github.com/UASE-TECH-STUDIO',
+    'problem_solution': {
+        'problem': 'Blood shortages and delayed donor discovery during emergencies.',
+        'solution': 'The system enables fast donor identification and streamlined blood request handling.'
+    },
     'downloads': [],
 },
+
 
     'food-ordering-app': {
         'title': 'Deliciously Simple: The Food Ordering Application (Web + Android APK)',
@@ -449,10 +496,10 @@ projects_data = {
             'User profile management and order history.'
         ],
         'screenshots': [
-            'unilag-food-app1.jpeg', 'unilag-food-app2.jpeg', 'unilag-food-app3.jpeg',
-            'unilag-food-app4.jpeg', 'unilag-food-app5.jpeg', 'unilag-food-app6.jpeg',
-            'unilag-food-app7.jpeg', 'unilag-food-app8.jpeg', 'unilag-food-app9.jpeg',
-            'unilag-food-app10.jpeg', 'unilag-food-app11.jpeg', 'unilag-food-app12.jpeg',
+            'food_ordering_app_screenshot_1.jpg', 'food_ordering_app_screenshot_2.jpg', 'food_ordering_app_screenshot_3.jpg',
+            'food_ordering_app_screenshot_4.jpg', 'food_ordering_app_screenshot_5.jpg', 'food_ordering_app_screenshot_6.jpg',
+            'food_ordering_app_screenshot_7.jpg', 'food_ordering_app_screenshot_8.jpg', 
+           
         ],
         'live_demo_link': 'https://unilag-foodapp.vercel.app/',
         'github_link': 'https://github.com/UASE-TECH-STUDIO',
@@ -463,101 +510,247 @@ projects_data = {
         'downloads': [{'name': 'Download Android APK', 'file_url': ''}],
     },
 
-    'campus-food-delivery-app': {
-    'title': 'Campus Food Delivery Application',
-    'tagline': 'Food ordering and delivery tailored for university campuses.',
-    'client_type': 'Universities / Campus Vendors',
+ 'campus-food-delivery-app': {
+    'title': 'UNILAGEats: Campus Food Delivery Application (Web + Android APK)',
+    'tagline': 'A campus-focused food ordering and delivery platform designed exclusively for university communities.',
+    'client_type': 'Universities / Campus Food Vendors / Student Communities',
     'category': 'mobile-apps',
-    'thumbnail': 'projects/campus_food_thumbnail.jpg',
+    'thumbnail': 'projects/campus_food_thumbnail.jpeg',
     'overview': (
-        'A campus-restricted food delivery platform that allows students to order meals from on-campus vendors, '
-        'track deliveries, and access services via web and Android APK.'
+        'UNILAGEats is a comprehensive campus food delivery application specifically designed to serve '
+        'university environments, where traditional city-wide food delivery platforms often fall short. '
+        'The platform provides students with a seamless way to order meals from approved on-campus food '
+        'vendors, cafeterias, and food courts using both a modern web interface and a native Android APK.\n\n'
+        'Students can browse vendor menus, customize their orders, and place requests securely within '
+        'the campus ecosystem. Orders are tracked in real time, allowing users to monitor preparation '
+        'and delivery progress without leaving the application. The platform enforces campus-based '
+        'restrictions, ensuring that only verified students and authorized vendors can access services.\n\n'
+        'For vendors and administrators, UNILAGEats offers a powerful backend system for managing menus, '
+        'orders, availability, and delivery workflows. Administrators can onboard vendors, manage user '
+        'accounts, monitor transactions, and oversee platform activity. The Android APK version ensures '
+        'smooth mobile performance, offline resilience for limited connectivity scenarios, and native '
+        'device integration tailored to student usage patterns.'
     ),
     'technologies': [
         'React.js', 'Next.js', 'TypeScript', 'Tailwind CSS',
-        'Node.js', 'MongoDB', 'Capacitor'
+        'Node.js', 'Express.js', 'MongoDB', 'Capacitor',
+        'Axios', 'Payment Gateway Integration'
+    ],
+    'expertise': [
+        'Designing campus-restricted multi-vendor food delivery architectures.',
+        'Building scalable React and Next.js frontends optimized for student usage and mobile responsiveness.',
+        'Managing application state efficiently using modern React patterns for smooth ordering flows.',
+        'Developing secure RESTful APIs with Node.js and Express for order, vendor, and user management.',
+        'Structuring MongoDB schemas for vendors, menus, campus zones, and delivery tracking.',
+        'Packaging and deploying the web application as a native Android APK using Capacitor.',
+        'Implementing role-based access control for students, vendors, and administrators.',
+        'Optimizing performance for low-bandwidth campus network environments.'
     ],
     'features': [
-        'Student-based authentication',
-        'Campus vendor listings',
-        'Real-time order tracking',
-        'Android APK support',
+        'Student authentication and campus-based user verification',
+        'Multi-vendor campus food listings and categorized menus',
+        'Meal customization and cart-based ordering system',
+        'Real-time order tracking and status updates',
+        'Vendor dashboard for managing menus and incoming orders',
+        'Administrative panel for vendor onboarding and system oversight',
+        'Fully responsive web interface for desktop and mobile browsers',
+        'Native Android APK with equivalent features and smooth performance',
+        'Order history and user profile management'
     ],
+     'screenshots': [
+            'unilag-food-app1.jpeg', 'unilag-food-app2.jpeg', 'unilag-food-app3.jpeg',
+            'unilag-food-app4.jpeg', 'unilag-food-app5.jpeg', 'unilag-food-app6.jpeg',
+            'unilag-food-app7.jpeg', 'unilag-food-app8.jpeg', 'unilag-food-app9.jpeg',
+            'unilag-food-app10.jpeg', 'unilag-food-app11.jpeg', 'unilag-food-app12.jpeg',
+        ],
     'live_demo_link': None,
     'github_link': 'https://github.com/UASE-TECH-STUDIO',
-    'downloads': [],
+    'problem_solution': {
+        'problem': (
+            'University students often struggle to access reliable food delivery services within campus '
+            'environments due to location restrictions, security concerns, and lack of vendor integration. '
+            'Existing city-wide food apps are not optimized for campus operations.'
+        ),
+        'solution': (
+            'UNILAGEats was developed as a campus-first food delivery solution, providing a controlled, '
+            'secure, and optimized platform that connects students directly with on-campus vendors. '
+            'The system improves convenience, reduces order delays, and enhances food service accessibility '
+            'within the university ecosystem.'
+        )
+    },
+    'downloads': [
+        {'name': 'Download Android APK', 'file_url': ''}
+    ],
 },
 
 
-    'film-house-cinema': {
-        'title': 'Film House Cinema Booking System (Full-Stack Web Application)',
-        'tagline': 'A Next.js + Prisma-powered cinema booking platform with secure user authentication, movie management, and real-time booking functionality.',
-        'client_type': 'Entertainment / Cinema Management',
-        'category': 'web-apps',
-        'thumbnail': 'projects/filmhouse_thumbnail.jpg',
-        'overview': (
-            "The 'Film House Cinema Booking System' is a full-stack web application designed to streamline movie ticket bookings and cinema management operations..."
-        ),
-        'technologies': [
-            'Next.js 15', 'React.js', 'TypeScript', 'Prisma ORM', 'PostgreSQL', 'NextAuth v5', 'Tailwind CSS', 'Node.js', 'bcryptjs'
-        ],
-        'features': [
-            'Secure login system via NextAuth.',
-            'Dynamic seat selection and total calculation.',
-            'Admin dashboard for managing movies and messages.',
-        ],
-        'live_demo_link': 'https://film-house-eight.vercel.app/',
-        'github_link': 'https://github.com/Mr-Usty/film-house',
-        'downloads': [],
+
+'film-house-cinema': {
+    'title': 'Film House Cinema Booking System',
+    'tagline': 'A modern cinema booking and management platform.',
+    'client_type': 'Entertainment / Cinema Management',
+    'category': 'web-apps',
+    'thumbnail': 'projects/filmhouse_thumbnail.jpeg',
+    'overview': (
+        'The Film House Cinema Booking System is a full-stack web application designed to modernize '
+        'movie ticket booking and cinema operations. Users can browse available movies, select showtimes, '
+        'choose seats dynamically, and complete secure bookings.\n\n'
+        'Administrators manage movie listings, showtimes, and customer messages via a dedicated dashboard. '
+        'The system ensures smooth customer experience while simplifying cinema management workflows.'
+    ),
+    'technologies': [
+        'Next.js 15', 'React.js', 'TypeScript',
+        'Prisma ORM', 'PostgreSQL', 'NextAuth v5',
+        'Tailwind CSS', 'Node.js', 'bcryptjs'
+    ],
+    'expertise': [
+        'Implementing secure authentication with NextAuth.',
+        'Dynamic seat selection logic and pricing calculation.',
+        'Database modeling using Prisma ORM.',
+        'Admin dashboard design and management.'
+    ],
+    'features': [
+        'User authentication and profile management',
+        'Movie listings and showtime scheduling',
+        'Dynamic seat selection',
+        'Admin movie and message management',
+        'Secure booking workflow'
+    ],
+    'screenshots': [
+        'film-house3.jpg', 'film-house4.jpg', 'film-house5.jpg', 'film-house6.jpg', 'film-house7.jpg',
+        'film-house8.jpg', 'film-house9.jpg', 'film-house10.jpg', 'film-house11.jpg', 'film-house12.jpg',
+        'film-house13.jpg'
+    ],
+    'live_demo_link': 'https://film-house-eight.vercel.app/',
+    'github_link': 'https://github.com/Mr-Usty/film-house',
+    'problem_solution': {
+        'problem': 'Manual or outdated cinema booking systems reduce customer satisfaction.',
+        'solution': 'The platform provides a streamlined digital booking experience with real-time seat selection.'
     },
+    'downloads': [],
+},
+
 'student-clearance-system': {
     'title': 'Student Clearance Management System',
-    'tagline': 'Digitizing academic and administrative clearance processes.',
+    'tagline': 'Automating academic and administrative clearance workflows.',
     'client_type': 'Universities / Polytechnics',
     'category': 'web-apps',
     'thumbnail': 'projects/clearance_thumbnail.jpg',
     'overview': (
-        'A centralized clearance management system that automates student clearance workflows across departments, '
-        'reducing paperwork, delays, and administrative bottlenecks.'
+        'The Student Clearance Management System digitizes the traditional paper-based clearance process '
+        'used in higher institutions. Students submit clearance requests online, while departments '
+        'review, approve, or reject requests digitally.\n\n'
+        'Administrators gain full oversight of clearance progress, reducing delays, errors, and manual tracking.'
     ),
     'technologies': [
         'Next.js', 'React.js', 'TypeScript',
         'Node.js', 'MongoDB'
     ],
-    'features': [
-        'Student clearance request submission',
-        'Departmental approval workflow',
-        'Admin oversight dashboard',
-        'Status tracking and notifications',
+    'expertise': [
+        'Designing multi-department approval workflows.',
+        'Building role-based dashboards.',
+        'Optimizing institutional process automation.'
     ],
-    'live_demo_link': None,
+    'features': [
+        'Online clearance request submission',
+        'Departmental approval stages',
+        'Admin oversight and reporting',
+        'Status tracking and notifications'
+    ],
+    'screenshots': [
+        'clearance0.jpg', 'clearance1.jpg', 'clearance2.jpg', 'clearance3.jpg', 'clearance4.jpg', 'clearance5.jpg', 
+        'clearance6.jpg', 'clearance7.jpg', 'clearance8.jpg',
+    ],
+    'live_demo_link': 'https://clearance-system-three.vercel.app/',
     'github_link': 'https://github.com/UASE-TECH-STUDIO',
+    'problem_solution': {
+        'problem': 'Manual clearance processes cause delays and loss of records.',
+        'solution': 'The system ensures transparency, speed, and accuracy through automation.'
+    },
     'downloads': [],
 },
+
 'medical-resource-procurement-system': {
     'title': 'Medical Resource Procurement System',
-    'tagline': 'Efficient sourcing and tracking of medical supplies.',
+    'tagline': 'Streamlining medical supply sourcing and approval.',
     'client_type': 'Hospitals / Health Institutions',
     'category': 'web-apps',
     'thumbnail': 'projects/medical_procurement_thumbnail.jpg',
     'overview': (
-        'A digital procurement system designed to manage medical supplies, vendor requests, approvals, '
-        'and inventory tracking for healthcare institutions.'
+        'The Medical Resource Procurement System is designed to manage the sourcing, approval, and tracking '
+        'of medical supplies within healthcare institutions. Departments submit procurement requests, '
+        'which are reviewed and approved by authorized personnel.\n\n'
+        'The platform improves accountability, inventory visibility, and operational efficiency.'
     ),
     'technologies': [
         'Next.js', 'React.js', 'TypeScript',
         'Node.js', 'MongoDB'
     ],
+    'expertise': [
+        'Designing approval-based procurement workflows.',
+        'Inventory tracking and reporting logic.',
+        'Secure handling of institutional data.'
+    ],
     'features': [
-        'Medical supply request handling',
-        'Vendor and inventory tracking',
+        'Medical supply request management',
         'Approval workflows',
-        'Procurement reporting',
+        'Vendor and inventory tracking',
+        'Procurement reports'
+    ],
+    'screenshots': [
+        'medical0.jpg', 'medical1.jpg', 'medical2.jpg', 'medical3.jpg', 'medical4.jpg', 'medical5.jpg',
     ],
     'live_demo_link': None,
     'github_link': 'https://github.com/UASE-TECH-STUDIO',
+    'problem_solution': {
+        'problem': 'Unstructured procurement processes cause delays and inefficiencies.',
+        'solution': 'This system centralizes and automates medical resource procurement.'
+    },
     'downloads': [],
 },
+'court-order-management-system': {
+    'title': 'Court Order Management System',
+    'tagline': 'Secure digital management of court orders and compliance tracking.',
+    'client_type': 'Judiciary / Legal Institutions',
+    'category': 'web-apps',
+    'thumbnail': 'projects/court_order_thumbnail.jpeg',
+    'overview': (
+        'The Court Order Management System is a Django-powered web application developed to digitize '
+        'the creation, issuance, and tracking of court orders. Judicial officers can issue court orders '
+        'electronically, assign them to enforcement bodies, and monitor compliance status.\n\n'
+        'The system ensures document integrity, auditability, and secure access to sensitive legal records, '
+        'eliminating the risks associated with paper-based court documentation.'
+    ),
+    'technologies': [
+        'Python', 'Django', 'Django ORM',
+        'PostgreSQL', 'HTML5', 'CSS3',
+        'JavaScript', 'Bootstrap'
+    ],
+    'expertise': [
+        'Designing secure legal document management systems.',
+        'Implementing Django-based role permissions.',
+        'Audit logging and compliance tracking.',
+        'Form handling and document storage.'
+    ],
+    'features': [
+        'Digital creation and issuance of court orders',
+        'Role-based access (Judges, Registrars, Enforcement)',
+        'Order status tracking and compliance monitoring',
+        'Secure document storage',
+        'Administrative oversight dashboard'
+    ],
+    'screenshots': [
+        'court0.jpg', 'court1.jpg', 'court2.jpg', 'court3.jpg',
+    ],
+    'live_demo_link': None,
+    'github_link': 'https://github.com/UASE-TECH-STUDIO',
+    'problem_solution': {
+        'problem': 'Paper-based court order management is prone to loss, delays, and manipulation.',
+        'solution': 'The system digitizes court orders with secure access and full audit trails.'
+    },
+    'downloads': [],
+},
+
 
     'crime-tracking-system': { 
         'title': 'Crime Tracking System Web App',
