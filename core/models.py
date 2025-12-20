@@ -33,9 +33,17 @@ class ContactMessage(models.Model):
     message = models.TextField()
     submitted_at = models.DateTimeField(auto_now_add=True)
     is_read = models.BooleanField(default=False) # To track if admin has read it
+    ip_address = models.GenericIPAddressField(null=True, blank=True)
+    country = models.CharField(max_length=100, null=True, blank=True)
+
+    submitted_at = models.DateTimeField(auto_now_add=True)
+    is_read = models.BooleanField(default=False)
 
     def __str__(self):
         return f"Message from {self.name} - Subject: {self.subject or 'No Subject'}"
+  
+
+
 
 # Blog Post Model
 class Post(models.Model):
