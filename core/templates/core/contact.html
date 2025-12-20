@@ -30,9 +30,39 @@
             </div>
 
             <div class="mb-3">
-                <h5 class="fw-bold text-dark"><i class="bi bi-whatsapp me-2"></i>WhatsApp / Phone:</h5>
-                <p class="text-secondary">+1 213-557-9828</p>
-            </div>
+    <h5 class="fw-bold text-dark">
+        <i class="bi bi-telephone-fill me-2"></i>Call / WhatsApp
+    </h5>
+
+    <div class="d-flex flex-column gap-2">
+
+        <!-- Nigeria -->
+        <div>
+            <span class="fs-4 me-2">🇳🇬</span>
+            <a href="tel:+2349133549399" class="text-secondary fw-semibold me-3">
+                Call
+            </a>
+            <a href="https://wa.me/2349133549399" target="_blank"
+               class="text-success fw-semibold">
+                WhatsApp
+            </a>
+        </div>
+
+        <!-- USA -->
+        <div>
+            <span class="fs-4 me-2">🇺🇸</span>
+            <a href="tel:+12135579828" class="text-secondary fw-semibold me-3">
+                Call
+            </a>
+            <a href="https://wa.me/12135579828" target="_blank"
+               class="text-success fw-semibold">
+                WhatsApp
+            </a>
+        </div>
+
+    </div>
+</div>
+
 
             <div class="mb-4">
                 <h5 class="fw-bold text-dark"><i class="bi bi-share-fill me-2"></i>Connect on Social Media:</h5>
@@ -77,7 +107,11 @@
                     <div class="g-recaptcha" data-sitekey="6LebklMrAAAAAJkzWLHS1WrCUY8DACIAlFxkFsz3"></div>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Send Message</button>
+                <button type="submit" class="btn btn-primary" id="submitBtn">
+    <span id="btnText">Send Message</span>
+    <span id="btnSpinner" class="spinner-border spinner-border-sm ms-2 d-none"></span>
+    </button>
+
             </form>
 
             <div id="formResponse" class="mt-3"></div>
@@ -93,9 +127,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("contactForm");
     const responseDiv = document.getElementById("formResponse");
 
+    const submitBtn = document.getElementById("submitBtn");
+    const btnText = document.getElementById("btnText");
+    const btnSpinner = document.getElementById("btnSpinner");
+
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
-        responseDiv.innerHTML = ''; // Clear previous messages
+        responseDiv.innerHTML = '';
+
+        // Button loading state
+        submitBtn.disabled = true;
+        btnSpinner.classList.remove("d-none");
+        btnText.textContent = "Sending...";
+
         const formData = new FormData(form);
 
         try {
@@ -110,23 +154,39 @@ document.addEventListener("DOMContentLoaded", () => {
             const data = await res.json();
 
             if (data.success) {
-                responseDiv.innerHTML = `<div class="alert alert-success">✅ ${data.message}</div>`;
+                responseDiv.innerHTML = `<div class="alert alert-success">${data.message}</div>`;
                 form.reset();
                 if (typeof grecaptcha !== "undefined") grecaptcha.reset();
+
+                // Google Analytics Event
+                if (window.gtag) {
+                    gtag('event', 'contact_form_submit', {
+                        event_category: 'engagement',
+                        event_label: 'Contact Page'
+                    });
+                }
+
             } else {
-                let errorText = data.message;
+                let errorText = data.message || "Submission failed.";
                 if (data.errors) {
                     for (let field in data.errors) {
                         errorText += `<br>${field}: ${data.errors[field].join(', ')}`;
                     }
                 }
-                responseDiv.innerHTML = `<div class="alert alert-danger">❌ ${errorText}</div>`;
+                responseDiv.innerHTML = `<div class="alert alert-danger">${errorText}</div>`;
             }
+
         } catch (error) {
-            console.error('Form submission error:', error);
+            console.error(error);
             responseDiv.innerHTML = `<div class="alert alert-danger">❌ Something went wrong. Please try again later.</div>`;
+        } finally {
+            // Restore button
+            submitBtn.disabled = false;
+            btnSpinner.classList.add("d-none");
+            btnText.textContent = "Send Message";
         }
     });
 });
 </script>
+
 {% endblock %}

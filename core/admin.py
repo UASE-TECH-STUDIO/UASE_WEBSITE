@@ -14,12 +14,21 @@ class TestimonialAdmin(admin.ModelAdmin):
 class UploadedFileAdmin(admin.ModelAdmin):
     list_display = ('name', 'file', 'uploaded_at')
     search_fields = ('name',)
-
+    
 @admin.register(ContactMessage)
 class ContactMessageAdmin(admin.ModelAdmin):
-    list_display = ('name', 'email', 'subject', 'submitted_at', 'is_read', 'user') # Added 'user' to display
-    list_filter = ('is_read', 'submitted_at')
-    search_fields = ('name', 'email', 'subject', 'message')
+    list_display = (
+        'name',
+        'email',
+        'subject',
+        'country',
+        'ip_address',
+        'submitted_at',
+        'is_read',
+        'user'
+    )
+    list_filter = ('country', 'is_read', 'submitted_at')
+    search_fields = ('name', 'email', 'subject', 'message', 'ip_address')
     list_editable = ('is_read',)
 
 @admin.register(Post)
