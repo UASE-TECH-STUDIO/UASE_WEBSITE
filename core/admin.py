@@ -14,7 +14,19 @@ class TestimonialAdmin(admin.ModelAdmin):
 class UploadedFileAdmin(admin.ModelAdmin):
     list_display = ('name', 'file', 'uploaded_at')
     search_fields = ('name',)
+
     
+    
+from django.contrib import admin
+from django.utils.timezone import now
+from .models import ContactMessage
+from .services.email_service import send_admin_reply
+
+
+
+  
+
+
 @admin.register(ContactMessage)
 class ContactMessageAdmin(admin.ModelAdmin):
     list_display = (
@@ -27,6 +39,28 @@ class ContactMessageAdmin(admin.ModelAdmin):
         'is_read',
         'user'
     )
+      readonly_fields = ("created_at", "ip_address", "country")
+
+    fieldsets = (
+        ("User Message", {
+            "fields": ("name", "email", "message")
+        }),
+        ("Admin Reply", {
+            "fields": ("admin_reply",)
+        }),
+        ("Meta", {
+            "fields": ("ip_address", "country", "created_at")
+        }),
+    )
+
+    actions = ["send_reply"]
+
+    def send_reply(self, request, queryset):
+        for msg in queryset:
+            if msg.admin_reply:
+                send_admin_reply(msg.email, msg.name, msg.admin_reply)
+                msg.replied_at = now()
+                msg.save()
     list_filter = ('country', 'is_read', 'submitted_at')
     search_fields = ('name', 'email', 'subject', 'message', 'ip_address')
     list_editable = ('is_read',)

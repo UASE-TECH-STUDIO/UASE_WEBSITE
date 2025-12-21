@@ -22,6 +22,9 @@ class UploadedFile(models.Model):
     def __str__(self):
         return self.name
 
+  
+
+
 # Model for contact messages submitted through the form
 class ContactMessage(models.Model):
     # Link to a User if they are logged in when submitting the form
@@ -35,12 +38,17 @@ class ContactMessage(models.Model):
     is_read = models.BooleanField(default=False) # To track if admin has read it
     ip_address = models.GenericIPAddressField(null=True, blank=True)
     country = models.CharField(max_length=100, null=True, blank=True)
+    admin_reply = models.TextField(blank=True)
+    replied_at = models.DateTimeField(null=True, blank=True)
+
+    email_sent = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     submitted_at = models.DateTimeField(auto_now_add=True)
     is_read = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"Message from {self.name} - Subject: {self.subject or 'No Subject'}"
+        return f"Message from {self.name} - {self.email} - Subject: {self.subject or 'No Subject'}"
   
 
 

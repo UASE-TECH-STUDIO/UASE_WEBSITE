@@ -1309,120 +1309,94 @@ def upload_file(request):
 
 @csrf_exempt
 def contact(request):
-    if request.method == 'POST':
-        form = ContactForm(request.POST)
-        recaptcha_token = request.POST.get('g-recaptcha-response')
+    if request.method != "POST":
+        return render(request, "core/contact.html", {"form": ContactForm()})
 
-        # --- Verify reCAPTCHA ---
-        recaptcha_data = {
-            'secret': settings.RECAPTCHA_SECRET_KEY,
-            'response': recaptcha_token,
-            'remoteip': request.META.get('REMOTE_ADDR')
-        }
+    form = ContactForm(request.POST)
+    recaptcha_token = request.POST.get("g-recaptcha-response")
 
-        try:
-            r = requests.post(
-                'https://www.google.com/recaptcha/api/siteverify',
-                data=recaptcha_data,
-                timeout=5
-            )
-            result = r.json()
-        except Exception:
-            return JsonResponse({
-                'success': False,
-                'message': '❌ reCAPTCHA verification failed. Please try again.'
-            })
-
-        if not result.get('success'):
-            return JsonResponse({
-                'success': False,
-                'message': '❌ reCAPTCHA failed. Please confirm you are not a robot.'
-            })
-
-        # --- Validate form ---
-        if not form.is_valid():
-            return JsonResponse({
-                'success': False,
-                'message': '❌ Please fill out all fields correctly.',
-                'errors': form.errors
-            })
-
-        # --- Extract data ---
-        name = form.cleaned_data['name']
-        email = form.cleaned_data['email']
-        subject = form.cleaned_data.get('subject', 'No Subject')
-        message = form.cleaned_data.get('message')
-
-        user_instance = request.user if request.user.is_authenticated else None
-
-        # Get IP + Country
-        ip_address = get_client_ip(request)
-        country = "Unknown"
-
-        try:
-            geo = requests.get(f"https://ipapi.co/{ip_address}/json/", timeout=4).json()
-            country = geo.get("country_name", "Unknown")
-        except Exception:
-            pass
-
-        # Save message
-        ContactMessage.objects.create(
-            name=name,
-            email=email,
-            subject=subject,
-            message=message,
-            user=user_instance,
-            ip_address=ip_address,
-            country=country
+    # --- Verify reCAPTCHA ---
+    try:
+        r = requests.post(
+            "https://www.google.com/recaptcha/api/siteverify",
+            data={
+                "secret": settings.RECAPTCHA_SECRET_KEY,
+                "response": recaptcha_token,
+                "remoteip": request.META.get("REMOTE_ADDR"),
+            },
+            timeout=5,
         )
-
-        # --- Email content ---
-        admin_message = (
-            f"Name: {name}\n"
-            f"Email: {email}\n"
-            f"Subject: {subject}\n\n"
-            f"Message:\n{message}"
-        )
-
-        # --- Send admin email ---
-        try:
-            send_mail(
-                subject=f"[UASE CONTACT] {subject}",
-                message=admin_message,
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                recipient_list=[settings.CONTACT_RECIPIENT_EMAIL],
-                fail_silently=False
-            )
-        except Exception:
-            return JsonResponse({
-                'success': False,
-                'message': '❌ Message saved but email delivery failed. Please contact us directly.'
-            })
-
-        # --- Send user confirmation (non-blocking) ---
-        try:
-            send_mail(
-                subject='We received your message | UASE TECH-STUDIO',
-                message=(
-                    f"Hi {name},\n\n"
-                    "Thank you for contacting UASE TECH-STUDIO.\n"
-                    "We have received your message and will respond shortly.\n\n"
-                    "Best regards,\nUASE TECH-STUDIO"
-                ),
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                recipient_list=[email],
-                fail_silently=True
-            )
-        except Exception:
-            pass  # Do not block success response
-
+        result = r.json()
+    except Exception:
         return JsonResponse({
-            'success': True,
-            'message': '✅ Message sent successfully! We will get back to you shortly.'
+            "success": False,
+            "message": "❌ reCAPTCHA verification failed."
         })
 
-    # GET request
-    return render(request, 'core/contact.html', {'form': ContactForm()})
+    if not result.get("success"):
+        return JsonResponse({
+            "success": False,
+            "message": "❌ reCAPTCHA failed. Please try again."
+        })
+
+    if not form.is_valid():
+        return JsonResponse({
+            "success": False,
+            "message": "❌ Invalid form submission.",
+            "errors": form.errors
+        })
+
+    # --- Extract Data ---
+    name = form.cleaned_data["name"]
+    email = form.cleaned_data["email"]
+    subject = form.cleaned_data.get("subject", "No Subject")
+    message = form.cleaned_data["message"]
+
+    user = request.user if request.user.is_authenticated else None
+    ip_address = get_client_ip(request)
+    country = "Unknown"
+
+    try:
+        geo = requests.get(f"https://ipapi.co/{ip_address}/json/", timeout=4).json()
+        country = geo.get("country_name", "Unknown")
+    except Exception:
+        pass
+
+    # --- Save Message ---
+    ContactMessage.objects.create(
+        name=name,
+        email=email,
+        subject=subject,
+        message=message,
+        user=user,
+        ip_address=ip_address,
+        country=country,
+    )
+
+    # --- Send Emails (Resend) ---
+    try:
+        send_admin_notification({
+            "name": name,
+            "email": email,
+            "subject": subject,
+            "message": message,
+            "ip_address": ip_address,
+            "country": country,
+        })
+
+        send_user_confirmation(name, email)
+
+    except Exception as e:
+        return JsonResponse({
+            "success": False,
+            "message": "❌ Message saved but email delivery failed."
+        })
+
+    return JsonResponse({
+        "success": True,
+        "message": "✅ Message sent successfully! We will contact you shortly."
+    })
+
 
 
 
