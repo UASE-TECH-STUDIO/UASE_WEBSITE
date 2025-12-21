@@ -1402,6 +1402,12 @@ def contact(request):
 
 
 def resume(request):
+    """
+    Renders the professional CV/Resume page.
+    As you scale, you can pull 'Featured Projects' or 'Tech Mastery' 
+    from your database models here.
+    """
+    # Point this to where your new HTML file is located
     return render(request, 'core/resume.html')
 
 
