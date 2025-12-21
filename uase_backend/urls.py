@@ -4,12 +4,14 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.generic.base import RedirectView
 
 # Import custom error handling views
 from core import views as core_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('favicon.ico', RedirectView.as_view(url='/static/core/images/uase_logo_white.png')),
     path('', include('core.urls')),  
     path('nigeria/', include('uase_nigeria.urls')),  
 ]
@@ -22,3 +24,5 @@ if settings.DEBUG:
 # Custom error handlers
 handler404 = core_views.custom_404
 handler500 = core_views.custom_500
+
+
