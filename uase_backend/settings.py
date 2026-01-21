@@ -145,7 +145,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 RESEND_API_KEY = os.environ.get("RESEND_API_KEY")
 
 # Email identities
-DEFAULT_FROM_EMAIL = "UASE Tech Studio <support@uase.tech>"
+DEFAULT_FROM_EMAIL = "UASE Tech Studio <uasetechstudio.com>"
 CONTACT_RECIPIENT_EMAIL = os.environ.get("CONTACT_RECIPIENT_EMAIL")
 
 # reCAPTCHA

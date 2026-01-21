@@ -4,129 +4,163 @@
 {% block title %}Contact Us | UASE Tech Studio - Let's Connect{% endblock %}
 
 {% block content %}
-<section class="hero-section position-relative overflow-hidden text-white py-5">
+<style>
+    /* 1. HERO SECTION */
+    .hero-section {
+        background: url("{% static 'core/images/contact_hero.jpg' %}") no-repeat center center;
+        background-size: cover;
+        min-height: 40vh;
+        display: flex;
+        align-items: center;
+        margin-top: -3rem;
+        border-radius: 0 0 50px 50px;
+    }
+    .hero-section .overlay {
+        background: linear-gradient(135deg, rgba(5, 8, 16, 0.85) 0%, rgba(5, 8, 16, 0.6) 100%);
+    }
+
+    /* 2. CONTACT CARD - High Contrast */
+    .contact-card {
+        background: #ffffff;
+        border: 1px solid #dee2e6;
+        border-radius: 30px;
+        padding: 3rem;
+        box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.1);
+    }
+    
+    /* FIXED LINE BELOW */
+    .form-label { color: #212529; font-weight: bold; margin-bottom: 0.5rem; display: block; }
+    
+    .form-control {
+        background: #f8f9fa !important;
+        border: 1px solid #ced4da !important;
+        color: #212529 !important;
+        border-radius: 12px;
+        padding: 0.8rem 1.2rem;
+    }
+    .form-control:focus {
+        border-color: #0d6efd !important;
+        background: #ffffff !important;
+        box-shadow: 0 0 10px rgba(13, 110, 253, 0.15);
+    }
+
+    /* 3. CONTACT TILES */
+    .contact-tile {
+        background: #ffffff;
+        border: 1px solid #dee2e6;
+        border-radius: 20px;
+        padding: 1.5rem;
+        transition: all 0.3s ease;
+        text-decoration: none !important;
+        display: block;
+    }
+    .contact-tile:hover {
+        border-color: #0d6efd;
+        transform: translateX(10px);
+    }
+
+    /* DARK MODE OVERRIDES */
+    body.dark-mode .contact-card, body.dark-mode .contact-tile { 
+        background: rgba(255, 255, 255, 0.05); 
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+    body.dark-mode .form-control {
+        background: rgba(255, 255, 255, 0.05) !important;
+        border-color: rgba(255, 255, 255, 0.1) !important;
+        color: white !important;
+    }
+    body.dark-mode .form-label { color: white; }
+</style>
+
+<section class="hero-section position-relative text-white">
     <div class="overlay position-absolute top-0 start-0 w-100 h-100"></div>
-    <div class="container position-relative z-1 text-center py-5">
-        <h1 class="display-3 fw-bold animate__animated animate__fadeInDown">Get in Touch with UASE TECH-STUDIO</h1>
-        <p class="lead mt-4 animate__animated animate__fadeInUp animate__delay-1s">
-            Have a project in mind, a question about our services, or just want to say hello? We'd love to hear from you!
+    <div class="container position-relative z-1 text-center">
+        <h1 class="display-3 fw-bold animate__animated animate__fadeInDown">Get in <span class="text-primary">Touch</span></h1>
+        <p class="lead mt-3 opacity-75 mx-auto animate__animated animate__fadeInUp" style="max-width: 700px;">
+            Have a project in mind or a question? Our team is ready to help you innovate and grow.
         </p>
     </div>
 </section>
 
 <section class="container my-5 py-5">
-    <div class="row">
-        <!-- Contact Information -->
-        <div class="col-lg-5 mb-4 mb-lg-0">
-            <h2 class="fw-bold text-primary mb-4">Contact Information</h2>
-            <p class="lead text-muted">Reach out to us through your preferred method:</p>
-
-            <div class="mb-3">
-                <h5 class="fw-bold text-dark"><i class="bi bi-envelope-fill me-2"></i>Email Addresses:</h5>
-                <ul class="list-unstyled">
-                    <li><a href="mailto:uasetechstudio@gmail.com" class="text-decoration-none text-secondary">uasetechstudio@gmail.com</a></li>
-                    <li><a href="mailto:ustyventures@gmail.com" class="text-decoration-none text-secondary">ustyventures@gmail.com</a></li>
-                </ul>
+    <div class="row g-5">
+        <div class="col-lg-5">
+            <h2 class="fw-bold mb-4 text-dark">Contact Information</h2>
+            
+            <div class="contact-tile mb-3">
+                <h6 class="text-primary fw-bold mb-2"><i class="bi bi-envelope-fill me-2"></i>Email Us</h6>
+                <a href="mailto:uasetechstudio@gmail.com" class="d-block text-secondary text-decoration-none">uasetechstudio@gmail.com</a>
+                <a href="mailto:ustyventures@gmail.com" class="d-block text-secondary text-decoration-none">ustyventures@gmail.com</a>
             </div>
 
-            <div class="mb-3">
-    <h5 class="fw-bold text-dark">
-        <i class="bi bi-telephone-fill me-2"></i>Call / WhatsApp
-    </h5>
+            <div class="contact-tile mb-3">
+                <h6 class="text-primary fw-bold mb-3"><i class="bi bi-telephone-fill me-2"></i>Call / WhatsApp</h6>
+                <div class="d-flex align-items-center mb-3">
+                    <span class="fs-4 me-3">🇳🇬</span>
+                    <a href="tel:+2349133549399" class="btn btn-sm btn-outline-secondary rounded-pill me-2">Call</a>
+                    <a href="https://wa.me/2349133549399" target="_blank" class="btn btn-sm btn-outline-success rounded-pill">WhatsApp</a>
+                </div>
+                <div class="d-flex align-items-center">
+                    <span class="fs-4 me-3">🇺🇸</span>
+                    <a href="tel:+12135579828" class="btn btn-sm btn-outline-secondary rounded-pill me-2">Call</a>
+                    <a href="https://wa.me/12135579828" target="_blank" class="btn btn-sm btn-outline-success rounded-pill">WhatsApp</a>
+                </div>
+            </div>
 
-    <div class="d-flex flex-column gap-2">
-
-        <!-- Nigeria -->
-        <div>
-            <span class="fs-4 me-2">🇳🇬</span>
-            <a href="tel:+2349133549399" class="text-secondary fw-semibold me-3">
-                Call
-            </a>
-            <a href="https://wa.me/2349133549399" target="_blank"
-               class="text-success fw-semibold">
-                WhatsApp
-            </a>
-        </div>
-
-        <!-- USA -->
-        <div>
-            <span class="fs-4 me-2">🇺🇸</span>
-            <a href="tel:+12135579828" class="text-secondary fw-semibold me-3">
-                Call
-            </a>
-            <a href="https://wa.me/12135579828" target="_blank"
-               class="text-success fw-semibold">
-                WhatsApp
-            </a>
-        </div>
-
-    </div>
-</div>
-
-
-            <div class="mb-4">
-                <h5 class="fw-bold text-dark"><i class="bi bi-share-fill me-2"></i>Connect on Social Media:</h5>
+            <div class="mt-5">
+                <h6 class="fw-bold mb-3 text-dark">Follow Our Journey</h6>
                 <div class="d-flex gap-3">
-                    <a href="https://www.facebook.com/profile.php?id=61583526124519" target="_blank" class="text-primary fs-3"><i class="bi bi-facebook"></i></a>
-                    <a href="https://x.com/uasetechstudio" target="_blank" class="text-info fs-3"><i class="bi bi-twitter"></i></a>
-                    <a href="https://www.linkedin.com/in/muhammedmustapha-abdullahi-bb897a309" target="_blank" class="text-primary fs-3"><i class="bi bi-linkedin"></i></a>
-                    <a href="https://www.instagram.com/uase_tech_studio/" target="_blank" class="text-danger fs-3"><i class="bi bi-instagram"></i></a>
-                    <a href="https://www.youtube.com/@UASE_TECH-STUDIOS" target="_blank" class="text-danger fs-3"><i class="bi bi-youtube"></i></a>
+                    <a href="https://www.facebook.com/profile.php?id=61583526124519" class="social-link text-primary"><i class="bi bi-facebook"></i></a>
+                    <a href="https://x.com/uasetechstudio" class="social-link text-info"><i class="bi bi-twitter-x"></i></a>
+                    <a href="https://www.linkedin.com/in/muhammedmustapha-abdullahi-bb897a309" class="social-link text-primary"><i class="bi bi-linkedin"></i></a>
+                    <a href="https://www.instagram.com/uase_tech_studio/" class="social-link text-danger"><i class="bi bi-instagram"></i></a>
+                    <a href="https://www.youtube.com/@UASE_TECH-STUDIOS" class="social-link text-danger"><i class="bi bi-youtube"></i></a>
                 </div>
             </div>
         </div>
 
-        <!-- Contact Form -->
         <div class="col-lg-7">
-            <h2 class="fw-bold text-primary mb-4">Send Us a Message</h2>
-            <p class="text-muted">Fill out the form below and we'll get back to you as soon as possible.</p>
-
-            <form id="contactForm" method="post" novalidate>
-                {% csrf_token %}
-                <div class="mb-3">
-                    <label for="id_name" class="form-label">Full Name</label>
-                    <input type="text" name="name" id="id_name" class="form-control" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="id_email" class="form-label">Email Address</label>
-                    <input type="email" name="email" id="id_email" class="form-control" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="id_subject" class="form-label">Subject</label>
-                    <input type="text" name="subject" id="id_subject" class="form-control" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="id_message" class="form-label">Your Message</label>
-                    <textarea name="message" id="id_message" rows="5" class="form-control" required></textarea>
-                </div>
-
-                <div class="mb-3">
-                    <div class="g-recaptcha" data-sitekey="6LebklMrAAAAAJkzWLHS1WrCUY8DACIAlFxkFsz3"></div>
-                </div>
-
-                <button type="submit" class="btn btn-primary" id="submitBtn">
-    <span id="btnText">Send Message</span>
-    <span id="btnSpinner" class="spinner-border spinner-border-sm ms-2 d-none"></span>
-    </button>
-
-            </form>
-
-            <div id="formResponse" class="mt-3"></div>
+            <div class="contact-card border-0">
+                <h2 class="fw-bold mb-4 text-dark">Send a Message</h2>
+                <form id="contactForm" method="post" novalidate>
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label" for="id_name">Full Name</label>
+                            <input type="text" name="name" id="id_name" class="form-control" placeholder="MUHAMMED USTY" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label" for="id_email">Email Address</label>
+                            <input type="email" name="email" id="id_email" class="form-control" placeholder="uasetechstudio@gmail.com" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="id_subject">Subject</label>
+                        <input type="text" name="subject" id="id_subject" class="form-control" placeholder="How can we help?" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label" for="id_message">Your Message</label>
+                        <textarea name="message" id="id_message" rows="5" class="form-control" placeholder="Tell us about your project..." required></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <div class="g-recaptcha" data-sitekey="6LebklMrAAAAAJkzWLHS1WrCUY8DACIAlFxkFsz3"></div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg w-100 rounded-pill py-3 fw-bold shadow-sm" id="submitBtn">
+                        <span id="btnText">Send Message</span>
+                        <span id="btnSpinner" class="spinner-border spinner-border-sm ms-2 d-none"></span>
+                    </button>
+                </form>
+                <div id="formResponse" class="mt-3"></div>
+            </div>
         </div>
     </div>
 </section>
 
-<!-- Google reCAPTCHA -->
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-
 <script>
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("contactForm");
     const responseDiv = document.getElementById("formResponse");
-
     const submitBtn = document.getElementById("submitBtn");
     const btnText = document.getElementById("btnText");
     const btnSpinner = document.getElementById("btnSpinner");
@@ -134,53 +168,28 @@ document.addEventListener("DOMContentLoaded", () => {
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
         responseDiv.innerHTML = '';
-
-        // Button loading state
         submitBtn.disabled = true;
         btnSpinner.classList.remove("d-none");
         btnText.textContent = "Sending...";
 
-        const formData = new FormData(form);
-
         try {
             const res = await fetch("{% url 'contact' %}", {
                 method: "POST",
-                headers: {
-                    'X-CSRFToken': form.csrfmiddlewaretoken.value,
-                },
-                body: formData
+                headers: { 'X-CSRFToken': '{{ csrf_token }}' },
+                body: new FormData(form)
             });
 
             const data = await res.json();
-
             if (data.success) {
-                responseDiv.innerHTML = `<div class="alert alert-success">${data.message}</div>`;
+                responseDiv.innerHTML = `<div class="alert alert-success rounded-3 shadow-sm">🚀 ${data.message}</div>`;
                 form.reset();
                 if (typeof grecaptcha !== "undefined") grecaptcha.reset();
-
-                // Google Analytics Event
-                if (window.gtag) {
-                    gtag('event', 'contact_form_submit', {
-                        event_category: 'engagement',
-                        event_label: 'Contact Page'
-                    });
-                }
-
             } else {
-                let errorText = data.message || "Submission failed.";
-                if (data.errors) {
-                    for (let field in data.errors) {
-                        errorText += `<br>${field}: ${data.errors[field].join(', ')}`;
-                    }
-                }
-                responseDiv.innerHTML = `<div class="alert alert-danger">${errorText}</div>`;
+                responseDiv.innerHTML = `<div class="alert alert-danger rounded-3 shadow-sm">❌ ${data.message || 'Error occurred'}</div>`;
             }
-
         } catch (error) {
-            console.error(error);
-            responseDiv.innerHTML = `<div class="alert alert-danger">❌ Something went wrong. Please try again later.</div>`;
+            responseDiv.innerHTML = `<div class="alert alert-danger rounded-3 shadow-sm">❌ Server error. Please try again later.</div>`;
         } finally {
-            // Restore button
             submitBtn.disabled = false;
             btnSpinner.classList.add("d-none");
             btnText.textContent = "Send Message";
@@ -188,5 +197,4 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 </script>
-
 {% endblock %}

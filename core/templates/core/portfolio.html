@@ -4,93 +4,193 @@
 {% block title %}Our Portfolio | UASE Tech Studio - Innovative Projects & Solutions{% endblock %}
 
 {% block content %}
-<section class="hero-section position-relative overflow-hidden text-white py-5">
+<style>
+    /* 1. HERO ENHANCEMENT */
+    .hero-section {
+        background: url("{% static 'core/images/about_journey.jpg' %}") no-repeat center center;
+        background-size: cover;
+        min-height: 50vh;
+        display: flex;
+        align-items: center;
+        margin-top: -3rem;
+        border-radius: 0 0 50px 50px;
+    }
+    .hero-section .overlay {
+        background: linear-gradient(135deg, rgba(5, 8, 16, 0.9) 0%, rgba(5, 8, 16, 0.7) 100%);
+    }
+
+    /* 2. PROJECT CARDS (Glassmorphism) */
+    .project-card {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 25px;
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .project-card:hover {
+        transform: translateY(-15px);
+        box-shadow: 0 20px 40px rgba(0, 210, 255, 0.2);
+        border-color: var(--accent);
+    }
+    .project-card img {
+        height: 220px;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+    .project-card:hover img {
+        transform: scale(1.1);
+    }
+
+    /* 3. FILTER BUTTONS STYLING */
+    .filter-btn {
+        border-radius: 50px;
+        padding: 0.6rem 1.5rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(0, 210, 255, 0.3);
+    }
+    .filter-btn.active {
+        background: var(--accent) !important;
+        border-color: var(--accent) !important;
+        color: white !important;
+        box-shadow: 0 8px 20px rgba(0, 210, 255, 0.3);
+    }
+
+    /* 4. DARK MODE OVERRIDES */
+    body.dark-mode .project-card {
+        background: rgba(255, 255, 255, 0.02);
+        border-color: rgba(255, 255, 255, 0.05);
+    }
+    body.dark-mode .card-body h3 { color: white !important; }
+
+    .badge-tech {
+        background: rgba(0, 210, 255, 0.1);
+        color: #00d2ff;
+        border: 1px solid rgba(0, 210, 255, 0.2);
+    }
+</style>
+
+<section class="hero-section position-relative text-white">
     <div class="overlay position-absolute top-0 start-0 w-100 h-100"></div>
-    <div class="container position-relative z-1 text-center py-5">
-        <h1 class="display-3 fw-bold animate__animated animate__fadeInDown">Our Work Speaks for Us: Digital Gallery of Success</h1>
-        <p class="lead mt-4 animate__animated animate__fadeInUp animate__delay-1s">Welcome to our digital gallery of success. At UASE TECH-STUDIO, every project is a problem solved, a skill showcased, and a story of innovation. Filter by category or browse through everything we’ve built.</p>
+    <div class="container position-relative z-1 text-center">
+        <h1 class="display-3 fw-bold animate__animated animate__fadeInDown">Digital Gallery of <span style="color: var(--accent);">Success</span></h1>
+        <p class="lead mt-3 opacity-75 mx-auto animate__animated animate__fadeInUp animate__delay-1s" style="max-width: 800px;">
+            Every project is a problem solved, a skill showcased, and a story of innovation. Browse through the digital experiences we've crafted.
+        </p>
     </div>
 </section>
 
 <section class="container my-5 py-5">
     <div class="row text-center mb-5">
-        <div class="col-lg-10 offset-lg-1">
-            <h2 class="fw-bold text-primary mb-4">Explore Our Diverse Projects</h2>
-            <p class="lead text-muted">Dive into our innovative solutions, built for a variety of clients and challenges.</p>
+  <div class="container my-5">
+   <div class="container" style="margin-top: -50px; margin-bottom: 80px;">
+    <div class="p-4 p-md-5 rounded-4 shadow-lg position-relative overflow-hidden" 
+         style="background: linear-gradient(90deg, #0d6efd 0%, #00d2ff 100%); border: none;">
+        
+        <div class="position-absolute top-0 start-0 w-100 h-100 opacity-25" 
+             style="background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 20px 20px;"></div>
 
-            {# Filter Buttons Section - Added ID for easier JS selection #}
-            <div id="filter-buttons-container" class="d-flex flex-wrap justify-content-center gap-2 mt-4">
-                <button type="button" class="btn btn-outline-primary active" data-filter="all">All Projects</button>
-                <button type="button" class="btn btn-outline-primary" data-filter="web-apps">🌐 Web Apps</button>
-                <button type="button" class="btn btn-outline-primary" data-filter="mobile-apps">📱 Mobile Apps</button>
-                <button type="button" class="btn btn-outline-primary" data-filter="training">🎓 Training Projects</button>
-                <button type="button" class="btn btn-outline-primary" data-filter="ui-ux">🎨 UI/UX Designs</button>
-                <button type="button" class="btn btn-outline-primary" data-filter="others">🛠️ Others (Data Entry, Analysis, Tools)</button>
+        <div class="row align-items-center position-relative z-1">
+            <div class="col-lg-8 text-white">
+                <span class="badge bg-white text-primary mb-2 fw-bold px-3">NEW GALLERY</span>
+                <h2 class="display-6 fw-bold mb-2">Visual Art & Graphics Portfolio</h2>
+                <p class="lead mb-0 opacity-90">Explore 25+ high-fidelity designs and masterclasses.</p>
+            </div>
+            <div class="col-lg-4 text-center text-lg-end mt-4 mt-lg-0">
+                <a href="{% url 'graphics_portfolio' %}" class="btn btn-light btn-lg rounded-pill px-5 py-3 fw-bold text-primary shadow">
+                    View Gallery <i class="bi bi-palette2 ms-2"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+        <div class="col-12">
+            <div id="filter-buttons-container" class="d-flex flex-wrap justify-content-center gap-3">
+                <button type="button" class="btn filter-btn btn-outline-primary active" data-filter="all">All Projects</button>
+                <button type="button" class="btn filter-btn btn-outline-primary" data-filter="web-apps">🌐 Web Apps</button>
+                <button type="button" class="btn filter-btn btn-outline-primary" data-filter="mobile-apps">📱 Mobile Apps</button>
+                <button type="button" class="btn filter-btn btn-outline-primary" data-filter="training">🎓 Training</button>
+                <button type="button" class="btn filter-btn btn-outline-primary" data-filter="ui-ux">🎨 UI/UX</button>
+                <button type="button" class="btn filter-btn btn-outline-primary" data-filter="others">🛠️ Others</button>
             </div>
         </div>
     </div>
 
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" id="portfolio-grid">
-        {# Projects will be dynamically filtered here by JavaScript, or by Django context if implemented server-side #}
         {% for project_slug, project in projects.items %}
-        <div class="col animate__animated animate__fadeInUp" data-category="{{ project.category }}">
-            <div class="card h-100 shadow-sm project-card">
-                {% if project.thumbnail %}
-                    <img src="{% static 'core/images/'|add:project.thumbnail %}" class="card-img-top" alt="{{ project.title }} Thumbnail">
-                {% else %}
-                    <img src="{% static 'core/images/placeholder_project.jpg' %}" class="card-img-top" alt="Placeholder Image">
-                {% endif %}
+        <div class="col portfolio-item animate__animated" data-category="{{ project.category }}">
+            <div class="card h-100 project-card shadow-sm border-0">
+                <div class="overflow-hidden">
+                    {% if project.thumbnail %}
+                        <img src="{% static 'core/images/'|add:project.thumbnail %}" class="card-img-top" alt="{{ project.title }}">
+                    {% else %}
+                        <img src="{% static 'core/images/placeholder_project.jpg' %}" class="card-img-top" alt="Placeholder">
+                    {% endif %}
+                </div>
+                
                 <div class="card-body d-flex flex-column p-4">
-                    <h3 class="h5 fw-bold mb-2 text-primary">{{ project.title }}</h3>
-                    <p class="text-muted small mb-3">{{ project.tagline }}</p>
-                    <div class="d-flex flex-wrap gap-2 mb-3">
-                        {% for tech in project.technologies|slice:":3" %} {# Display up to 3 technologies #}
-                            <span class="badge bg-secondary">{{ tech }}</span>
+                    <h3 class="h5 fw-bold mb-2">{{ project.title }}</h3>
+                    <p class="text-muted small mb-4">{{ project.tagline|truncatechars:90 }}</p>
+                    
+                    <div class="d-flex flex-wrap gap-2 mb-4">
+                        {% for tech in project.technologies|slice:":3" %}
+                            <span class="badge badge-tech">{{ tech }}</span>
                         {% endfor %}
-                        {% if project.technologies|length > 3 %}
-                            <span class="badge bg-light text-dark">...</span>
-                        {% endif %}
                     </div>
-                    <a href="{% url 'project_detail' project_slug=project_slug %}" class="btn btn-sm btn-outline-primary mt-auto">View Project <i class="bi bi-arrow-right"></i></a>
+                    
+                    <a href="{% url 'project_detail' project_slug=project_slug %}" class="btn btn-primary rounded-pill mt-auto">
+                        View Details <i class="bi bi-arrow-right ms-2"></i>
+                    </a>
                 </div>
             </div>
         </div>
         {% endfor %}
     </div>
 
-    <div class="text-center mt-5">
-        <h4 class="fw-bold mb-3">Ready to Start Your Project?</h4>
-        <a href="{% url 'contact' %}" class="btn btn-primary btn-lg px-5 py-3 animate__animated animate__pulse animate__infinite">Get a Free Consultation</a>
+    <div class="text-center mt-5 pt-5">
+        <div class="call-to-action-bg p-5 text-white shadow-lg">
+            <h2 class="fw-bold mb-3">Ready to Start Your Project?</h2>
+            <p class="mb-4 opacity-75">Let's turn your vision into the next item in our gallery.</p>
+            <a href="{% url 'contact' %}" class="btn btn-light btn-lg px-5 py-3 fw-bold text-primary rounded-pill animate__animated animate__pulse animate__infinite">Get a Free Consultation</a>
+        </div>
     </div>
 </section>
 {% endblock %}
 
 {% block scripts %}
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Correctly select buttons by their container ID
-        const filterButtons = document.querySelectorAll('#filter-buttons-container button');
-        const portfolioItems = document.querySelectorAll('#portfolio-grid .col');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const portfolioItems = document.querySelectorAll('.portfolio-item');
 
         filterButtons.forEach(button => {
             button.addEventListener('click', function() {
-                // Remove active class from all buttons
+                // Update active state
                 filterButtons.forEach(btn => btn.classList.remove('active'));
-                // Add active class to clicked button
                 this.classList.add('active');
 
                 const filter = this.dataset.filter;
 
                 portfolioItems.forEach(item => {
-                    const category = item.dataset.category;
-                    if (filter === 'all' || category === filter) {
-                        item.style.display = 'block'; // Ensure it displays correctly
+                    item.classList.remove('animate__fadeInUp'); // Reset animation
+                    
+                    if (filter === 'all' || item.dataset.category === filter) {
+                        item.style.display = 'block';
+                        setTimeout(() => item.classList.add('animate__fadeInUp'), 10);
                     } else {
                         item.style.display = 'none';
                     }
                 });
             });
+        });
+
+        // Initial entrance animation
+        portfolioItems.forEach((item, index) => {
+            setTimeout(() => {
+                item.classList.add('animate__fadeInUp');
+            }, index * 100);
         });
     });
 </script>

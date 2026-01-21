@@ -1,272 +1,171 @@
 {% extends 'core/layout.html' %}
 {% load static %}
 
-{% block title %}About UASE Tech Studio - Our Story, Vision & Expertise{% endblock %}
+{% block title %}About UASE Tech Studio - Our Story & Technical Expertise{% endblock %}
 
 {% block content %}
-<section class="hero-section position-relative overflow-hidden text-white py-5">
-    
-    <div class="overlay position-absolute top-0 start-0 w-100 h-100"></div> 
-    <div class="container position-relative z-1 text-center py-5">
-        <h1 class="display-3 fw-bold animate__animated animate__fadeInDown">UASE Tech Studio: Crafting Digital Futures with Expertise & Vision</h1>
-        <p class="lead mt-4 animate__animated animate__fadeInUp animate__delay-1s">We go beyond building software, creating innovative solutions that fuel growth, tackle real-world challenges, and empower the next generation of tech talent. Explore our journey, our passion, and what makes us your perfect technology partner.</p>
-    </div>
-</section>
+<style>
+    /* MASTER DESIGN SYSTEM */
+    .about-hero {
+        background: url("{% static 'core/images/about_journey.jpg' %}") no-repeat center center;
+        background-size: cover;
+        min-height: 60vh;
+        display: flex;
+        align-items: center;
+        position: relative;
+        border-radius: 0 0 50px 50px;
+        margin-top: -3rem;
+    }
+    .about-hero .overlay {
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: linear-gradient(to right, rgba(5, 8, 16, 0.95) 30%, rgba(5, 8, 16, 0.5) 100%);
+    }
+    .card-glass {
+        background: var(--glass);
+        backdrop-filter: blur(15px);
+        border: 1px solid var(--border);
+        border-radius: 25px;
+        transition: transform 0.3s ease;
+    }
+    .tech-pill {
+        background: rgba(0, 210, 255, 0.1);
+        border: 1px solid rgba(0, 210, 255, 0.3);
+        color: var(--accent);
+        padding: 5px 12px;
+        border-radius: 8px;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 0.8rem;
+        display: inline-block;
+        margin: 4px;
+    }
+    .justify-text {
+        text-align: justify;
+    }
+    .profile-frame {
+        border: 8px solid var(--glass);
+        border-radius: 30px;
+        box-shadow: var(--shadow);
+        transition: 0.3s;
+    }
+    .work-history-item {
+        border-left: 3px solid var(--accent);
+        padding-left: 20px;
+        margin-bottom: 25px;
+    }
+</style>
 
-<section class="container my-5 py-5">
-    {# UASE Journey Section #}
-    <div class="row featurette align-items-center mb-5">
-        <div class="col-md-7 animate__animated animate__fadeInLeft">
-            <h2 class="featurette-heading fw-bold text-primary">The UASE Journey: <span class="text-muted">Vision, Milestones & Growth.</span></h2>
-            <p class="lead">UASE Tech Studio began with a singular vision: to bridge the gap between complex technological challenges and accessible, impactful solutions. Simultaneously, we aimed to nurture digital talent from the grassroots up.</p>
-            <p>What started as a humble initiative by Usty has rapidly evolved into a multi-dimensional tech brand. Today, we touch lives through professional training programs, cutting-edge web services, and continuous innovation.</p>
-            <p>Our scope has broadened significantly over the years. We've transitioned from offering essential virtual assistance and technical support to developing full-fledged, scalable applications that solve real-world problems. UASE Tech Studio stands as a beacon for digital empowerment and youth transformation through technology. We don't just teach or build; we create immersive experiences, solve tangible problems for businesses, and guide individuals from tech curiosity to unwavering tech confidence.</p>
-            <p>Our growth is marked by an expanding technological stack and a deepening understanding of diverse industry needs. We excel at translating abstract ideas into tangible, high-performing digital products that truly stand out. We are proud of our commitment to excellence and innovation and constantly look forward to future possibilities, striving to be Africa’s leading grassroots technology hub.</p>
+<main class="about-page">
+    <section class="about-hero text-white">
+        <div class="overlay"></div>
+        <div class="container position-relative z-1">
+            <h1 class="display-3 fw-black animate__animated animate__fadeInDown">Architecting <span style="color: var(--accent);">Excellence</span></h1>
+            <p class="lead opacity-75 col-lg-7 animate__animated animate__fadeInUp">From Data Entry Clerk in 2014 to a Full-Stack Software Engineer in 2025. This is the journey of UASE Tech Studio.</p>
         </div>
-        <div class="col-md-5 animate__animated animate__fadeInRight">
-            <img class="img-fluid rounded-3 shadow-lg" src="{% static 'core/images/about_journey.jpeg' %}" alt="UASE Tech Studio Journey">
+    </section>
+
+    <section class="container py-5 my-5">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-7 animate__animated animate__fadeInLeft">
+                <h2 class="display-6 fw-bold text-primary mb-4">The UASE Journey</h2>
+                <div class="justify-text opacity-75 lead-text">
+                    <p>UASE Tech Studio began with a singular vision: to bridge the gap between complex technological challenges and accessible, impactful solutions. Simultaneously, we aimed to nurture digital talent from the grassroots up.</p>
+                    <p>What started as a humble initiative by Usty has rapidly evolved into a multi-dimensional tech brand. Today, we touch lives through professional training programs, cutting-edge web services, and continuous innovation.</p>
+                    <p>Our growth is marked by an expanding technological stack and a deepening understanding of diverse industry needs. We excel at translating abstract ideas into tangible, high-performing digital products that truly stand out in the marketplace.</p>
+                </div>
+            </div>
+            <div class="col-lg-5 animate__animated animate__fadeInRight">
+                <div class="card-glass p-2">
+                    <img src="{% static 'core/images/about_journey.jpeg' %}" alt="UASE Journey" class="img-fluid rounded-4 shadow-lg profile-frame">
+                </div>
+            </div>
         </div>
-    </div>
+    </section>
 
-    <hr class="featurette-divider my-5">
-
-    {# Founder Bio Section #}
-    <div class="row featurette align-items-center flex-row-reverse mb-5">
-        <div class="col-md-7 animate__animated animate__fadeInRight">
-            <h2 class="featurette-heading fw-bold text-success">Meet the Founder: <span class="text-muted">Usty (Muhammedmustapha Abdullahi)</span></h2>
-            <p class="lead">Hi, I’m Usty – <strong>Muhammedmustapha Abdullahi</strong> – founder of UASE Tech Studio. I am a passionate tech enthusiast, dedicated trainer, and relentless problem-solver hailing from Nigeria. My journey into technology is a testament to continuous learning, adaptability, and an unwavering commitment to making a tangible impact.</p>
-            <p>My professional path began in 2014 at Bukar Garba & Company, where I started my career as a Data Entry Clerk, quickly progressing to Secretary, Supervisor, IT Clerk, and eventually Manager. This foundational experience in diverse roles laid the groundwork for my future endeavors.</p>
-            <p>I further expanded my expertise working remotely as a Virtual Assistant, IT Administrator, IT Support, Data Entry, and IT Assistant for various international platforms including Learnavers, Tigervers, and Totems. In the physical realm, I served as IT Administrator, IT Assistant, Designer, and Data Entry at Pesther Brand Limited. My experience also includes working as Technical Assistant, IT Administrator, IT Assistant, and providing general IT and technical services at Edge Meter Company Limited.</p>
-            <p>My journey continued with T4U Engineering Company Limited as an Executive Assistant, and I also held roles as Executive Assistant and IT Assistant with Sunstart Integrated Services Limited and AY Global Integrated Consult Limited, collaborating with Edge Meter Company Limited. I continue to work remotely with them, providing IT support and managing technical documentation.</p>
-            <p>Beyond my core technical pursuits, I also own and manage multi-branch brands under the UASE umbrella, spanning ICT, style, food, and more. This reflects a holistic approach to entrepreneurship and community engagement.</p>
-
-            <h4 class="fw-bold text-secondary mt-4">Education & Academic Pursuit:</h4>
-            <ul class="list-unstyled">
-                <li><i class="bi bi-mortarboard-fill me-2 text-info"></i>National Diploma in Computer Science.</li>
-                <li><i class="bi bi-mortarboard-fill me-2 text-info"></i>BSc in Computer Science (Ahmadu Bello University).</li>
-                <li><i class="bi bi-mortarboard-fill me-2 text-info"></i>Technical Web Development Programs: Extensive remote programs and hands-on practice, including specialized training at Bro-Tech Institute, Ligogold Computers, Heritage Computers, self-training, and continuous self-development, have solidified my expertise across the web development spectrum.</li>
-            </ul>
-
-            <h4 class="fw-bold text-secondary mt-4">Passion & Philosophy:</h4>
-            <p>My passion lies in leveraging technology to simplify complexities and empower individuals and businesses. I firmly believe that well-crafted software is a powerful tool for positive change. This philosophy is embedded in every UASE Tech Studio project, ensuring our solutions are not just functional but also intuitive, secure, scalable, and designed for long-term success. Whether architecting complex backend systems, designing engaging user interfaces, or providing insightful IT consulting, I bring a comprehensive skill set and an unwavering dedication to quality and client satisfaction.</p>
-
-            <h4 class="fw-bold text-secondary mt-4">Connect with Usty:</h4>
-<div class="d-flex flex-wrap gap-3">
-    <a href="https://www.linkedin.com/in/muhammedmustapha-abdullahi-bb897a309/" target="_blank" class="btn btn-primary btn-lg">
-        <i class="bi bi-linkedin me-2"></i>LinkedIn
-    </a>
-    <a href="https://www.youtube.com/@UASE_TECH-STUDIOS" target="_blank" class="btn btn-danger btn-lg">
-        <i class="bi bi-youtube me-2"></i>YouTube
-    </a>
-    <a href="https://wa.me/2349133549399" target="_blank" class="btn btn-success btn-lg position-relative" title="Nigeria WhatsApp">
-    <i class="bi bi-whatsapp"></i>
-    <span class="position-absolute top-0 end-0 translate-middle fs-6">🇳🇬</span>
-</a>
-
-<a href="https://wa.me/12135579829" target="_blank" class="btn btn-success btn-lg position-relative" title="USA WhatsApp">
-    <i class="bi bi-whatsapp"></i>
-    <span class="position-absolute top-0 end-0 translate-middle fs-6">🇺🇸</span>
-</a>
-
-</div>
-
+    <section class="container py-5 my-5 bg-light-soft rounded-5 p-5 shadow-sm">
+        <div class="row align-items-center flex-row-reverse g-5">
+            <div class="col-lg-7 animate__animated animate__fadeInRight">
+                <h2 class="display-6 fw-bold text-success mb-3">Meet the Founder: <span class="text-muted">Usty</span></h2>
+                <p class="text-primary fw-bold mb-3">Muhammedmustapha Abdullahi — Lead Full-Stack Architect</p>
+                <div class="justify-text opacity-75">
+                    <p>My professional path began in 2014 at <strong>Bukar Garba & Company</strong>, advancing from Data Entry Clerk to Manager. This foundation in leadership led me to support international platforms like <strong>Learnavers, Tigervers, and Totems</strong> as a Remote IT Administrator.</p>
+                    <p>My physical experience at <strong>Pesther Brand Ltd</strong> and <strong>Edge Meter Company Ltd</strong> as a Technical Assistant solidified my expertise in ICT systems and documentation management. Today, I leverage my <strong>BSc in Computer Science from Ahmadu Bello University</strong> to build secure, scalable software solutions.</p>
+                </div>
+                <div class="mt-4 d-flex gap-2">
+                    <a href="https://linkedin.com/in/muhammedmustapha-abdullahi-bb897a309/" class="btn btn-outline-primary rounded-pill"><i class="bi bi-linkedin me-2"></i>LinkedIn</a>
+                    <a href="https://wa.me/2349133549399" class="btn btn-outline-success rounded-pill"><i class="bi bi-whatsapp me-2"></i>WhatsApp</a>
+                </div>
+            </div>
+            <div class="col-lg-5 animate__animated animate__fadeInLeft">
+                <div class="card-glass p-2 text-center">
+                    <img src="{% static 'core/images/about_founder_usty.jpeg' %}" alt="Usty" class="img-fluid rounded-4 shadow-lg profile-frame">
+                </div>
+            </div>
         </div>
-        <div class="col-md-5 animate__animated animate__fadeInLeft">
-            <img class="img-fluid rounded-3 shadow-lg" src="{% static 'core/images/about_founder_usty.jpeg' %}" alt="Usty - Founder of UASE Tech Studio">
-        </div>
-    </div>
+    </section>
 
-    <hr class="featurette-divider my-5">
-
-    {# Timeline Section #}
-    <div class="row text-center my-5">
-        <div class="col-12 animate__animated animate__fadeInUp">
-            <h2 class="fw-bold text-warning mb-5">Our Achievements: A Detailed Timeline of Growth</h2>
-            <div class="timeline">
-                <div class="timeline-item left animate__animated animate__fadeInLeft">
-                    <div class="timeline-content card shadow-sm border-0 p-4">
-                        <div class="card-body">
-                            <h4 class="fw-bold text-primary">2014: Career Foundations</h4>
-                            <p>Started my professional journey at Bukar Garba & Company, beginning as a Data Entry Clerk and advancing through roles including Secretary, Supervisor, IT Clerk, and Manager.</p>
-                        </div>
+    <section class="container py-5 my-5">
+        <div class="card-glass p-5 shadow-lg">
+            <h2 class="fw-bold text-center mb-5">Professional Technical Stack</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <h6 class="fw-bold text-primary mb-3 text-uppercase small"><i class="bi bi-server me-2"></i>Backend & Logic</h6>
+                    <div class="d-flex flex-wrap">
+                        <span class="tech-pill">Python</span> <span class="tech-pill">Django</span> <span class="tech-pill">FastAPI</span>
+                        <span class="tech-pill">REST APIs</span> <span class="tech-pill">Node.js</span> <span class="tech-pill">Express</span>
+                        <span class="tech-pill">PHP</span> <span class="tech-pill">Java</span>
                     </div>
                 </div>
-                <div class="timeline-item right animate__animated animate__fadeInRight">
-                    <div class="timeline-content card shadow-sm border-0 p-4">
-                        <div class="card-body">
-                            <h4 class="fw-bold text-primary">2016: Stepping into Instruction & Expanding Roles</h4>
-                            <p>Transitioned into a Computer Instructor role at Heritage Computers, gaining valuable experience in simplifying complex technical concepts. Simultaneously, took on diverse physical roles as IT Administrator, IT Assistant, Designer, and Data Entry at Pesther Brand Limited.</p>
-                        </div>
+                <div class="col-md-4">
+                    <h6 class="fw-bold text-success mb-3 text-uppercase small"><i class="bi bi-phone me-2"></i>Frontend & Mobile</h6>
+                    <div class="d-flex flex-wrap">
+                        <span class="tech-pill">React.js</span> <span class="tech-pill">Next.js</span> <span class="tech-pill">TypeScript</span>
+                        <span class="tech-pill">JavaScript</span> <span class="tech-pill">Dart (Flutter)</span> <span class="tech-pill">Capacitor</span>
+                        <span class="tech-pill">Tailwind CSS</span> <span class="tech-pill">Bootstrap</span>
                     </div>
                 </div>
-                <div class="timeline-item left animate__animated animate__fadeInLeft">
-                    <div class="timeline-content card shadow-sm border-0 p-4">
-                        <div class="card-body">
-                            <h4 class="fw-bold text-primary">2020: Entry into Coding & Remote Digital Services</h4>
-                            <p>Began learning coding from various sources. Concurrently, joined Learnavers, Tigervers, and Totems, transitioning into the dynamic world of remote virtual assistance, IT administration, IT support, and digital freelancing, building a reputation for efficiency and reliability.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="timeline-item right animate__animated animate__fadeInRight">
-                    <div class="timeline-content card shadow-sm border-0 p-4">
-                        <div class="card-body">
-                            <h4 class="fw-bold text-primary">2021: Deepening Practical IT Expertise & Executive Support</h4>
-                            <p>Joined Edge Meter Company Limited as a Technical Assistant, gaining invaluable hands-on experience with real-world electrical and ICT systems, further solidifying practical problem-solving skills. Also served as Executive Assistant at T4U Engineering Company Limited.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="timeline-item left animate__animated animate__fadeInLeft">
-                    <div class="timeline-content card shadow-sm border-0 p-4">
-                        <div class="card-body">
-                            <h4 class="fw-bold text-primary">2022: Formalizing Software Development & Continued Schooling</h4>
-                            <p>Fully entered into software development while pursuing a Bachelor's in Computer Science at Ahmadu Bello University. Actively attended various tech trainings and institutes during, after, and in between school sessions, rapidly progressing towards becoming the software developer I am today.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="timeline-item right animate__animated animate__fadeInRight">
-                    <div class="timeline-content card shadow-sm border-0 p-4">
-                        <div class="card-body">
-                            <h4 class="fw-bold text-primary">2023: Initial Project Development & Expanded Executive Roles</h4>
-                            <p>Began working on foundational software projects, including calculators, counters, timers, countdowns, and static websites. Continued executive and IT assistant roles with Sunstart Integrated Services Limited and AY Global Integrated Consult Limited, collaborating with Edge Meter Company Limited.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="timeline-item left animate__animated animate__fadeInLeft">
-                    <div class="timeline-content card shadow-sm border-0 p-4">
-                        <div class="card-body">
-                            <h4 class="fw-bold text-primary">2024: Real-time Project Launches & Mobile Expansion</h4>
-                            <p>Started working on real-time projects for clients and internal initiatives, including dynamic websites and mobile applications. Successfully converted existing web applications into standalone Android APKs using technologies like Capacitor, extending reach to mobile users.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="timeline-item right animate__animated animate__fadeInRight">
-                    <div class="timeline-content card shadow-sm border-0 p-4">
-                        <div class="card-body">
-                            <h4 class="fw-bold text-primary">2025: Official Platform Launch & Strategic Growth</h4>
-                            <p>Officially launching the UASE website (this platform!) and setting UASE Tech Studio officially live. Focusing on building more real-time, impactful projects and further expanding training initiatives.</p>
-                        </div>
+                <div class="col-md-4">
+                    <h6 class="fw-bold text-warning mb-3 text-uppercase small"><i class="bi bi-gear-wide-connected me-2"></i>Engineering & Data</h6>
+                    <div class="d-flex flex-wrap">
+                        <span class="tech-pill">MongoDB</span> <span class="tech-pill">PostgreSQL</span> <span class="tech-pill">MySQL</span>
+                        <span class="tech-pill">NumPy</span> <span class="tech-pill">CI/CD</span> <span class="tech-pill">TDD</span>
+                        <span class="tech-pill">Git/GitHub</span> <span class="tech-pill">Docker</span>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <hr class="featurette-divider my-5">
-
-    {# Skills Section #}
-    <div class="row my-5">
-        <div class="col-12 animate__animated animate__fadeInUp">
-            <h2 class="fw-bold text-info text-center mb-5">Our Core Skills & Expertise</h2>
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-                <div class="col">
-                    <div class="card h-100 shadow-sm border-primary border-3">
-                        <div class="card-body p-4">
-                            <h3 class="h5 fw-bold text-primary mb-3"><i class="bi bi-file-earmark-code me-2"></i>Programming Languages</h3>
-                            <ul class="list-unstyled">
-                                <li><i class="bi bi-caret-right-fill text-primary me-2"></i><strong>HTML5, CSS3:</strong> Foundation for all web interfaces, including responsive design.</li>
-                                <li><i class="bi bi-caret-right-fill text-primary me-2"></i><strong>JavaScript:</strong> Core of interactive web development (Vanilla & DOM Manipulation).</li>
-                                <li><i class="bi bi-caret-right-fill text-primary me-2"></i><strong>TypeScript:</strong> For building scalable and maintainable JavaScript applications.</li>
-                                <li><i class="bi bi-caret-right-fill text-primary me-2"></i><strong>Python:</strong> Robust backend development (Django, Flask, Django REST Framework).</li>
-                                <li><i class="bi bi-caret-right-fill text-primary me-2"></i><strong>PHP:</strong> Used in the backend of various live projects, demonstrating versatility.</li>
-                                <li><i class="bi bi-caret-right-fill text-primary me-2"></i><strong>SQL & MySQL:</strong> Strong proficiency in relational database management and querying.</li>
-                                <li><i class="bi bi-caret-right-fill text-primary me-2"></i><strong>NoSQL (MongoDB):</strong> Expertise in flexible, scalable NoSQL database solutions.</li>
-                                <li><i class="bi bi-caret-right-fill text-primary me-2"></i><strong>Dart:</strong> Primary language for Flutter cross-platform mobile development.</li>
-                                <li><i class="bi bi-caret-right-fill text-primary me-2"></i><strong>C++, Java:</strong> Good understanding of object-oriented programming principles and foundational computer science concepts through these languages.</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card h-100 shadow-sm border-success border-3">
-                        <div class="card-body p-4">
-                            <h3 class="h5 fw-bold text-success mb-3"><i class="bi bi-gear-fill me-2"></i>Tools & Frameworks</h3>
-                            <ul class="list-unstyled">
-                                <li><i class="bi bi-caret-right-fill text-success me-2"></i><strong>Frontend:</strong> React.js, Next.js (for server-side rendering and static site generation), Bootstrap, Tailwind CSS.</li>
-                                <li><i class="bi bi-caret-right-fill text-success me-2"></i><strong>Backend:</strong> Node.js, Express.js.</li>
-                                <li><i class="bi bi-caret-right-fill text-success me-2"></i><strong>Databases:</strong> PostgreSQL, MySQL, SQLite, MongoDB.</li>
-                                <li><i class="bi bi-caret-right-fill text-success me-2"></i><strong>Mobile Development:</strong> Flutter, Capacitor (for converting PWAs to native Android/iOS apps).</li>
-                                <li><i class="bi bi-caret-right-fill text-success me-2"></i><strong>APIs:</strong> Extensive experience with RESTful APIs, integration with payment gateways like Stripe API, and data fetching with Axios.</li>
-                                <li><i class="bi bi-caret-right-fill text-success me-2"></i><strong>Version Control:</strong> Git, GitHub (for collaborative development and code management).</li>
-                                <li><i class="bi bi-caret-right-fill text-success me-2"></i><strong>Development Environment:</strong> Visual Studio Code, Command Line Interface (CLI).</li>
-                                <li><i class="bi bi-caret-right-fill text-success me-2"></i><strong>Cloud Services (Familiarity):</strong> Firebase (for backend services), Heroku (for deployment).</li>
-                                <li><i class="bi bi-caret-right-fill text-success me-2"></i><strong>Containerization (Basic):</strong> Docker concepts for streamlined development and deployment.</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card h-100 shadow-sm border-warning border-3">
-                        <div class="card-body p-4">
-                            <h3 class="h5 fw-bold text-warning mb-3"><i class="bi bi-award-fill me-2"></i>Certifications & Methodologies</h3>
-                            <ul class="list-unstyled">
-                                <li><i class="bi bi-caret-right-fill text-warning me-2"></i><strong>Web Development (Front-End & Full-Stack):</strong> Comprehensive understanding and practical application across the entire web stack.</li>
-                                <li><i class="bi bi-caret-right-fill text-warning me-2"></i><strong>Mobile App Conversion (PWA to APK):</strong> Specialized skill in making web applications accessible as native mobile apps.</li>
-                                <li><i class="bi bi-caret-right-fill text-warning me-2"></i><strong>Database Design and Management:</strong> Certified knowledge in designing and optimizing database structures.</li>
-                                <li><i class="bi bi-caret-right-fill text-warning me-2"></i><strong>Agile Development & Scrum Principles:</strong> Adherence to agile methodologies for flexible, iterative, and client-focused project delivery.</li>
-                                <li><i class="bi bi-caret-right-fill text-warning me-2"></i><strong>Data Entry & Office Tools:</strong> Foundational efficiency in administrative and data handling tasks.</li>
-                                <li><i class="bi bi-caret-right-fill text-warning me-2"></i><strong>Virtual Assistance & Digital Support:</strong> Expertise in remote support and online lead generation.</li>
-                                <li><i class="bi bi-caret-right-fill text-warning me-2"></i><strong>Basic IT Support & System Administration:</strong> Competence in fundamental IT troubleshooting and system maintenance.</li>
-                                <li><i class="bi bi-caret-right-fill text-warning me-2"></i><strong>UI/UX Design Fundamentals:</strong> Understanding principles for creating intuitive and engaging user experiences.</li>
-                                <li><i class="bi bi-caret-right-fill text-warning me-2"></i><strong>Object-Oriented Programming (OOP) Principles:</strong> Strong grasp of OOP for structured and scalable code.</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+    <section class="container py-5">
+        <h2 class="fw-bold text-center mb-5">Professional Milestones</h2>
+        <div class="row">
+            <div class="col-md-6 work-history-item">
+                <h5 class="fw-bold">Edge Meter Company Ltd</h5>
+                <p class="small text-primary fw-bold">Technical Assistant & IT Administrator</p>
+                <p class="small opacity-75 justify-text">Managed technical documentation, IT support, and collaborated on electrical and ICT system integrations for large-scale metering solutions.</p>
             </div>
-            <div class="col-12 mt-4 text-center">
-                <p class="text-muted fst-italic">Our expertise is continuously growing, ensuring we stay at the forefront of technological innovation.</p>
+            <div class="col-md-6 work-history-item">
+                <h5 class="fw-bold">Learnavers / Tigervers / Totems</h5>
+                <p class="small text-primary fw-bold">Remote IT Support & Virtual Assistant</p>
+                <p class="small opacity-75 justify-text">Delivered global digital support, administrative automation, and lead generation for international remote platforms.</p>
+            </div>
+            <div class="col-md-6 work-history-item">
+                <h5 class="fw-bold">Pesther Brand Limited</h5>
+                <p class="small text-primary fw-bold">IT Administrator & Designer</p>
+                <p class="small opacity-75 justify-text">Oversaw internal digital design workflows, managed complex data entry operations, and maintained local network stability.</p>
+            </div>
+            <div class="col-md-6 work-history-item">
+                <h5 class="fw-bold">Bukar Garba & Co.</h5>
+                <p class="small text-primary fw-bold">Manager (2014 - Present Career Path)</p>
+                <p class="small opacity-75 justify-text">A 10-year growth trajectory starting as a Data Entry Clerk and advancing into full office management and operational oversight.</p>
             </div>
         </div>
-    </div>
+    </section>
 
-    <hr class="featurette-divider my-5">
-
-    {# Why Work With Us Section #}
-    <div class="row justify-content-center text-center my-5">
-        <div class="col-lg-10 animate__animated animate__fadeInUp">
-            <h2 class="fw-bold text-danger mb-4">Why Partner with UASE Tech Studio?</h2>
-            <p class="lead mb-4">Partnering with UASE Tech Studio offers a distinct strategic advantage. We are more than just developers; we are dedicated partners committed to your digital success. We combine deep technical expertise, robust problem-solving experience, and dynamic youthful energy to deliver unparalleled value across technology, training, and development.</p>
-            <div class="row mt-4">
-                <div class="col-md-4 mb-4">
-                    <div class="p-4 border rounded shadow-sm h-100">
-                        <i class="bi bi-lightbulb-fill text-primary display-5 mb-3"></i>
-                        <h4 class="fw-bold">Innovative Solutions</h4>
-                        <p class="text-muted">We delve deep into your unique challenges to deliver forward-thinking, scalable solutions that provide a true competitive edge.</p>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="p-4 border rounded shadow-sm h-100">
-                        <i class="bi bi-shield-check-fill text-success display-5 mb-3"></i>
-                        <h4 class="fw-bold">Unwavering Reliability & Quality</h4>
-                        <p class="text-muted">Expect robust, secure, and high-performing applications, built with meticulous attention to detail and rigorous testing.</p>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="p-4 border rounded shadow-sm h-100">
-                        <i class="bi bi-person-lines-fill text-warning display-5 mb-3"></i>
-                        <h4 class="fw-bold">Client-Centric Approach</h4>
-                        <p class="text-muted">Your vision is our blueprint. We prioritize clear communication and active collaboration to ensure your goals are met and exceeded.</p>
-                    </div>
-                </div>
-                <div class="col-md-6 mb-4">
-                    <div class="p-4 border rounded shadow-sm h-100">
-                        <i class="bi bi-pie-chart-fill text-info display-5 mb-3"></i>
-                        <h4 class="fw-bold">Comprehensive Expertise</h4>
-                        <p class="text-muted">From concept to deployment and beyond, our diverse skill set means you have a single, reliable partner for all your digital needs.</p>
-                    </div>
-                </div>
-                <div class="col-md-6 mb-4">
-                    <div class="p-4 border rounded shadow-sm h-100">
-                        <i class="bi bi-people-fill text-secondary display-5 mb-3"></i>
-                        <h4 class="fw-bold">Empowerment Through Training & Support</h4>
-                        <p class="text-muted">We don't just build; we empower through teaching and dedicated support, offering structured programs to help you understand and manage your digital future.</p>
-                    </div>
-                </div>
-            </div>
-            <p class="mt-5 lead fst-italic">"UASE Tech Studio isn't just a brand — it's a movement for digital growth, empowerment, and innovation, driven by real-world experience, authentic passion, and a vision for a tech-driven Africa."</p>
-            <p class="fw-bold mb-4">- Usty (Muhammedmustapha Abdullahi), Founder, UASE Tech Studio.</p>
-            <a href="{% url 'contact' %}" class="btn btn-primary btn-lg px-5 py-3 animate__animated animate__pulse animate__infinite">Let's Discuss Your Project Today</a>
-        </div>
-    </div>
-</section>
+    <section class="container py-5 mb-5 text-center call-to-action-bg text-white shadow-lg p-5 rounded-5">
+        <h2 class="display-5 fw-bold mb-3">Ready to Build Something Robust?</h2>
+        <p class="lead mb-4 opacity-75">Deploying high-performance solutions with TDD, CI/CD, and expert architecture.</p>
+        <a href="{% url 'contact' %}" class="btn btn-light btn-lg px-5 py-3 fw-bold text-primary rounded-pill">Start Your Project</a>
+    </section>
+</main>
 {% endblock %}

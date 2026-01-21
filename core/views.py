@@ -1,3 +1,4 @@
+import os
 import json
 import requests
 from django.http import HttpResponse, JsonResponse, Http404
@@ -32,329 +33,216 @@ class CommentForm(ModelForm):
 # --- GLOBAL DATA FOR SERVICES AND PROJECTS ---
 # These dictionaries should be defined once at the module level (top of the file)
 # so they are created when Django loads the file and can be accessed by all views.
-
 services_data = {
-    'web-development': {
-        'title': 'Web Development',
-        'description': 'Our web development service focuses on building responsive, visually appealing, and user-friendly websites. We help businesses, startups, and individuals establish a strong digital presence that reflects their brand identity and engages users effectively. Whether you\'re starting from scratch or need a site revamp, we tailor every project to meet your goals.',
-        'image_url': 'core/images/services/web_development.jpg', # Example image path, ensure it exists
-        'tools_stack': [
-            'HTML5', 'CSS3', 'JavaScript', 'React.js', 'Next.js', 'Bootstrap', 'Tailwind CSS',
-            'Python (Django, Flask)', 'Node.js (Express.js)', 'PHP',
-            'MySQL', 'PostgreSQL', 'MongoDB', 'RESTful APIs', 'Git/GitHub', 'VS Code'
-        ],
+    'web-mobile-backend': {
+        'title': 'Full-Stack Web & Mobile Development',
+        'description': 'End-to-end digital solutions. We combine sleek frontend interfaces with robust backend architectures. Whether it is a RESTful API, a database-driven web app, or a native Android APK, we build for performance and security.',
+        'image_url': 'core/images/services/fullstack_dev.jpg',
+        'tools_stack': ['React.js', 'Next.js', 'Python (Django)', 'Node.js', 'PostgreSQL', 'Capacitor', 'AWS'],
         'benefits': [
-            'Fast, responsive websites that perform across all devices.',
-            'SEO-friendly structure for better online visibility.',
-            'Tailored design aligned with your brand identity and goals.',
-            'Scalability – websites ready to grow with your business.',
-            'Dedicated support after delivery for smooth operation.',
-            'Affordable pricing suitable for students & startups.',
+            'Robust Backend: Secure data handling and server-side logic.',
+            'Mobile Ready: Native Android APKs from the same codebase.',
+            'Fast Performance: Optimized for speed and low latency.',
+            'Scalable: Built to handle growing user bases.'
         ],
         'how_we_work': [
-            '<strong>Consultation & Planning:</strong> We start with in-depth consultations to understand your goals, target audience, and specific functionalities needed.',
-            '<strong>Design Phase:</strong> Creating wireframes, mockups, and prototypes to visualize the website structure and user flow.',
-            '<strong>Development:</strong> Bringing the design to life with clean, efficient code for both front-end and optional backend functionalities.',
-            '<strong>Testing & Feedback:</strong> Rigorous testing across various devices and browsers, followed by your feedback for final bug fixing and fine-tuning.',
-            '<strong>Launch:</strong> Handling hosting setup, domain linking, and ensuring a smooth, secure launch of your website.',
-            '<strong>Support:</strong> Providing optional maintenance plans and updates to keep your website performing optimally and securely.',
-        ],
-        'projects_linked': [
-            {'name': 'UASE TECH-STUDIO Website (Your Current Site)', 'link': '/'},
-            {'name': 'Student Age Calculator Web App', 'link': '/portfolio/student-age-calculator-web-app/'},
-            {'name': 'Online Portfolio (React-based)', 'link': '/portfolio/online-portfolio-react/'},
-            {'name': 'Palatables Restaurant Concept Site (UI prototype)', 'link': '/portfolio/palatables-restaurant-concept/'},
+            'Requirement gathering and system architecture design.',
+            'Backend API development and Database schema setup.',
+            'Frontend UI implementation and Mobile APK conversion.',
+            'Deployment to cloud servers and final QA testing.'
         ]
     },
-    'software-development': {
-        'title': 'Software Development',
-        'description': 'We craft custom software applications that optimize your business processes, automate tasks, and solve unique challenges. From robust desktop solutions to complex enterprise systems, our software is built for high performance, security, and scalability, tailored to your exact operational needs.',
-        'image_url': 'core/images/services/software_development.jpg',
-        'tools_stack': [
-            'Python', 'Django', 'Flask', 'Node.js', 'Express.js', 'Java', 'C++',
-            'SQL (MySQL, PostgreSQL)', 'NoSQL (MongoDB)', 'Git/GitHub', 'VS Code', 'CLI',
-            'MS Office Suite (for documentation/reporting)'
-        ],
+    'top-notch-graphics': {
+        'title': 'High-Fidelity Graphics & Media',
+        'description': 'Premium visual branding designed to make your business stand out. We specialize in tech-studio aesthetics—minimalist, modern, and high-impact designs.',
+        'image_url': 'core/images/services/graphics.jpg',
+        'tools_stack': ['Adobe Photoshop', 'Illustrator', 'CorelDRAW', 'Figma', 'Canva Pro'],
         'benefits': [
-            'Automate manual tasks and reduce operational costs.',
-            'Gain a competitive edge with proprietary tools.',
-            'Enhance data security and integrity.',
-            'Future-proof solutions designed for growth.',
-            'Streamlined workflows and improved decision-making.',
+            'Professional Logos: Distinctive and memorable brand marks.',
+            'Marketing Assets: High-conversion flyers and social kits.',
+            'UI Assets: Custom icons and visual components.',
+            'Print Ready: High-resolution files for banners.'
         ],
         'how_we_work': [
-            '<strong>Discovery & Planning:</strong> In-depth analysis of your requirements, scope definition, and technical architecture planning.',
-            '<strong>Design & Prototyping:</strong> Designing system architecture and user interfaces for optimal usability and functionality.',
-            '<strong>Agile Development:</strong> Iterative development sprints with continuous testing and client feedback integration.',
-            '<strong>Quality Assurance:</strong> Comprehensive testing (unit, integration, UAT) to ensure a bug-free and secure application.',
-            '<strong>Deployment & Training:</strong> Smooth deployment process followed by user training and comprehensive documentation.',
-            '<strong>Maintenance & Support:</strong> Ongoing support, performance monitoring, and feature enhancements post-launch.',
-        ],
-        'projects_linked': [
-            {'name': 'Internal Management System (Concept)', 'link': '#'},
-            {'name': 'Custom CRM Tool (Prototype)', 'link': '#'},
+            'Brand discovery and mood-board creation.',
+            'Concept sketching and digital drafting.',
+            'Iterative feedback and color theory refinement.',
+            'Final delivery of source files and export formats.'
         ]
     },
-    'mobile-app-development': {
-        'title': 'Mobile App Development',
-        'description': 'Empower your business with intuitive and high-performing mobile applications for Android. Leveraging Flutter (for cross-platform) and Capacitor (for web-to-native conversions), we build apps that deliver seamless user experience, stunning design, and robust functionality, ensuring your brand reaches users on the go.',
-        'image_url': 'core/images/services/mobile_app_development.jpg',
-        'tools_stack': [
-            'Flutter', 'Dart', 'Capacitor (for web-to-native conversion)', 'Firebase',
-            'RESTful APIs', 'Provider/Bloc for State Management', 'Native Device Features (Camera, GPS)',
-            'Git/GitHub', 'VS Code'
-        ],
+    'seo-content-strategy': {
+        'title': 'SEO & Content Drafting',
+        'description': 'Visibility is currency. We draft SEO-optimized content that ranks on search engines and speaks to your audience.',
+        'image_url': 'core/images/services/seo_content.jpg',
+        'tools_stack': ['Google Analytics', 'SEMrush', 'Grammarly Business', 'WordPress SEO'],
         'benefits': [
-            'Wider audience reach across iOS and Android platforms.',
-            'Enhanced user engagement with modern, fluid interfaces.',
-            'Cost-effective development with cross-platform efficiency.',
-            'Access to device hardware features for rich experiences.',
-            'Direct communication channel with your customers.',
+            'Higher Rankings: Targeted keywords for organic growth.',
+            'Professional Tone: Well-crafted content building authority.',
+            'Technical Writing: Clear guides and descriptions.',
+            'Engagement: Turning visitors into leads.'
         ],
         'how_we_work': [
-            '<strong>Idea Validation & Strategy:</strong> Refining your app concept, identifying key features, and strategizing user acquisition.',
-            '<strong>UI/UX Design:</strong> Crafting wireframes, mockups, and interactive prototypes focused on mobile usability and aesthetics.',
-            '<strong>Development Sprints:</strong> Building core functionalities in agile sprints, allowing for regular reviews and adjustments.',
-            '<strong>Thorough Testing:</strong> Comprehensive testing on various devices and operating system versions to ensure stability and performance.',
-            '<strong>App Store Submission:</strong> Guiding you through the process of submitting your app to Google Play Store and Apple App Store.',
-            '<strong>Post-Launch Optimization:</strong> Providing ongoing updates, bug fixes, and performance monitoring for continued success.',
-        ],
-        'projects_linked': [
-            {'name': 'Food Ordering Application (Web + Android APK)', 'link': '/portfolio/food-ordering-app/'},
+            'Keyword research and competitor gap analysis.',
+            'Content drafting with a focus on SEO best practices.',
+            'On-page optimization and readability checks.',
+            'Publishing and performance tracking via Analytics.'
         ]
     },
-    'data-entry-virtual-assistance': {
-        'title': 'Data Entry & Virtual Assistance',
-        'description': 'Free up your valuable time by outsourcing routine administrative and data management tasks. We provide accurate, secure, and fast data handling, along with comprehensive remote administrative support, ensuring your operations run smoothly and efficiently without the overhead of additional staff.',
-        'image_url': 'core/images/services/data_entry_virtual_assistance.jpg',
-        'tools_stack': [
-            'Microsoft Office Suite (Excel, Word, PowerPoint, Outlook)',
-            'Google Workspace (Sheets, Docs, Gmail)',
-            'Data Entry Software (various client-specific tools)',
-            'CRM Software (basic navigation)',
-            'Communication Platforms (Zoom, Slack, Google Meet)',
-        ],
+    'tech-skills-siwes': {
+        'title': 'Tech Skills & SIWES Training',
+        'description': 'Hands-on mentorship for the next generation of innovators. Project-based training and SIWES support for students.',
+        'image_url': 'core/images/services/training.jpg',
+        'tools_stack': ['Python', 'Web Dev', 'SPSS', 'Technical Reporting'],
         'benefits': [
-            'Significant time savings for core business activities.',
-            'High accuracy and consistency in data management.',
-            'Cost-effective solution, paying only for hours worked.',
-            'Access to professional support without geographical limits.',
-            'Improved operational efficiency and organization.',
+            'Industry Experience: Work on live studio projects.',
+            'Logbook Support: Guidance on IT documentation.',
+            'Skill Acquisition: Master in-demand programming.',
+            'Defense Prep: Mock presentations for students.'
         ],
         'how_we_work': [
-            '<strong>Task Scoping:</strong> Understanding your specific data entry or virtual assistance needs and workflow.',
-            '<strong>Secure Data Transfer:</strong> Establishing secure methods for data sharing and communication.',
-            '<strong>Execution & Quality Check:</strong> Meticulous task completion with built-in quality assurance processes.',
-            '<strong>Regular Updates:</strong> Providing consistent progress reports and status updates.',
-            '<strong>Feedback Loop:</strong> Adapting to your preferences and incorporating feedback for continuous improvement.',
-            '<strong>Confidentiality:</strong> Strict adherence to data privacy and confidentiality agreements.',
-        ],
-        'projects_linked': [
-            {'name': 'Client Database Migration (Project X)', 'link': '#'},
-            {'name': 'Ongoing Administrative Support for Company Y', 'link': '#'},
+            'Assessment of current skill level and goal setting.',
+            'Structured curriculum with daily practical tasks.',
+            'Bi-weekly project reviews and logbook vetting.',
+            'Final project completion and defense preparation.'
         ]
     },
-    'student-projects-academic-support': {
-        'title': 'Student Project & Academic Support',
-        'description': 'Navigate complex computer science and IT academic challenges with expert guidance. We offer comprehensive support for SIWES reports, final year projects, research assistance, and academic writing, helping students achieve excellence and build confidence in their technical and research skills.',
-        'image_url': 'core/images/services/student_projects_academic_support.jpg',
-        'tools_stack': [
-            'Problem Solving & Algorithm Design',
-            'Programming Languages (Python, Java, C++, HTML, CSS, JavaScript)',
-            'Database Management Systems (MySQL, PostgreSQL, MongoDB)',
-            'Research Methodologies',
-            'Documentation Tools (MS Word, LaTeX basics)',
-            'Presentation Software (PowerPoint, Google Slides)',
-        ],
+    'virtual-assistance-email': {
+        'title': 'Virtual Assistance & Email Marketing',
+        'description': 'Offload your administrative burden. We handle professional communication and automated email campaigns.',
+        'image_url': 'core/images/services/va_email.jpg',
+        'tools_stack': ['Mailchimp', 'Google Workspace', 'Calendly', 'Slack'],
         'benefits': [
-            'Deeper understanding of academic concepts.',
-            'High-quality, well-structured projects and reports.',
-            'Enhanced problem-solving and coding abilities.',
-            'Improved grades and academic standing.',
-            'Confidence in tackling complex technical assignments.',
+            'Automation: Set-and-forget email sequences.',
+            'Organization: Clean inbox and managed schedules.',
+            'Communication: Professional client responses.',
+            'Efficiency: Focus on your core business.'
         ],
         'how_we_work': [
-            '<strong>Project Brief Review:</strong> Thoroughly understanding your academic brief, guidelines, and specific areas requiring support.',
-            '<strong>Concept Elucidation:</strong> Breaking down complex topics and clarifying methodologies relevant to your project.',
-            '<strong>Guidance & Debugging:</strong> Providing expert advice on code structure, logic, and assisting with debugging efforts (we won\'t do it for you, but we\'ll guide you effectively).',
-            '<strong>Research & Writing Support:</strong> Guiding you through research processes and refining academic writing for clarity and impact.',
-            '<strong>Feedback & Revision:</strong> Offering constructive feedback on drafts and iterations to ensure academic rigor.',
-            '<strong>Presentation Preparation:</strong> Assisting with clear and compelling presentation strategies for your project defense.',
-        ],
-        'projects_linked': [
-            {'name': 'Guidance on a Final Year Project on AI', 'link': '#'},
-            {'name': 'Debugging & Optimization for a Data Structures Assignment', 'link': '#'},
+            'Workflow audit to identify repetitive tasks.',
+            'Setup of scheduling and communication tools.',
+            'Execution of admin tasks or email campaign drafts.',
+            'Monthly reporting on efficiency and engagement.'
         ]
     },
-    'tech-skills-training': {
-        'title': 'Tech Skills Training',
-        'description': 'Empower yourself or your team with in-demand digital skills. We offer practical, hands-on training and bootcamps in web development, UI/UX design, basic coding, and general ICT literacy. Our programs are designed to transform novices into proficient tech enthusiasts, ready for the digital age.',
-        'image_url': 'core/images/services/tech_skills_training.jpg',
-        'tools_stack': [
-            'HTML, CSS, JavaScript',
-            'Python Fundamentals',
-            'UI/UX Design Tools (Figma, Adobe XD)',
-            'Web Development Frameworks (Bootstrap, basics of React)',
-            'General ICT Tools & Software',
-            'Learning Management Systems (as platforms)',
-        ],
+    'it-support-technical': {
+        'title': 'IT Support & Technical Assistance',
+        'description': 'Troubleshooting, system administration, and network optimization to ensure your infrastructure remains operational.',
+        'image_url': 'core/images/services/it_support.jpg',
+        'tools_stack': ['Windows/Linux', 'Networking', 'Remote Desk', 'Hardware Diagnostics'],
         'benefits': [
-            'Acquire practical, industry-relevant digital skills.',
-            'Boost career prospects and marketability.',
-            'Build a strong foundation for advanced tech studies.',
-            'Gain confidence in navigating digital environments.',
-            'Personalized learning paths and hands-on practice.',
+            'Zero Downtime: Rapid response to glitches.',
+            'System Security: Protection against malware.',
+            'Network Setup: Optimized office Wi-Fi/LAN.',
+            'Device Health: Proactive maintenance.'
         ],
         'how_we_work': [
-            '<strong>Needs Assessment:</strong> Identifying your current skill level and learning objectives to tailor the training program.',
-            '<strong>Custom Curriculum:</strong> Developing a curriculum that combines theoretical knowledge with practical, project-based exercises.',
-            '<strong>Interactive Sessions:</strong> Delivering engaging sessions through live instruction, demonstrations, and Q&A.',
-            '<strong>Hands-on Projects:</strong> Focusing on practical application through real-world mini-projects and coding challenges.',
-            '<strong>Continuous Feedback:</strong> Providing regular feedback on progress and offering personalized guidance.',
-            '<strong>Certification:</strong> Issuing certificates of completion for relevant bootcamps/courses.',
-        ],
-        'projects_linked': [
-            {'name': 'Basic Web Development Bootcamp (Student Showcase)', 'link': '#'},
-            {'name': 'Introduction to Python for Beginners Workshop', 'link': '#'},
+            'Full infrastructure audit and vulnerability scan.',
+            'Implementation of maintenance and security protocols.',
+            'Ongoing remote support and on-site visits.',
+            'Quarterly performance and health reports.'
         ]
     },
-    'it-support-administration': {
-        'title': 'IT Support & System Administration',
-        'description': 'Ensure seamless operations and optimal performance with our comprehensive IT support and system administration services. We provide expert technical assistance, proactive system maintenance, and robust infrastructure management to keep your business running smoothly and securely.',
-        'image_url': 'core/images/services/ict_problem_solving.jpg',
-        'tools_stack': [
-            'OS Installation/Configuration (Windows, Linux, macOS)',
-            'Troubleshooting (Hardware, Software, Network)',
-            'Remote Assistance Tools (e.g., TeamViewer, AnyDesk)',
-            'Printer/Scanner Setup & Maintenance',
-            'User Support & Training',
-            'IT Asset & Documentation Management',
-            'System Security Basics',
-            'User Account Administration',
-            'Backups & Recovery Solutions',
-            'Helpdesk Tools',
-            'MS Office Suite (Word, Excel, PowerPoint, Outlook)',
-            'Networking (TCP/IP, DNS, DHCP, Router Configuration, LAN/WAN Diagnostics)',
-            'Virtual Assisting Tools (e.g., Calendar Management, Email Management, Task Management Software)',
-            'Graphic Editing Tools (e231.g., CorelDRAW, Basic Photoshop for IT-related graphics/documentation)',
-        ],
+    'data-analysis-research': {
+        'title': 'Data Analysis & Research Support',
+        'description': 'Turning complex data into actionable insights. Statistical analysis and research support for businesses.',
+        'image_url': 'core/images/services/data_analysis.jpg',
+        'tools_stack': ['SPSS', 'Advanced Excel', 'SQL', 'Python (Pandas)'],
         'benefits': [
-            'Rapid resolution of technical issues, minimizing downtime.',
-            'Optimized system performance and efficiency.',
-            'Enhanced security against cyber threats.',
-            'Expert advice for strategic IT decisions.',
-            'Reduced frustration and improved productivity.',
+            'Accurate Reporting: Error-free statistical results.',
+            'Visual Insights: Clear charts and visualizations.',
+            'Research Validity: Methodologically sound analysis.',
+            'Automation: Automated Excel reporting.'
         ],
         'how_we_work': [
-            '<strong>Initial Diagnosis:</strong> Gathering information about the problem through detailed questioning and initial checks.',
-            '<strong>Remote/On-site Troubleshooting:</strong> Utilizing appropriate tools and techniques to identify the root cause of the issue.',
-            '<strong>Solution Implementation:</strong> Applying effective fixes, patches, or configuration changes.',
-            '<strong>Verification & Testing:</strong> Ensuring the problem is fully resolved and systems are functioning as expected.',
-            '<strong>Prevention & Recommendations:</strong> Advising on measures to prevent future issues and optimizing systems for long-term stability.',
-            '<strong>Documentation:</strong> Providing clear explanations of the problem and its resolution for future reference.',
-        ],
-        'projects_linked': [
-            {'name': 'Network Optimization for Small Office', 'link': '#'},
-            {'name': 'Software Debugging & Patching for Client App', 'link': '#'},
+            'Data cleaning and hypothesis formulation.',
+            'Running statistical tests (SPSS/SQL/Python).',
+            'Interpretation of results and chart generation.',
+            'Delivery of a comprehensive research report.'
         ]
     },
-    'data-analysis-reports': {
-        'title': 'Data Analysis & Reports',
-        'description': 'Transform raw data into actionable insights. We offer data analysis services using tools like Excel, SPSS, and SQL for businesses, researchers, and students. From cleaning and organizing data to generating insightful reports and visualizations, we help you make data-driven decisions and present your findings clearly.',
-        'image_url': 'core/images/services/data_analysis_reports.jpg',
-        'tools_stack': [
-            'Microsoft Excel (Advanced Functions, Pivot Tables)',
-            'SPSS (Statistical Package for the Social Sciences)',
-            'SQL (for database querying)',
-            'Python (Pandas, NumPy for basic scripting)',
-            'Data Visualization Tools (Tableau basics, Matplotlib basics)',
-            'Google Sheets',
-        ],
+    'general-contract-supplies': {
+        'title': 'General Contract & Technical Supplies',
+        'description': 'As **Usty Alhaji Service Enterprise**, we handle general contracts and the supply of specialized technical equipment.',
+        'image_url': 'core/images/services/contract.jpg',
+        'tools_stack': ['Hardware Procurement', 'Logistics', 'Supply Chain'],
         'benefits': [
-            'Clear, actionable insights from complex datasets.',
-            'Improved decision-making based on factual data.',
-            'Professional and visually appealing reports and presentations.',
-            'Identification of trends, patterns, and opportunities.',
-            'Time-saving for data cleaning and organization.',
+            'Quality Sourcing: Genuine tech hardware.',
+            'Reliability: Timely delivery of requirements.',
+            'Technical Expertise: We know the specs.',
+            'Compliance: Registered for tenders.'
         ],
         'how_we_work': [
-            '<strong>Data Understanding:</strong> Discussing your data sources, objectives, and desired outcomes for the analysis.',
-            '<strong>Data Cleaning & Preparation:</strong> Ensuring data quality, handling missing values, and formatting for analysis.',
-            '<strong>Analysis Execution:</strong> Applying appropriate statistical or analytical methods using chosen tools.',
-            '<strong>Report Generation:</strong> Creating comprehensive reports with clear explanations, charts, and visualizations.',
-            '<strong>Insights & Recommendations:</strong> Translating findings into actionable recommendations for your business or research.',
-            '<strong>Review & Revision:</strong> Collaborating to refine reports and ensure they meet your specific needs.',
-        ],
-        'projects_linked': [
-            {'name': 'Market Research Data Analysis for Startup X', 'link': '#'},
-            {'name': 'Sales Performance Report for Retail Business', 'link': '#'},
+            'Quotation request and specification vetting.',
+            'Source procurement from verified vendors.',
+            'Quality control and logistics planning.',
+            'Secure delivery and installation at client site.'
         ]
     },
-    'graphics-media-design': {
-        'title': 'Graphics & Media Design',
-        'description': 'Create a powerful visual identity with our expert graphics and media design services. We craft engaging flyers, distinctive logos, compelling social media content, and full brand visuals that capture attention and effectively communicate your message, ensuring your brand stands out in a crowded digital landscape.',
-        'image_url': 'core/images/services/graphics_media_design.jpg',
-        'tools_stack': [
-            'Adobe Photoshop',
-            'Adobe Illustrator',
-            'Canva Pro',
-            'CorelDRAW',
-            'Figma (for visual assets)',
-        ],
+    'academic-support-writing': {
+        'title': 'Academic Support & SIWES Logs',
+        'description': 'Specialized support for IT students. We assist with technical writing and project defense preparation.',
+        'image_url': 'core/images/services/academic.jpg',
+        'tools_stack': ['Technical Writing', 'Logbook Documentation', 'Presentation'],
         'benefits': [
-            'Strong, memorable, and professional brand identity.',
-            'Visually appealing marketing materials that attract clients.',
-            'Consistent brand messaging across all platforms.',
-            'Increased engagement and recall on social media.',
-            'Clear communication through impactful infographics and visuals.',
+            'Grade Improvement: High-quality output.',
+            'Clarity: Simple explanations of tech concepts.',
+            'Structure: Professionally formatted reports.',
+            'Confidence: Ready for external supervisors.'
         ],
         'how_we_work': [
-            '<strong>Creative Briefing:</strong> Understanding your brand, target audience, design preferences, and project objectives.',
-            '<strong>Concept Development:</strong> Brainstorming and sketching initial design concepts based on the brief.',
-            '<strong>Design & Iteration:</strong> Digitally creating and refining designs, incorporating your feedback through revisions.',
-            '<strong>Finalization & Delivery:</strong> Providing high-resolution files in various formats suitable for web, print, and other uses.',
-            '<strong>Brand Guideline Support:</strong> Advising on how to maintain brand consistency for future design needs (optional).',
-        ],
-        'projects_linked': [
-            {'name': 'Startup Logo & Brand Identity Package', 'link': '#'},
-            {'name': 'Social Media Marketing Graphics for Event', 'link': '#'},
+            'Review of project topics and logbook guidelines.',
+            'Drafting technical chapters and documentation.',
+            'Reviewing for plagiarism and technical accuracy.',
+            'Final polishing and presentation coaching.'
         ]
-    },
-    'lead-generation-online-growth': {
-        'title': 'Lead Generation & Online Growth',
-        'description': 'Supercharge your business growth by effectively identifying and nurturing potential clients. Our lead generation and online growth strategies focus on boosting your brand visibility, increasing website traffic, and converting prospects into loyal customers through targeted digital techniques.',
-        'image_url': 'core/images/services/lead_generation_online_growth.jpg',
-        'tools_stack': [
-            'Digital Marketing Platforms (Google Ads, Facebook Ads basics)',
-            'SEO Tools (Google Analytics, Keyword Planners basics)',
-            'Social Media Management Tools',
-            'Email Marketing Platforms',
-            'Content Creation Tools',
-            'CRM Integration (basic understanding)',
-        ],
-        'benefits': [
-            'Increased qualified leads and potential customers.',
-            'Improved brand awareness and online presence.',
-            'Higher conversion rates and return on investment (ROI).',
-            'Targeted marketing campaigns reaching the right audience.',
-            'Measurable growth and actionable insights.',
-        ],
-        'how_we_work': [
-            '<strong>Strategy Development:</strong> Defining your target audience, marketing goals, and crafting a tailored lead generation strategy.',
-            '<strong>Content Creation:</strong> Developing engaging content (e.g., blog posts, social media updates, ad copy) to attract prospects.',
-            '<strong>Campaign Implementation:</strong> Setting up and managing online advertising campaigns, SEO efforts, and social media promotions.',
-            '<strong>Monitoring & Optimization:</strong> Continuously tracking performance metrics and optimizing campaigns for better results.',
-            '<strong>Reporting & Analysis:</strong> Providing detailed reports on lead generation performance and growth metrics.',
-            '<strong>Continuous Improvement:</strong> Adapting strategies based on market trends and performance data.',
-        ],
-        'projects_linked': [
-            {'name': 'Social Media Growth Campaign for E-commerce', 'link': '#'},
-            {'name': 'Website Traffic & SEO Improvement for Local Business', 'link': '#'},
-        ]
-    },
+    }
 }
-
 projects_data = {
+    'jira-task-engine': {
+        'title': 'High-Velocity Engineering: Async Jira Task Engine & TDD Suite',
+        'tagline': 'A high-performance backend core built with Python 3.12+, FastAPI, and Pydantic V2.',
+        'client_type': 'Internal Tooling / Enterprise Backend',
+        'category': 'others',
+        'thumbnail': 'projects/backend_preview.jpg',
+        'overview': (
+            "The 'High-Velocity Jira Task Engine' is a technical demonstration of modern backend engineering principles, focusing on high-performance concurrency and data integrity. "
+            "Built using Python 3.12+, this engine utilizes Asynchronous IO (asyncio) to handle multiple task creations and status updates concurrently, simulating a high-traffic enterprise environment. "
+            "The system leverages Pydantic V2 for strict data validation, ensuring that every task entering the system meets rigorous schema requirements before reaching the database layer. "
+            "A core highlight of this project is the integrated Test-Driven Development (TDD) suite. This suite automatically verifies system reliability by running concurrent test engines that simulate real-world stress, "
+            "ensuring 100% uptime and zero-error data processing. The modular architecture allows for easy integration with PostgreSQL or MongoDB, making it a scalable solution for modern software teams."
+        ),
+        'technologies': [
+            'Python 3.12', 'FastAPI', 'Pydantic V2', 'Asyncio', 
+            'Pytest', 'TDD', 'REST API', 'JSON Schema', 
+            'UUID4', 'NumPy'
+        ],
+        'expertise': [
+            'Developing high-performance asynchronous systems using Python 3.12 and asyncio for non-blocking execution.',
+            'Implementing strict data modeling and schema validation using Pydantic V2 field validators.',
+            'Applying Test-Driven Development (TDD) methodologies to build a self-verifying software architecture.',
+            'Utilizing UUID4 and Python Enum classes to ensure unique data identification and consistent state management.',
+            'Designing modular service layers that separate business logic from data storage for maximum scalability.',
+            'Simulating high-velocity concurrent environments to test system stability under heavy data loads.'
+        ],
+        'features': [
+            'Asynchronous Task Engine capable of handling concurrent creation requests without performance lag.',
+            'Automated TDD Test Suite with terminal output verification and status reporting.',
+            'Pydantic-powered validation layer that prevents empty titles or invalid status transitions.',
+            'Real-time status tracking (To Do, In Progress, Done) with automated timestamps.',
+            'Scalable architecture designed for easy conversion into a full REST API with FastAPI.',
+            'Modular JiraService class that supports future database migrations (SQL/NoSQL).'
+        ],
+        'screenshots': [
+            'jira1.png', 'jira2.png', 'jira3.png','jira4.png'
+        ],
+
+        'github_link': 'https://github.com/UASE-TECH-STUDIO/Jira-Gmail-Velocity-Engine.git',
+        'problem_solution': {
+            'problem': 'Enterprise systems often struggle with data consistency and performance bottlenecks when handling high volumes of concurrent status updates and task creation.',
+            'solution': 'Developed a modular, asynchronous engine using Python 3.12+ that utilizes non-blocking IO and Pydantic V2 validation. This ensures data integrity at the entry point and allows the system to scale horizontally with 100% reliability verified through TDD.'
+        },
+        'downloads': [],
+    },
     'recipe-management-app': {
     'title': 'Smart Recipe Management Application',
     'tagline': 'A feature-rich platform for creating, managing, and discovering recipes.',
@@ -1256,17 +1144,99 @@ def services(request):
     return render(request, 'core/services.html')
 
 
+
+from django.shortcuts import render
+from django.http import Http404
+
 def service_detail(request, service_slug):
+    services_data = {
+        'web-development': {
+            'title': 'Web Development & Engineering',
+            'description': 'Building high-performance, type-safe web applications. We specialize in modern architectures that prioritize speed, security, and developer experience using industry-standard best practices like TDD.',
+            'image_url': 'core/images/services/web_development.jpg',
+            'tools_stack': ['TypeScript', 'RESTAPI', 'React.js', 'Next.js', 'FastAPI', 'Python (Django)', 'Tailwind CSS', 'PostgreSQL', 'TDD (PyTest/Jest)', 'RESTful APIs', 'Git/GitHub'],
+            'benefits': ['Type-safe code for fewer bugs.', 'Scalable FastAPI backends.', 'TDD-backed reliability.', 'SEO-optimized Next.js structures.', 'Responsive modern UI.'],
+            'how_we_work': ['Requirements & Logic Mapping.', 'API Design with FastAPI.', 'Frontend Implementation (TS/React).', 'Test-Driven Development (TDD) cycles.', 'Deployment & CI/CD.']
+        },
+        'software-development': {
+            'title': 'Software Engineering',
+            'description': 'Crafting robust software solutions using modern Python and TypeScript. We focus on clean code architecture and automated testing to solve complex business challenges.',
+            'image_url': 'core/images/services/software_development.jpg',
+            'tools_stack': ['Python', 'TypeScript', 'FastAPI', 'RESTAPI', 'Django', 'SQL/NoSQL', 'TDD', 'Docker', 'CLI Tools'],
+            'benefits': ['Automated workflows.', 'Highly maintainable codebase.', 'Scalable system architecture.', 'Seamless API integrations.'],
+            'how_we_work': ['System Architecture Planning.', 'Test-Driven Development (TDD).', 'Iterative Feature Sprints.', 'Rigorous QA & Bug Fixing.', 'Documentation & Deployment.']
+        },
+        'data-analysis-reports': {
+            'title': 'Data Science & Analysis',
+            'description': 'Transforming raw data into intelligence. We use powerful libraries to clean, analyze, and visualize complex datasets for research and business growth.',
+            'image_url': 'core/images/services/data_analysis.jpg',
+            'tools_stack': ['Python', 'RESTAPI', 'NumPy', 'Pandas', 'Matplotlib', 'SQL', 'SPSS', 'Advanced Excel'],
+            'benefits': ['NumPy-powered computation.', 'Actionable business insights.', 'Statistically sound research.', 'Automated reporting pipelines.'],
+            'how_we_work': ['Data Cleaning & Wrangling.', 'Exploratory Data Analysis (EDA).', 'Statistical Testing (NumPy/SPSS).', 'Interpretation & Visualization.', 'Final Reporting.']
+        },
+        'graphics-media-design': {
+            'title': 'Graphics & Design',
+            'description': 'Where code meets art. We don’t just draw; we engineer visuals. We specialize in generative design and high-fidelity branding using both traditional tools and code-driven graphic generation.',
+            'image_url': 'core/images/services/graphics.jpg',
+            'tools_stack': ['CorelDraw', 'Figma', 'Adobe Photoshop', 'Canva', 'Vs Code', 'Code-Driven Graphics',],
+            'benefits': ['Unique Generative Designs.', 'Pixel-perfect UI Assets.', 'High-impact Brand Identity.', 'Mathematical precision in visuals.'],
+            'how_we_work': ['Visual Logic Discovery.', 'Code-based sketching & prototyping.', 'High-fidelity design refinement.', 'Exporting for Web/Print.', 'Final Asset Delivery.']
+        },
+        'mobile-app-development': {
+            'title': 'Web-to-Native Solutions',
+            'description': 'Deploying powerful web applications to mobile environments. We use modern wrappers to ensure your business logic reaches users on their mobile devices efficiently.',
+            'image_url': 'core/images/services/mobile_app.jpg',
+            'tools_stack': ['Capacitor', 'TypeScript', 'Next.js', 'FastAPI (Backend)', 'Firebase'],
+            'benefits': ['Cost-effective cross-platform.', 'Unified codebase.', 'Native device access.', 'Fast development cycles.'],
+            'how_we_work': ['Web application optimization.', 'Mobile wrapper implementation.', 'Native feature integration.', 'Testing on physical devices.', 'APK/IPA generation.']
+        },
+        'data-entry-virtual-assistance': {
+            'title': 'Virtual Assistance & Admin',
+            'description': 'Technical administrative support. We use automation tools to handle your data entry and email marketing with surgical precision.',
+            'image_url': 'core/images/services/va.jpg',
+            'tools_stack': ['Google Workspace', 'Mailchimp', 'Excel Automation', 'Python Scripts', 'Slack'],
+            'benefits': ['Reduced operational friction.', 'Automated repetitive tasks.', 'Accurate data management.', 'Professional communication.'],
+            'how_we_work': ['Workflow audit.', 'Setup of automation scripts.', 'Task execution.', 'Quality assurance.', 'Weekly status reporting.']
+        },
+        'student-projects-academic-support': {
+            'title': 'IT Project & Academic Support',
+            'description': 'Guiding students through the complexities of Computer Science projects, focusing on modern stacks and proper documentation.',
+            'image_url': 'core/images/services/academic.jpg',
+            'tools_stack': ['Technical Writing', 'Algorithm Design', 'Python/TypeScript', 'TDD Basics', 'LaTeX'],
+            'benefits': ['Deeper technical mastery.', 'Modern coding standards.', 'High-quality documentation.', 'Project defense readiness.'],
+            'how_we_work': ['Topic assessment.', 'Technical guidance sessions.', 'Code review & debugging.', 'Research writing support.', 'Defense coaching.']
+        },
+        'tech-skills-training': {
+            'title': 'Tech Skills & SIWES Mentorship',
+            'description': 'Hands-on training for aspiring developers. We teach modern industry standards: from basic logic to TDD and building with FastAPI.',
+            'image_url': 'core/images/services/training.jpg',
+            'tools_stack': ['TypeScript', 'Python', 'FastAPI', 'Web Fundamentals', 'TDD'],
+            'benefits': ['Industry-ready skills.', 'Project-based learning.', 'SIWES logbook support.', 'Modern tech mindset.'],
+            'how_we_work': ['Skill gap analysis.', 'Curriculum delivery.', 'Live coding projects.', 'Progress evaluation.', 'Certification.']
+        },
+        'it-support-administration': {
+            'title': 'Technical IT Administration',
+            'description': 'Maintaining secure and efficient IT infrastructures. We provide troubleshooting, system optimization, and proactive tech support.',
+            'image_url': 'core/images/services/it_support.jpg',
+            'tools_stack': ['Windows/Linux Admin', 'Networking', 'Remote Support', 'System Security'],
+            'benefits': ['Infrastructure stability.', 'Rapid problem resolution.', 'Data security.', 'Optimized productivity.'],
+            'how_we_work': ['Audit & Health checks.', 'Optimization implementation.', 'Ongoing monitoring.', 'Vulnerability patching.', 'Reporting.']
+        },
+        'general-contracts-supplies': {
+            'title': 'Contracts & Technical Supplies',
+            'description': 'Under Usty Alhaji Service Enterprise, we procure high-end technical hardware and manage general service contracts with professional excellence.',
+            'image_url': 'core/images/services/contract.jpg',
+            'tools_stack': ['Hardware Procurement', 'Technical Vetting', 'Logistics', 'Supply Chain'],
+            'benefits': ['Quality assurance.', 'Reliable sourcing.', 'Tech-spec compliance.', 'Official accountability.'],
+            'how_we_work': ['Request for Quotation.', 'Procurement & Vetting.', 'Logistics Planning.', 'Delivery & Setup.']
+        }
+    }
+
     service = services_data.get(service_slug)
     if not service:
-        raise Http404("Service not found or coming soon!")
+        raise Http404("Service not found.")
     
-    context = {
-        'service': service
-    }
-    return render(request, 'core/service_detail.html', context)
-
-
+    return render(request, 'core/service_detail.html', {'service': service})
 def portfolio(request):
     context = {
         'projects': projects_data
@@ -1446,6 +1416,17 @@ def login_view(request):
         form = AuthenticationForm()
     return render(request, 'core/login.html', {'form': form})
 
+
+
+def graphics_portfolio(request):
+    # Explicitly listing your 25 graphics
+    images = [f'graphic{i}.jpg' for i in range(1, 26)]
+    
+    context = {
+        'images': images,
+        'pdf_link': 'core/downloads/uase_graphics_catalog.pdf'
+    }
+    return render(request, 'core/graphics_portfolio.html', context)
 
 @login_required
 def logout_view(request):

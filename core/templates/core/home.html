@@ -5,184 +5,157 @@
 
 {% block content %}
 <style>
-    /* 1. STYLES FOR THE HERO SECTION BACKGROUND AND HEIGHT */
+    /* 1. HERO SECTION & LAYOUT */
     .hero-section {
-        /* Set the background image and positioning */
         background: url("{% static 'core/images/about_journey.jpg' %}") no-repeat center center;
         background-size: cover;
-        /* Ensure the hero section takes up a good portion of the screen */
-        min-height: 80vh; /* 80% of the viewport height */
-        /* Make the section use flexbox to center content */
+        min-height: 85vh;
         display: flex;
         align-items: center;
         justify-content: center;
-        /* Set position to relative so the absolutely positioned overlay respects its bounds */
         position: relative;
-        overflow: hidden; /* Important for clean edges */
-        padding-top: 5rem !important; /* Ensure content isn't under the navbar */
-        padding-bottom: 5rem !important;
+        overflow: hidden;
+        margin-top: -3rem; 
+        border-radius: 0 0 50px 50px;
     }
 
-    /* 2. STYLES FOR THE DARK OVERLAY */
     .hero-section .overlay {
         position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        /* Add a semi-transparent dark tint */
-        background-color: rgba(0, 0, 0, 0.65); 
-        z-index: 0; /* Ensures the overlay is behind the content */
-    }
-    
-    /* 3. STYLES FOR HERO CONTENT (optional, based on your design) */
-    .hero-section h1, .hero-section p {
-        /* Ensure text is above the overlay */
-        z-index: 1;
-        position: relative; 
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: linear-gradient(135deg, rgba(5, 8, 16, 0.85) 0%, rgba(5, 8, 16, 0.6) 100%);
+        z-index: 0;
     }
 
     .hero-logo-style {
-        max-height: 80px;
-        width: auto;
+        max-height: 100px;
+        filter: drop-shadow(0 0 15px rgba(0, 210, 255, 0.5));
     }
 
-    /* Additional styles for sections */
-    .transform-on-hover {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    /* 2. GLASSMORPHISM & CARDS */
+    .card-glass {
+        background: rgba(255, 255, 255, 0.02);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        transition: all 0.3s ease;
     }
+
     .transform-on-hover:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1) !important;
-    }
-    
-    /* Style for the CTA section background */
-    .call-to-action-bg {
-        /* A dark/techy gradient for the CTA */
-        background: linear-gradient(135deg, #0d6efd, #00bfff); 
+        transform: translateY(-12px) scale(1.02);
+        box-shadow: 0 20px 40px rgba(0, 210, 255, 0.15) !important;
     }
 
-    /* ========================================================== */
-    /* 🔴 DARK MODE FIX FOR TESTIMONIALS (Specific Overrides) */
-    /* ========================================================== */
+    /* 3. DARK MODE COMPATIBILITY */
+    body.dark-mode .bg-light {
+        background-color: #161b22 !important;
+        border: 1px solid #30363d;
+    }
 
-    /* Override the outer container with bg-light */
-    body.dark-mode section.bg-light {
-        background-color: #161b22 !important; /* Secondary dark color */
+    body.dark-mode .testimonial {
+        background: #0d1117 !important;
         border-color: #30363d !important;
     }
 
-    /* Override the individual testimonial card with bg-white */
-    body.dark-mode .testimonial.bg-white {
-        background-color: #0d1117 !important; /* Primary dark background */
-        border: 1px solid #30363d !important;
-        box-shadow: 0 6px 16px rgba(88, 166, 255, 0.08) !important;
+    /* 4. UTILITIES */
+    .call-to-action-bg {
+        background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
+        border-radius: 30px;
     }
 
-    /* Ensure text within the testimonial is visible */
-    body.dark-mode .testimonial.bg-white p,
-    body.dark-mode .testimonial.bg-white strong,
-    body.dark-mode .testimonial.bg-white span {
-        color: #c9d1d9 !important; /* Light text color */
+    .badge-tech {
+        background: rgba(0, 210, 255, 0.1);
+        color: var(--accent);
+        font-family: 'Space Grotesk', sans-serif;
+        padding: 0.5rem 1rem;
     }
-
-    /* Re-apply the primary color to the author name if needed */
-    body.dark-mode .testimonial.bg-white strong.text-primary {
-        color: #58a6ff !important;
-    }
-    
 </style>
 
-{# ADD THIS <main> TAG WITH THE APPROPRIATE CLASS #}
 <main class="home-page"> 
 
-    <section class="hero-section text-white text-center py-5 mb-5 d-flex align-items-center justify-content-center">
-        
+    <section class="hero-section text-white text-center">
         <div class="overlay"></div> 
         <div class="container position-relative z-1">
             <div class="row justify-content-center">
                 <div class="col-lg-10">
-                    {# Logo Styling: Centered with margin, slightly adjusted max-height and width #}
-                    <img src="{% static 'core/images/uase_logo_white.png' %}" alt="UASE Tech Studio Logo" class="img-fluid mb-4 mx-auto d-block hero-logo-style">
-                    <h1 class="display-3 fw-bold mb-3 animate__animated animate__fadeInDown">Crafting Tomorrow's Digital Experiences, Today.</h1>
-                    <p class="lead mb-4 animate__animated animate__fadeInUp animate__delay-1s">Innovating bespoke web, mobile, and software solutions that drive growth and empower your vision.</p>
+                    <img src="{% static 'core/images/uase_logo_white.png' %}" alt="UASE Logo" class="img-fluid mb-4 mx-auto d-block hero-logo-style animate__animated animate__zoomIn">
+                    <h1 class="display-2 fw-black mb-3 animate__animated animate__fadeInDown">Crafting Tomorrow's <span style="color: var(--accent);">Digital</span> Experiences</h1>
+                    <p class="lead mb-5 opacity-75 animate__animated animate__fadeInUp animate__delay-1s">Innovating bespoke web, mobile, and software solutions that drive growth and empower your vision.</p>
                     <div class="d-grid gap-3 d-sm-flex justify-content-sm-center animate__animated animate__fadeInUp animate__delay-2s">
-                        <a href="{% url 'services' %}" class="btn btn-primary btn-lg px-4 me-sm-3">Explore Our Services</a>
-                        <a href="{% url 'portfolio' %}" class="btn btn-outline-light btn-lg px-4">View Our Portfolio</a>
+                        <a href="{% url 'services' %}" class="btn btn-primary btn-lg px-5 rounded-pill shadow-lg">Our Services</a>
+                        <a href="{% url 'portfolio' %}" class="btn btn-outline-light btn-lg px-5 rounded-pill">View Portfolio</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
-    {# Rest of your content... #}
 
     <section class="container py-5 my-5 text-center">
         <div class="row justify-content-center">
             <div class="col-lg-8">
-                <h2 class="display-5 fw-bold mb-4">Innovating for Impact: The UASE Tech Studio Difference</h2>
-                <p class="lead text-muted">
-                    UASE Tech Studio is a dynamic technology firm dedicated to transforming innovative ideas into powerful digital realities. Founded by Muhammedmustapha Abdullahi (Usty), we specialize in delivering bespoke web and mobile applications, robust software solutions, and strategic IT support and administration. Our approach is rooted in understanding your unique challenges and leveraging cutting-edge technology to build solutions that not only meet but exceed expectations, driving tangible results and lasting value for businesses and individuals.
+                <h2 class="display-6 fw-bold mb-4">The <span class="text-primary">Studio</span> Difference</h2>
+                <p class="lead opacity-75">
+                    UASE Tech Studio is a dynamic technology firm dedicated to transforming innovative ideas into powerful digital realities. Founded by Muhammedmustapha Abdullahi (Usty), we specialize in delivering bespoke solutions that redefine expectations.
                 </p>
             </div>
         </div>
     </section>
 
-    <section class="container py-5 my-5 bg-light rounded-3 shadow-sm">
+    <section class="container py-5 my-5 bg-light rounded-5 shadow-sm p-5">
         <div class="row align-items-center">
             <div class="col-md-4 text-center mb-4 mb-md-0">
-                <img src="{% static 'core/images/usty_headshot.jpg' %}" alt="Muhammedmustapha Abdullahi (Usty) Headshot" class="img-fluid rounded-circle shadow-lg" style="width: 200px; height: 200px; object-fit: cover;">
+                <div class="position-relative d-inline-block">
+                    <img src="{% static 'core/images/usty_headshot.jpg' %}" alt="Usty" class="img-fluid rounded-circle shadow-lg" style="width: 220px; height: 220px; object-fit: cover; border: 5px solid #00d2ff;">
+                </div>
             </div>
             <div class="col-md-8">
-                <h2 class="display-5 fw-bold mb-3">Meet Usty: Architecting Digital Excellence</h2>
-                <p class="text-muted">
-                    Led by Muhammedmustapha Abdullahi, a.k.a. Usty, a Computer Science graduate with a strong foundation from various renowned tech institutes, UASE Tech Studio embodies a passion for technological innovation and a commitment to excellence. Usty's journey is defined by a relentless pursuit of knowledge and hands-on experience across full-stack development, mobile applications, and system administration. This diverse expertise ensures that every project at UASE Tech Studio is approached with a holistic understanding and a drive for perfection.
+                <h2 class="h1 fw-bold mb-3">Meet Usty: Architecting Excellence</h2>
+                <p class="opacity-75">
+                    A Computer Science graduate with a relentless pursuit of full-stack perfection. Usty ensures every project is approached with a holistic understanding, combining technical mastery with strategic innovation to drive lasting value.
                 </p>
             </div>
         </div>
     </section>
 
-    <section class="container py-5 my-5 text-center">
-        <h2 class="display-5 fw-bold mb-4">Our Core Expertise: Solutions That Propel Growth</h2>
-        <p class="lead text-muted mb-5">Empowering your vision with comprehensive technology solutions.</p>
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
-            <div class="col">
-                <div class="card h-100 shadow-sm border-0 transform-on-hover">
-                    <div class="card-body p-4">
-                        <i class="bi bi-browser-chrome service-icon display-4 text-primary mb-3"></i> {# Placeholder icon #}
-                        <h5 class="card-title fw-bold">Web Application Development</h5>
-                        <p class="card-text text-muted">Building dynamic, scalable, and secure web platforms with technologies like Django, Node.js, React.js, PHP, and modern frontend frameworks.</p>
-                        <a href="{% url 'service_detail' 'web-development' %}" class="btn btn-sm btn-outline-primary mt-3">Learn More</a>
+    <section class="container py-5 my-5">
+        <h2 class="display-6 fw-bold text-center mb-5">Core Expertise</h2>
+        <div class="row g-4">
+            <div class="col-md-3">
+                <div class="card h-100 border-0 transform-on-hover card-glass p-3">
+                    <div class="card-body">
+                        <i class="bi bi-browser-chrome display-5 text-primary mb-3"></i>
+                        <h5 class="fw-bold">Web Apps</h5>
+                        <p class="small opacity-75">Scalable platforms built with Django, React, and Node.js.</p>
+                        <a href="{% url 'service_detail' 'web-development' %}" class="btn btn-link text-primary p-0">Learn More</a>
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="card h-100 shadow-sm border-0 transform-on-hover">
-                    <div class="card-body p-4">
-                        <i class="bi bi-phone service-icon display-4 text-success mb-3"></i> {# Placeholder icon #}
-                        <h5 class="card-title fw-bold">Mobile App Development</h5>
-                        <p class="card-text text-muted">Creating intuitive and high-performing Android applications, including converting web apps to native APKs using Capacitor.</p>
-                        <a href="{% url 'service_detail' 'mobile-app-development' %}" class="btn btn-sm btn-outline-success mt-3">Learn More</a>
+            <div class="col-md-3">
+                <div class="card h-100 border-0 transform-on-hover card-glass p-3">
+                    <div class="card-body">
+                        <i class="bi bi-phone-vibrate display-5 text-success mb-3"></i>
+                        <h5 class="fw-bold">Mobile Apps</h5>
+                        <p class="small opacity-75">High-performing Android apps using Capacitor & Native tech.</p>
+                        <a href="{% url 'service_detail' 'mobile-app-development' %}" class="btn btn-link text-success p-0">Learn More</a>
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="card h-100 shadow-sm border-0 transform-on-hover">
-                    <div class="card-body p-4">
-                        <i class="bi bi-gear service-icon display-4 text-info mb-3"></i> {# Placeholder icon #}
-                        <h5 class="card-title fw-bold">Custom Software Solutions</h5>
-                        <p class="card-text text-muted">Developing robust, custom software with Python, Node.js, Java, and C++ to automate processes, enhance efficiency, and solve unique challenges.</p>
-                        <a href="{% url 'service_detail' 'software-development' %}" class="btn btn-sm btn-outline-info mt-3">Learn More</a> {# Changed to 'software-development' to align with the slug in views.py #}
+            <div class="col-md-3">
+                <div class="card h-100 border-0 transform-on-hover card-glass p-3">
+                    <div class="card-body">
+                        <i class="bi bi-cpu display-5 text-info mb-3"></i>
+                        <h5 class="fw-bold">Custom Software</h5>
+                        <p class="small opacity-75">Python-based automation and complex process solvers.</p>
+                        <a href="{% url 'service_detail' 'software-development' %}" class="btn btn-link text-info p-0">Learn More</a>
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="card h-100 shadow-sm border-0 transform-on-hover">
-                    <div class="card-body p-4">
-                        <i class="bi bi-tools service-icon display-4 text-warning mb-3"></i> {# Changed icon for IT support #}
-                        <h5 class="card-title fw-bold">IT Support & System Administration</h5>
-                        <p class="card-text text-muted">Providing expert technical assistance, proactive system maintenance, network diagnostics, and user support to ensure seamless operations.</p>
-                        <a href="{% url 'service_detail' 'it-support-administration' %}" class="btn btn-sm btn-outline-warning mt-3">Learn More</a>
+            <div class="col-md-3">
+                <div class="card h-100 border-0 transform-on-hover card-glass p-3">
+                    <div class="card-body">
+                        <i class="bi bi-shield-lock display-5 text-warning mb-3"></i>
+                        <h5 class="fw-bold">IT Admin</h5>
+                        <p class="small opacity-75">Network diagnostics and proactive maintenance.</p>
+                        <a href="{% url 'service_detail' 'it-support-administration' %}" class="btn btn-link text-warning p-0">Learn More</a>
                     </div>
                 </div>
             </div>
@@ -190,174 +163,92 @@
     </section>
 
     <section class="container py-5 my-5">
-        <h2 class="display-5 fw-bold text-center mb-4">Our Work in Action: Driving Success</h2>
-        <p class="lead text-muted text-center mb-5">Explore a selection of projects where innovation met tangible results.</p>
-
-        <div id="featuredProjectsCarousel" class="carousel slide carousel-dark" data-bs-ride="carousel">
-            <div class="carousel-indicators">
-                <button type="button" data-bs-target="#featuredProjectsCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#featuredProjectsCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#featuredProjectsCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                <button type="button" data-bs-target="#featuredProjectsCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
-                <button type="button" data-bs-target="#featuredProjectsCarousel" data-bs-slide-to="4" aria-label="Slide 5"></button>
-                <button type="button" data-bs-target="#featuredProjectsCarousel" data-bs-slide-to="5" aria-label="Slide 6"></button>
-            </div>
+        <h2 class="display-6 fw-bold text-center mb-5">Our Work in Action</h2>
+        <div id="featuredProjectsCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <div class="row align-items-center g-4">
+                    <div class="row align-items-center g-5">
                         <div class="col-md-7">
-                            <img src="{% static 'core/images/crime_tracking_system_screenshot_1.jpg' %}" class="d-block w-100 rounded shadow-lg" alt="Crime Tracking System Screenshot">
+                            <img src="{% static 'core/images/crime_tracking_system_screenshot_1.jpg' %}" class="img-fluid rounded-4 shadow-lg" alt="Crime Tracking">
                         </div>
                         <div class="col-md-5">
-                            <h3 class="fw-bold">Crime Tracking System: Enhancing Public Safety</h3>
-                            <p class="text-muted">A robust PHP/MySQL web application for crime reporting, data management, and analysis, featuring an admin dashboard with detailed control over crimes, alerts, comments, and users.</p>
-                            <p class="fw-bold">Key Technologies: <span class="badge bg-primary">PHP</span> <span class="badge bg-secondary">MySQL</span> <span class="badge bg-info">Bootstrap</span> <span class="badge bg-dark">jQuery</span></p>
-                            <a href="{% url 'project_detail' 'crime-tracking-system' %}" class="btn btn-primary mt-3">View Project Details</a>
+                            <h3 class="fw-bold h2">Crime Tracking System</h3>
+                            <p class="opacity-75">A robust PHP/MySQL web application for crime reporting and public safety analysis.</p>
+                            <div class="d-flex flex-wrap gap-2 mb-4">
+                                <span class="badge badge-tech">PHP</span>
+                                <span class="badge badge-tech">MySQL</span>
+                                <span class="badge badge-tech">Bootstrap</span>
+                            </div>
+                            <a href="{% url 'project_detail' 'crime-tracking-system' %}" class="btn btn-primary px-4 py-2">Details</a>
                         </div>
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <div class="row align-items-center g-4">
+                    <div class="row align-items-center g-5">
                         <div class="col-md-7">
-                            <img src="{% static 'core/images/food_ordering_app_screenshot_1.jpg' %}" class="d-block w-100 rounded shadow-lg" alt="Food Ordering App Screenshot">
+                            <img src="{% static 'core/images/food_ordering_app_screenshot_1.jpg' %}" class="img-fluid rounded-4 shadow-lg" alt="Food App">
                         </div>
                         <div class="col-md-5">
-                            <h3 class="fw-bold">Deliciously Simple: The Food Ordering Application (Web + Android APK)</h3>
-                            <p class="text-muted">An intuitive React.js/Node.js web application, converted to an Android APK via Capacitor, offering seamless food ordering, secure Stripe payments, and comprehensive management features.</p>
-                            <p class="fw-bold">Key Technologies: <span class="badge bg-primary">React.js</span> <span class="badge bg-success">Node.js</span> <span class="badge bg-info">MongoDB</span> <span class="badge bg-warning">Capacitor</span> <span class="badge bg-danger">Stripe API</span></p>
-                            <a href="{% url 'project_detail' 'food-ordering-app' %}" class="btn btn-primary mt-3">View Project Details</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <div class="row align-items-center g-4">
-                        <div class="col-md-7">
-                            <img src="{% static 'core/images/training_website_screenshot_1.jpg' %}" class="d-block w-100 rounded shadow-lg" alt="3-Month Training Website Screenshot">
-                        </div>
-                        <div class="col-md-5">
-                            <h3 class="fw-bold">Empowering Futures: The 3-Month Training Platform</h3>
-                            <p class="text-muted">A comprehensive and responsive web platform built with HTML, CSS, JavaScript, and Bootstrap, designed for structured skill development and course curriculum presentation.</p>
-                            <p class="fw-bold">Key Technologies: <span class="badge bg-primary">HTML5</span> <span class="badge bg-secondary">CSS3</span> <span class="badge bg-info">JavaScript</span> <span class="badge bg-warning">Bootstrap</span></p>
-                            <a href="{% url 'project_detail' '3-month-training-website' %}" class="btn btn-primary mt-3">View Project Details</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <div class="row align-items-center g-4">
-                        <div class="col-md-7">
-                            <img src="{% static 'core/images/training_registration_form_screenshot_1.jpg' %}" class="d-block w-100 rounded shadow-lg" alt="3-Days Training Registration Form Screenshot">
-                        </div>
-                        <div class="col-md-5">
-                            <h3 class="fw-bold">Seamless Enrollment: 3-Days Training Registration Form</h3>
-                            <p class="text-muted">A user-friendly and robust registration form with client-side validation, ensuring efficient and secure participant data collection for training programs, enhanced with CorelDRAW design elements.</p>
-                            <p class="fw-bold">Key Technologies: <span class="badge bg-primary">HTML</span> <span class="badge bg-success">CSS</span> <span class="badge bg-info">JavaScript</span> <span class="badge bg-warning">CorelDRAW</span></p>
-                            <a href="{% url 'project_detail' '3-days-training-registration' %}" class="btn btn-primary mt-3">View Project Details</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <div class="row align-items-center g-4">
-                        <div class="col-md-7">
-                            <img src="{% static 'core/images/ecommerce_cart_screenshot_1.jpg' %}" class="d-block w-100 rounded shadow-lg" alt="E-commerce Cart System Screenshot">
-                        </div>
-                        <div class="col-md-5">
-                            <h3 class="fw-bold">Efficient Online Shopping: E-commerce Cart System (Backend Logic)</h3>
-                            <p class="text-muted">A robust Python-based backend cart system showcasing core e-commerce functionalities like dynamic product additions, quantity management, and accurate total calculations.</p>
-                            <p class="fw-bold">Key Technologies: <span class="badge bg-primary">Python</span> <span class="badge bg-success">Django/Flask</span> <span class="badge bg-info">SQL/NoSQL</span> <span class="badge bg-warning">OOP</span></p>
-                            <a href="{% url 'project_detail' 'ecommerce-cart-system' %}" class="btn btn-primary mt-3">View Project Details</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <div class="row align-items-center g-4">
-                        <div class="col-md-7">
-                            <img src="{% static 'core/images/uase_website_screenshot_1.jpg' %}" class="d-block w-100 rounded shadow-lg" alt="UASE Tech Studio Website Screenshot">
-                        </div>
-                        <div class="col-md-5">
-                            <h3 class="fw-bold">UASE Tech Studio: Official Website & Portfolio (This Platform)</h3>
-                            <p class="text-muted">The platform you are currently exploring, developed with Django and Python to showcase UASE Tech Studio's diverse services, comprehensive portfolio, and technical expertise.</p>
-                            <p class="fw-bold">Key Technologies: <span class="badge bg-primary">Django</span> <span class="badge bg-success">Python</span> <span class="badge bg-info">Bootstrap 5</span> <span class="badge bg-warning">JavaScript</span></p>
-                            <a href="{% url 'project_detail' 'uase-tech-studio-website' %}" class="btn btn-primary mt-3">View Project Details</a>
-                            {# Live demo link is None for this project as per your instruction #}
+                            <h3 class="fw-bold h2">Food Ordering App</h3>
+                            <p class="opacity-75">React.js/Node.js application converted to Android APK via Capacitor.</p>
+                            <div class="d-flex flex-wrap gap-2 mb-4">
+                                <span class="badge badge-tech">React</span>
+                                <span class="badge badge-tech">Node.js</span>
+                                <span class="badge badge-tech">Capacitor</span>
+                            </div>
+                            <a href="{% url 'project_detail' 'food-ordering-app' %}" class="btn btn-primary px-4 py-2">Details</a>
                         </div>
                     </div>
                 </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#featuredProjectsCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
+                <span class="carousel-control-prev-icon bg-dark rounded-circle" aria-hidden="true"></span>
             </button>
             <button class="carousel-control-next" type="button" data-bs-target="#featuredProjectsCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
+                <span class="carousel-control-next-icon bg-dark rounded-circle" aria-hidden="true"></span>
             </button>
         </div>
     </section>
 
-    <section class="container py-5 my-5 text-center bg-light rounded-3 shadow-sm">
-        <h2 class="display-5 fw-bold mb-4">What Our Partners Say</h2>
-        <p class="lead text-muted mb-5">Hear directly from those who've experienced the UASE Tech Studio advantage.</p>
+    <section class="container py-5 my-5 text-center bg-light rounded-5 shadow-sm p-5">
+        <h2 class="fw-bold mb-5">Partner Feedback</h2>
         <div class="row justify-content-center">
             <div class="col-lg-8">
-                <div class="testimonials">
-                    {% for testimonial in testimonials %}
-                        <div class="testimonial border p-4 mb-4 rounded shadow-sm text-start bg-white">
-                            
-                            {# 🔴 Ensure you use the corrected template variables here: .content, .author_name, .author_title #}
-                            <p class="lead mb-3 fst-italic">"{{ testimonial.content }}"</p>
-                            
-                            <strong class="text-primary">- {{ testimonial.author_name }}{% if testimonial.author_title %}, <span class="text-muted">{{ testimonial.author_title }}</span>{% endif %}</strong>
-                        </div>
-                    {% empty %}
-                        <p class="text-muted">No testimonials yet. Be the first to share your experience!</p>
-                    {% endfor %}
+                {% for testimonial in testimonials %}
+                <div class="testimonial p-4 mb-4 rounded-4 text-start bg-white shadow-sm">
+                    <p class="lead fst-italic">"{{ testimonial.content }}"</p>
+                    <strong class="text-primary">— {{ testimonial.author_name }}</strong>
+                    {% if testimonial.author_title %}<span class="text-muted small">, {{ testimonial.author_title }}</span>{% endif %}
                 </div>
-
-                <div class="pagination d-flex justify-content-center align-items-center gap-3 mt-4">
-                    {% if testimonials.has_previous %}
-                        <a href="?page={{ testimonials.previous_page_number }}" class="btn btn-outline-primary">Previous</a>
-                    {% endif %}
-
-                    <span class="fw-bold">Page {{ testimonials.number }} of {{ testimonials.paginator.num_pages }}</span>
-
-                    {% if testimonials.has_next %}
-                        <a href="?page={{ testimonials.next_page_number }}" class="btn btn-outline-primary">Next</a>
-                    {% endif %}
-                </div>
+                {% empty %}
+                <p class="opacity-50">No testimonials yet.</p>
+                {% endfor %}
             </div>
         </div>
     </section>
 
-    <section class="container py-5 my-5 text-center call-to-action-bg text-white rounded-3 shadow-lg">
-        <h2 class="display-4 fw-bold mb-4">Ready to Build Your Next Big Idea?</h2>
-        <p class="lead mb-5">Let's connect and transform your concepts into innovative digital solutions.</p>
-        <a href="{% url 'contact' %}" class="btn btn-warning btn-lg px-5 py-3 animate__animated animate__pulse animate__infinite">Get a Free Consultation</a>
+    <section class="container py-5 my-5 text-center call-to-action-bg text-white shadow-lg p-5">
+        <h2 class="display-5 fw-bold mb-3">Ready to Build Your Next Big Idea?</h2>
+        <p class="lead mb-4 opacity-75">Let's connect and transform your concepts into digital solutions.</p>
+        <a href="{% url 'contact' %}" class="btn btn-light btn-lg px-5 py-3 fw-bold text-primary rounded-pill animate__animated animate__pulse animate__infinite">Get Free Consultation</a>
     </section>
 
-</main> {# CLOSE THE <main> TAG #}
+</main>
 {% endblock %}
 
 {% block scripts %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const observerOptions = {
-                root: null, // viewport
-                rootMargin: "0px",
-                threshold: 0.2 // Trigger when 20% of the item is visible
-            };
-
-            const observer = new IntersectionObserver((entries, observer) => {
+            const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('animate__fadeInUp');
-                        observer.unobserve(entry.target);
                     }
                 });
-            }, observerOptions);
+            }, { threshold: 0.1 });
 
-            document.querySelectorAll('section.my-5:not(.hero-section), section.call-to-action-bg').forEach(section => {
+            document.querySelectorAll('section').forEach(section => {
                 section.classList.add('animate__animated');
                 observer.observe(section);
             });
