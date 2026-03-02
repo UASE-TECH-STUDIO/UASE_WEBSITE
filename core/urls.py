@@ -25,7 +25,8 @@ urlpatterns = [
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
     path('graphics/', views.graphics_portfolio, name='graphics_portfolio'),
-
+    # Change registration_view to register_view
+    path('registration/', views.register_view, name='registration'),
     
 
     # Blog URLs

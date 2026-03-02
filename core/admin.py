@@ -1,162 +1,125 @@
-from django.contrib import admin
-from django.utils.timezone import now
-from .models import Testimonial, UploadedFile, ContactMessage, Post, Comment
-from .services.email_service import send_admin_reply
-from django.http import HttpResponse
 import csv
-
-
-
+from django.contrib import admin
+from django.http import HttpResponse
+from django.utils.timezone import now
+from django.utils.html import format_html
 from .models import (
-    Testimonial,
-    UploadedFile,
-    ContactMessage,
-    Post,
-    Comment,
+    Testimonial, UploadedFile, ContactMessage, 
+    Post, Comment, ProgramRegistration
 )
-
 from .services.email_service import send_admin_reply
 
+# ===============================
+# PROGRAM REGISTRATION ADMIN
+# ===============================
+@admin.register(ProgramRegistration)
+class ProgramRegistrationAdmin(admin.ModelAdmin):
+    # FIXED: Added 'is_confirmed' here so 'list_editable' works
+    list_display = (
+        "name", "program_tag", "mode", "payment_status", 
+        "amount_paid", "is_confirmed", "whatsapp", "created_at"
+    )
+    
+    # Quick filters on the right sidebar
+    list_filter = ("program", "mode", "payment_method", "is_confirmed", "created_at")
+    
+    # Search box for finding students
+    search_fields = ("name", "email", "phone", "whatsapp")
+    
+    # Allow one-click confirmation from the list view
+    list_editable = ("is_confirmed",)
+    
+    actions = ["export_students_csv", "mark_as_confirmed"]
+
+    # Color-coded Program labels
+    def program_tag(self, obj):
+        colors = {
+            'launch': '#fbbf24',    # Gold
+            'pro': '#60a5fa',       # Blue
+            'fullstack': '#a78bfa', # Purple
+            'extra': '#f472b6',     # Pink
+        }
+        color = colors.get(obj.program, '#94a3b8')
+        return format_html(
+            '<span style="background: {}; color: black; padding: 3px 10px; border-radius: 10px; font-weight: bold; font-size: 10px; text-transform: uppercase;">{}</span>',
+            color, obj.program
+        )
+    program_tag.short_description = "Track"
+
+    # Visual Payment Status
+    def payment_status(self, obj):
+        if obj.is_confirmed:
+            return format_html('<b style="color: #059669;">Verified ✅</b>')
+        return format_html('<b style="color: #dc2626;">Pending ⏳</b>')
+    payment_status.short_description = "Status"
+
+    def mark_as_confirmed(self, request, queryset):
+        queryset.update(is_confirmed=True)
+    mark_as_confirmed.short_description = "Confirm selected payments"
+
+    def export_students_csv(self, request, queryset):
+        response = HttpResponse(content_type="text/csv")
+        response["Content-Disposition"] = f'attachment; filename="uase_students_{now().date()}.csv"'
+        writer = csv.writer(response)
+        writer.writerow(["Name", "Email", "Phone", "WhatsApp", "Mode", "Program", "Depth", "Amount", "Confirmed"])
+        for student in queryset:
+            writer.writerow([
+                student.name, student.email, student.phone, student.whatsapp,
+                student.mode, student.program, student.depth, student.amount_paid, student.is_confirmed
+            ])
+        return response
+    export_students_csv.short_description = "Export Student List (CSV)"
 
 # ===============================
-# TESTIMONIAL ADMIN
-# ===============================
-@admin.register(Testimonial)
-class TestimonialAdmin(admin.ModelAdmin):
-    list_display = ("author_name", "author_title", "is_approved", "created_at")
-    list_filter = ("is_approved", "created_at")
-    search_fields = ("author_name", "content")
-    list_editable = ("is_approved",)
-    ordering = ("-created_at",)
-
-
-# ===============================
-# UPLOADED FILE ADMIN
-# ===============================
-@admin.register(UploadedFile)
-class UploadedFileAdmin(admin.ModelAdmin):
-    list_display = ("name", "file", "uploaded_at")
-    search_fields = ("name",)
-    ordering = ("-uploaded_at",)
-
-
-# ===============================
-# CONTACT MESSAGE ADMIN (CRM)
+# CONTACT MESSAGE ADMIN
 # ===============================
 @admin.register(ContactMessage)
 class ContactMessageAdmin(admin.ModelAdmin):
-    list_display = (
-        "name",
-        "email",
-        "subject",
-        "country",
-        "ip_address",
-        "created_at",
-        "is_read",
-        "user",
-    )
-
+    list_display = ("name", "email", "subject", "country", "created_at", "is_read")
     list_filter = ("country", "is_read", "created_at")
-    search_fields = (
-        "name",
-        "email",
-        "subject",
-        "message",
-        "ip_address",
-    )
-
+    search_fields = ("name", "email", "subject", "message")
     list_editable = ("is_read",)
-    ordering = ("-created_at",)
-
     readonly_fields = ("created_at", "ip_address", "country")
-
-    fieldsets = (
-        ("User Message", {
-            "fields": ("name", "email", "message")
-        }),
-        ("Admin Reply", {
-            "fields": ("admin_reply",)
-        }),
-        ("System Metadata", {
-            "fields": ("ip_address", "country", "created_at")
-        }),
-    )
-
     actions = ["send_reply", "export_contacts_csv"]
 
     def send_reply(self, request, queryset):
         sent = 0
         for msg in queryset:
             if msg.admin_reply and msg.email:
-                send_admin_reply(
-                    to_email=msg.email,
-                    name=msg.name,
-                    reply_message=msg.admin_reply,
-                )
+                send_admin_reply(to_email=msg.email, name=msg.name, reply_message=msg.admin_reply)
                 msg.replied_at = now()
                 msg.is_read = True
                 msg.save()
                 sent += 1
-
-        self.message_user(
-            request,
-            f"{sent} reply email(s) successfully sent."
-        )
-
-    send_reply.short_description = "Send admin reply email"
+        self.message_user(request, f"{sent} reply email(s) successfully sent.")
 
     def export_contacts_csv(self, request, queryset):
         response = HttpResponse(content_type="text/csv")
         response["Content-Disposition"] = 'attachment; filename="contacts.csv"'
-
         writer = csv.writer(response)
-        writer.writerow([
-            "Name",
-            "Email",
-            "Country",
-            "IP Address",
-            "Message",
-            "Created At",
-            "Replied",
-        ])
-
+        writer.writerow(["Name", "Email", "Country", "Message", "Created At"])
         for obj in queryset:
-            writer.writerow([
-                obj.name,
-                obj.email,
-                obj.country,
-                obj.ip_address,
-                obj.message,
-                obj.created_at,
-                bool(obj.replied_at),
-            ])
-
+            writer.writerow([obj.name, obj.email, obj.country, obj.message, obj.created_at])
         return response
 
-    export_contacts_csv.short_description = "Export selected contacts to CSV"
-
-
 # ===============================
-# BLOG POST ADMIN
+# REMAINING ADMINS
 # ===============================
+@admin.register(Testimonial)
+class TestimonialAdmin(admin.ModelAdmin):
+    list_display = ("author_name", "author_title", "is_approved", "created_at")
+    list_editable = ("is_approved",)
+
+@admin.register(UploadedFile)
+class UploadedFileAdmin(admin.ModelAdmin):
+    list_display = ("name", "file", "uploaded_at")
+
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ("title", "slug", "author", "created_on", "updated_on")
-    list_filter = ("author", "created_on")
-    search_fields = ("title", "content")
+    list_display = ("title", "slug", "author", "created_on")
     prepopulated_fields = {"slug": ("title",)}
-    raw_id_fields = ("author",)
-    ordering = ("-created_on",)
 
-
-# ===============================
-# COMMENT ADMIN
-# ===============================
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
     list_display = ("post", "author", "created_on", "is_approved")
-    list_filter = ("is_approved", "created_on")
-    search_fields = ("content", "author__username")
     list_editable = ("is_approved",)
-    raw_id_fields = ("post", "author")
-    ordering = ("-created_on",)

@@ -1,20 +1,26 @@
 import os
 import json
 import requests
+from django.conf import settings
+from django.contrib import messages
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.core.mail import send_mail
+from django.core.paginator import Paginator
 from django.http import HttpResponse, JsonResponse, Http404
 from django.shortcuts import render, redirect, get_object_or_404
-from django.core.mail import send_mail
-from django.conf import settings
-from django.core.paginator import Paginator
-from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
-from .models import Testimonial, UploadedFile, ContactMessage, Post, Comment # Import new models
-from .forms import ContactForm # You'll need to adjust this if you add a subject field to your form
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth import login, authenticate, logout
-from django.contrib import messages
-from django import forms  # <--- Essential for using forms.Textarea
-from django.forms import ModelForm # For CommentForm
+from django import forms
+from django.forms import ModelForm
+
+# Import your models (Unified)
+from .models import (
+    Testimonial, UploadedFile, ContactMessage, 
+    Post, Comment, ProgramRegistration
+)
+from .forms import ContactForm
+from .services.email_service import send_admin_notification, send_user_confirmation
 # A simple form for comments (add this to forms.py later if you want)
 # For now, we'll define it here for simplicity in views.py
 class CommentForm(ModelForm):
@@ -1232,50 +1238,40 @@ def service_detail(request, service_slug):
         }
     }
 
+def service_detail(request, service_slug):
     service = services_data.get(service_slug)
     if not service:
         raise Http404("Service not found.")
-    
     return render(request, 'core/service_detail.html', {'service': service})
-def portfolio(request):
-    context = {
-        'projects': projects_data
-    }
-    return render(request, 'core/portfolio.html', context)
 
+def portfolio(request):
+    return render(request, 'core/portfolio.html', {'projects': projects_data})
 
 def project_detail(request, project_slug):
-    # This function now correctly references the global projects_data dictionary
     project = projects_data.get(project_slug) 
     if not project:
         raise Http404("Project not found")
-    
-    context = {
+    return render(request, 'core/project_detail.html', {
         'project': project,
         'MEDIA_URL': settings.MEDIA_URL,
-    }
-    return render(request, 'core/project_detail.html', context)
+    })
 
 def resources(request):
-    context = {
-        'resources': resources_data # Pass the resources data to the template
-    }
-    return render(request, 'core/resources.html', context)
+    return render(request, 'core/resources.html', {'resources': resources_data})
 
+def resume(request):
+    return render(request, 'core/resume.html')
 
-@login_required
-def upload_file(request):
-    if request.method == 'POST' and request.FILES.get('file'):
-        UploadedFile.objects.create(
-            name=request.POST.get('name'),
-            file=request.FILES['file']
-        )
-        messages.success(request, 'File uploaded successfully!')
-        return redirect('upload_file')
-    return render(request, 'core/upload.html')
+def graphics_portfolio(request):
+    images = [f'graphic{i}.jpg' for i in range(1, 26)]
+    return render(request, 'core/graphics_portfolio.html', {
+        'images': images,
+        'pdf_link': 'core/downloads/uase_graphics_catalog.pdf'
+    })
 
-
-
+# ===============================
+# CONTACT & CRM
+# ===============================
 
 @csrf_exempt
 def contact(request):
@@ -1285,7 +1281,6 @@ def contact(request):
     form = ContactForm(request.POST)
     recaptcha_token = request.POST.get("g-recaptcha-response")
 
-    # --- Verify reCAPTCHA ---
     try:
         r = requests.post(
             "https://www.google.com/recaptcha/api/siteverify",
@@ -1293,140 +1288,138 @@ def contact(request):
                 "secret": settings.RECAPTCHA_SECRET_KEY,
                 "response": recaptcha_token,
                 "remoteip": request.META.get("REMOTE_ADDR"),
-            },
-            timeout=5,
-        )
-        result = r.json()
+            }, timeout=5
+        ).json()
     except Exception:
-        return JsonResponse({
-            "success": False,
-            "message": "❌ reCAPTCHA verification failed."
-        })
+        return JsonResponse({"success": False, "message": "❌ reCAPTCHA verification failed."})
 
-    if not result.get("success"):
-        return JsonResponse({
-            "success": False,
-            "message": "❌ reCAPTCHA failed. Please try again."
-        })
+    if not r.get("success") or not form.is_valid():
+        return JsonResponse({"success": False, "message": "❌ Invalid submission or reCAPTCHA failed.", "errors": form.errors})
 
-    if not form.is_valid():
-        return JsonResponse({
-            "success": False,
-            "message": "❌ Invalid form submission.",
-            "errors": form.errors
-        })
-
-    # --- Extract Data ---
-    name = form.cleaned_data["name"]
-    email = form.cleaned_data["email"]
-    subject = form.cleaned_data.get("subject", "No Subject")
-    message = form.cleaned_data["message"]
-
-    user = request.user if request.user.is_authenticated else None
     ip_address = get_client_ip(request)
     country = "Unknown"
-
     try:
         geo = requests.get(f"https://ipapi.co/{ip_address}/json/", timeout=4).json()
         country = geo.get("country_name", "Unknown")
-    except Exception:
-        pass
+    except: pass
 
-    # --- Save Message ---
     ContactMessage.objects.create(
-        name=name,
-        email=email,
-        subject=subject,
-        message=message,
-        user=user,
+        name=form.cleaned_data["name"],
+        email=form.cleaned_data["email"],
+        subject=form.cleaned_data.get("subject", "No Subject"),
+        message=form.cleaned_data["message"],
+        user=request.user if request.user.is_authenticated else None,
         ip_address=ip_address,
         country=country,
     )
 
-    # --- Send Emails (Resend) ---
     try:
         send_admin_notification({
-            "name": name,
-            "email": email,
-            "subject": subject,
-            "message": message,
+            "name": form.cleaned_data["name"],
+            "email": form.cleaned_data["email"],
+            "subject": form.cleaned_data.get("subject"),
+            "message": form.cleaned_data["message"],
             "ip_address": ip_address,
             "country": country,
         })
+        send_user_confirmation(form.cleaned_data["name"], form.cleaned_data["email"])
+    except:
+        return JsonResponse({"success": False, "message": "❌ Message saved but email delivery failed."})
 
-        send_user_confirmation(name, email)
+    return JsonResponse({"success": True, "message": "✅ Message sent successfully!"})
 
-    except Exception as e:
-        return JsonResponse({
-            "success": False,
-            "message": "❌ Message saved but email delivery failed."
-        })
+# ===============================
+# ADMISSIONS / REGISTRATION
+# ===============================
 
-    return JsonResponse({
-        "success": True,
-        "message": "✅ Message sent successfully! We will contact you shortly."
-    })
+# ===============================
+# ADMISSIONS / REGISTRATION
+# ===============================
 
-
-
-
-
-def resume(request):
-    """
-    Renders the professional CV/Resume page.
-    As you scale, you can pull 'Featured Projects' or 'Tech Mastery' 
-    from your database models here.
-    """
-    # Point this to where your new HTML file is located
-    return render(request, 'core/resume.html')
-
-
-# --- User Authentication Views ---
 def register_view(request):
+    # This context passes keys to your template
+    context = {
+        "flutterwave_public_key": getattr(settings, 'FLUTTERWAVE_PUBLIC_KEY', ''),
+        "paystack_public_key": getattr(settings, 'PAYSTACK_PUBLIC_KEY', ''),
+    }
+
+    if request.method == 'POST':
+        amount_map = {'launch': 20000, 'pro': 100000, 'fullstack': 150000, 'extra': 200000}
+        program_slug = request.POST.get('program')
+        payment_method = request.POST.get('payment_method')
+        
+        # Determine if payment is instant (Card) or needs verification (Transfer)
+        # Note: 'paystack' and 'flutterwave' are card methods
+        is_card = payment_method in ['paystack', 'flutterwave']
+
+        # Capture reference from either Flutterwave or Paystack
+        # The JS sends 'payment_ref' for Flutterwave and 'paystack_ref' for Paystack
+        reference = request.POST.get('paystack_ref') or request.POST.get('payment_ref') or 'N/A'
+
+        # Save the Registration and the File
+        reg = ProgramRegistration.objects.create(
+            name=request.POST.get('name'),
+            email=request.POST.get('email'),
+            phone=request.POST.get('phone'),
+            whatsapp=request.POST.get('whatsapp'),
+            program=program_slug,
+            payment_method=payment_method,
+            amount_paid=amount_map.get(program_slug, 0),
+            transaction_ref=reference,
+            payment_screenshot=request.FILES.get('payment_screenshot'),
+            is_confirmed=True if is_card else False
+        )
+
+        # 1. Send Email Notification
+        try:
+            subject = "Registration Received - UASE Tech Studio"
+            if is_card:
+                message = f"Hi {reg.name}, your payment for the {reg.program} program has been confirmed! We will contact you on WhatsApp shortly to begin."
+            else:
+                message = f"Hi {reg.name}, we have received your payment proof for the {reg.program} program. Our team will verify the transfer and contact you shortly."
+            
+            send_mail(
+                subject,
+                message,
+                settings.DEFAULT_FROM_EMAIL,
+                [reg.email],
+                fail_silently=True,
+            )
+        except:
+            pass
+
+        # 2. Return Response for AJAX/JavaScript
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            return JsonResponse({'status': 'success', 'message': 'Registration successful'})
+            
+        messages.success(request, "Registration submitted successfully!")
+        return redirect('home')
+
+    # This handles the GET request
+    return render(request, 'core/registration.html', context)
+# ===============================
+# AUTHENTICATION & FILES
+# ===============================
+
+def register_user(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            login(request, user)
+            login(request, form.save())
             messages.success(request, "Registration successful. Welcome!")
             return redirect('home')
-        else:
-            messages.error(request, "Registration failed. Please correct the errors below.")
-    else:
-        form = UserCreationForm()
-    return render(request, 'core/register.html', {'form': form})
-
+        messages.error(request, "Registration failed.")
+    return render(request, 'core/register.html', {'form': UserCreationForm()})
 
 def login_view(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                login(request, user)
-                messages.success(request, f"Welcome back, {username}!")
-                return redirect('home')
-            else:
-                messages.error(request, "Invalid username or password.")
-        else:
-            messages.error(request, "Invalid username or password.")
-    else:
-        form = AuthenticationForm()
-    return render(request, 'core/login.html', {'form': form})
-
-
-
-def graphics_portfolio(request):
-    # Explicitly listing your 25 graphics
-    images = [f'graphic{i}.jpg' for i in range(1, 26)]
-    
-    context = {
-        'images': images,
-        'pdf_link': 'core/downloads/uase_graphics_catalog.pdf'
-    }
-    return render(request, 'core/graphics_portfolio.html', context)
+            login(request, form.get_user())
+            messages.success(request, f"Welcome back, {form.cleaned_data.get('username')}!")
+            return redirect('home')
+        messages.error(request, "Invalid username or password.")
+    return render(request, 'core/login.html', {'form': AuthenticationForm()})
 
 @login_required
 def logout_view(request):
@@ -1434,60 +1427,47 @@ def logout_view(request):
     messages.info(request, "You have been logged out.")
     return redirect('home')
 
+@login_required
+def upload_file(request):
+    if request.method == 'POST' and request.FILES.get('file'):
+        UploadedFile.objects.create(name=request.POST.get('name'), file=request.FILES['file'])
+        messages.success(request, 'File uploaded successfully!')
+        return redirect('upload_file')
+    return render(request, 'core/upload.html')
 
-# --- Blog Views ---
+# ===============================
+# BLOG VIEWS
+# ===============================
+
 def blog_list(request):
     posts = Post.objects.all()
-    paginator = Paginator(posts, 6) # Show 6 posts per page
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+    page_obj = Paginator(posts, 6).get_page(request.GET.get('page'))
     return render(request, 'core/blog_list.html', {'page_obj': page_obj})
 
 def blog_detail(request, slug):
     post = get_object_or_404(Post, slug=slug)
-    comments = post.comments.filter(is_approved=True) # Only show approved comments
-    new_comment = None
-    
-    if request.method == 'POST':
-        comment_form = CommentForm(data=request.POST)
-        if comment_form.is_valid():
-            if request.user.is_authenticated:
-                new_comment = comment_form.save(commit=False)
-                new_comment.post = post
-                new_comment.author = request.user
-                new_comment.save()
-                messages.success(request, "Your comment has been submitted!")
-                return redirect('blog_detail', slug=post.slug)
-            else:
-                messages.error(request, "You must be logged in to comment.")
-                # You might want to redirect to login or show an inline message
-                return redirect('login') # Or render the page again with an error on the form
-    else:
-        comment_form = CommentForm()
+    comments = post.comments.filter(is_approved=True)
+    form = CommentForm(request.POST or None)
 
-    return render(request, 'core/blog_detail.html', {
-        'post': post,
-        'comments': comments,
-        'comment_form': comment_form,
-        'new_comment': new_comment # Pass this for potential feedback if comment was just added
-    })
+    if request.method == 'POST' and form.is_valid():
+        if request.user.is_authenticated:
+            comment = form.save(commit=False)
+            comment.post, comment.author = post, request.user
+            comment.save()
+            messages.success(request, "Your comment has been submitted!")
+            return redirect('blog_detail', slug=post.slug)
+        messages.error(request, "You must be logged in to comment.")
+        return redirect('login')
+
+    return render(request, 'core/blog_detail.html', {'post': post, 'comments': comments, 'comment_form': form})
 
 
-# --- Error Handlers (Optional but Recommended) ---
-def custom_404(request, exception):
-    return render(request, 'core/404.html', {}, status=404)
 
-def custom_500(request):
-    return render(request, 'core/500.html', {}, status=500)
+# ===============================
+# SYSTEM HANDLERS
+# ===============================
+def custom_404(request, exception): 
+    return render(request, 'core/404.html', status=404)
 
-try:
-    send_mail(
-        subject='Test Email',
-        message='Hello, this is a test.',
-        from_email=settings.DEFAULT_FROM_EMAIL,
-        recipient_list=[settings.CONTACT_RECIPIENT_EMAIL],
-        fail_silently=False,
-    )
-except Exception as e:
-    print("Email sending error:", e)
-
+def custom_500(request): 
+    return render(request, 'core/500.html', status=500)

@@ -151,7 +151,11 @@ CONTACT_RECIPIENT_EMAIL = os.environ.get("CONTACT_RECIPIENT_EMAIL")
 # reCAPTCHA
 RECAPTCHA_SECRET_KEY = os.environ.get("RECAPTCHA_SECRET_KEY")
 
+# Paystack (Current: Test Mode)
+PAYSTACK_PUBLIC_KEY = "pk_test_b8c646f5e7cbaa9791c6c1c16e67623"
 
+# Flutterwave (Current: LIVE Mode - Ready for production)
+FLUTTERWAVE_PUBLIC_KEY = "FLWPUBK-67a8337d2753ae69151fc99f1306dcde-X"
 
 
 
@@ -159,3 +163,5 @@ RECAPTCHA_SECRET_KEY = os.environ.get("RECAPTCHA_SECRET_KEY")
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
+
+
