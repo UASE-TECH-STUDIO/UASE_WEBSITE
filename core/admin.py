@@ -12,24 +12,55 @@ from .services.email_service import send_admin_reply
 # ===============================
 # PROGRAM REGISTRATION ADMIN
 # ===============================
+
+
 @admin.register(ProgramRegistration)
 class ProgramRegistrationAdmin(admin.ModelAdmin):
-    # FIXED: Added 'is_confirmed' here so 'list_editable' works
+    # 1. Columns shown in the main list view
     list_display = (
-        "name", "program_tag", "mode", "payment_status", 
+        "name", "program", "mode", "payment_method", 
         "amount_paid", "is_confirmed", "whatsapp", "created_at"
     )
     
-    # Quick filters on the right sidebar
+    # 2. Sidebar filters
     list_filter = ("program", "mode", "payment_method", "is_confirmed", "created_at")
     
-    # Search box for finding students
-    search_fields = ("name", "email", "phone", "whatsapp")
+    # 3. Search functionality
+    search_fields = ("name", "email", "phone", "whatsapp", "location")
     
-    # Allow one-click confirmation from the list view
+    # 4. Quick edit checkmark in the list
     list_editable = ("is_confirmed",)
+
+    # 5. Organization of the detail page (when you click a name)
+    fieldsets = (
+        ("Personal Information", {
+            "fields": ("name", "email", "phone", "whatsapp", "occupation")
+        }),
+        ("Address & Goals", {
+            "fields": ("location", "address", "aim")
+        }),
+        ("Program Details", {
+            "fields": ("program", "mode", "depth")
+        }),
+        ("Payment Info", {
+            "fields": ("payment_method", "amount_paid", "transaction_ref", "payment_screenshot", "is_confirmed")
+        }),
+    )
+
+    # 6. Action to export to CSV (Excel)
+    actions = ["export_to_csv"]
+
+    @admin.action(description="Export selected to CSV")
+    def export_to_csv(self, request, queryset):
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="registrations.csv"'
+        writer = csv.writer(response)
+        writer.writerow(['Name', 'Email', 'Phone', 'Program', 'Mode', 'Location', 'Paid'])
+        for obj in queryset:
+            writer.writerow([obj.name, obj.email, obj.phone, obj.program, obj.mode, obj.location, obj.amount_paid])
+        return response
+
     
-    actions = ["export_students_csv", "mark_as_confirmed"]
 
     # Color-coded Program labels
     def program_tag(self, obj):

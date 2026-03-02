@@ -89,12 +89,23 @@ class ProgramRegistration(models.Model):
         ('extra', 'Full Stack Extra'),
     ]
     MODE_CHOICES = [('Physical', 'Physical'), ('Online', 'Online')]
-    PAYMENT_METHODS = [('card', 'Card'), ('transfer', 'Transfer')]
+    # Updated to match your form values exactly
+    PAYMENT_METHODS = [
+        ('flutterwave', 'Flutterwave'), 
+        ('paystack', 'Paystack'), 
+        ('transfer', 'Transfer')
+    ]
 
     name = models.CharField(max_length=255)
     email = models.EmailField()
     phone = models.CharField(max_length=20)
     whatsapp = models.CharField(max_length=20)
+    
+    # NEW FIELDS ADDED HERE
+    location = models.CharField(max_length=255, blank=True, null=True)
+    occupation = models.CharField(max_length=100, blank=True, null=True)
+    address = models.TextField(blank=True, null=True)
+    aim = models.TextField(blank=True, null=True)
     
     mode = models.CharField(max_length=20, choices=MODE_CHOICES)
     program = models.CharField(max_length=50, choices=PROGRAM_CHOICES)
@@ -102,18 +113,16 @@ class ProgramRegistration(models.Model):
     
     payment_method = models.CharField(max_length=20, choices=PAYMENT_METHODS)
     transaction_ref = models.CharField(max_length=200, blank=True, null=True)
-    paystack_ref = models.CharField(max_length=100, blank=True, null=True)
     
-    # Screenshot field fixed here:
     payment_screenshot = models.ImageField(upload_to='screenshots/', blank=True, null=True)
-    
     amount_paid = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     is_confirmed = models.BooleanField(default=False)
-    
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         ordering = ['-created_at']
 
     def __str__(self):
-        return f"{self.name} - {self.get_program_display()}"
+        return f"{self.name} - {self.program}"
+
+  
