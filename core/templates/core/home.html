@@ -5,184 +5,110 @@
 
 {% block content %}
 <style>
-  /* ─── HERO ─── */
   .hero-section {
-    background: url("{% static 'core/images/about_journey.jpg' %}") no-repeat center center;
-    background-size: cover;
-    min-height: 90vh;
-    display: flex; align-items: center; justify-content: center;
-    position: relative; overflow: hidden;
-    margin-top: -3rem;
-    border-radius: 0 0 60px 60px;
+    background: url("{% static 'core/images/about_journey.jpg' %}") no-repeat center center / cover;
+    min-height: 92vh; display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden; margin-top: -3rem; border-radius: 0 0 60px 60px;
   }
   .hero-section .overlay {
     position: absolute; inset: 0;
-    background: linear-gradient(135deg, rgba(5,8,16,0.92) 0%, rgba(5,8,16,0.65) 100%);
-    z-index: 0;
+    background: linear-gradient(135deg, rgba(5,8,16,0.93) 0%, rgba(5,8,16,0.62) 100%); z-index: 0;
   }
-  .hero-logo-style { max-height: 90px; filter: drop-shadow(0 0 18px rgba(0,210,255,0.4)); }
   .hero-badge {
     display: inline-flex; align-items: center; gap: 8px;
     background: rgba(0,210,255,0.1); border: 1px solid rgba(0,210,255,0.25);
-    color: #00d2ff; padding: 6px 16px; border-radius: 100px;
-    font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase;
-    font-family: 'Space Grotesk', sans-serif; font-weight: 500;
-    margin-bottom: 1.5rem;
+    color: #00d2ff; padding: 6px 18px; border-radius: 100px;
+    font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500;
   }
   .hero-badge-dot { width: 7px; height: 7px; background: #2ecc71; border-radius: 50%; animation: blink 2s infinite; }
-  @keyframes blink { 0%,100%{opacity:1}50%{opacity:0.3} }
-  .hero-stats { display: flex; gap: 2.5rem; justify-content: center; flex-wrap: wrap; margin-top: 2.5rem; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
   .hero-stat-num { font-size: 2rem; font-weight: 700; color: #00d2ff; line-height: 1; font-family: 'Syncopate', sans-serif; }
-  .hero-stat-label { font-size: 0.75rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+  .hero-stat-label { font-size: 0.72rem; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
 
-  /* ─── FEATURED PROJECTS ─── */
-  .featured-label {
+  .section-label {
     display: inline-flex; align-items: center; gap: 8px;
-    font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
-    color: var(--accent); font-weight: 600; margin-bottom: 0.75rem;
+    font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--accent); font-weight: 600; margin-bottom: 0.5rem;
   }
-  .featured-label::before { content: ''; display: block; width: 20px; height: 1px; background: var(--accent); }
+  .section-label::before { content:''; display:block; width:18px; height:1px; background:var(--accent); }
 
-  .featured-project-card {
+  .feat-card {
     border-radius: 20px; overflow: hidden;
-    border: 1px solid rgba(255,255,255,0.08);
-    transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
-    position: relative;
+    border: 1px solid rgba(255,255,255,0.08); transition: all 0.4s ease;
   }
-  body.dark-mode .featured-project-card { background: #0a0f1d; }
-  body:not(.dark-mode) .featured-project-card { background: #fff; box-shadow: 0 4px 24px rgba(0,0,0,0.07); }
+  body.dark-mode .feat-card { background: #0a0f1d; }
+  body:not(.dark-mode) .feat-card { background:#fff; box-shadow:0 4px 24px rgba(0,0,0,0.07); border-color:#dee2e6; }
+  .feat-card:hover { transform: translateY(-8px); border-color: var(--accent); box-shadow: 0 20px 50px rgba(0,210,255,0.12); }
+  .feat-card-img { width:100%; height:270px; object-fit:cover; transition: transform 0.5s ease; display:block; }
+  .feat-card:hover .feat-card-img { transform:scale(1.04); }
+  .feat-img-placeholder { width:100%; height:270px; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,#0a0f1d,#111827); font-size:4rem; opacity:0.25; }
 
-  .featured-project-card:hover { transform: translateY(-8px); border-color: var(--accent); box-shadow: 0 20px 50px rgba(0,210,255,0.12); }
+  .badge-feat { position:absolute; top:14px; left:14px; background:var(--accent); color:#000; padding:4px 12px; border-radius:100px; font-size:0.7rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; }
+  .badge-live { position:absolute; top:14px; right:14px; background:rgba(46,204,113,0.15); border:1px solid rgba(46,204,113,0.4); color:#2ecc71; padding:4px 12px; border-radius:100px; font-size:0.7rem; font-weight:600; display:flex; align-items:center; gap:5px; }
+  .live-dot { width:6px; height:6px; background:#2ecc71; border-radius:50%; animation:blink 2s infinite; }
 
-  .featured-project-card .project-img {
-    width: 100%; height: 280px; object-fit: cover;
-    transition: transform 0.5s ease;
-  }
-  .featured-project-card:hover .project-img { transform: scale(1.04); }
-  .project-img-placeholder {
-    width: 100%; height: 280px;
-    display: flex; align-items: center; justify-content: center;
-    background: linear-gradient(135deg, #0a0f1d, #111827);
-    font-size: 4rem; opacity: 0.3;
-  }
+  .tech-badge { background:rgba(0,210,255,0.08); color:#00d2ff; border:1px solid rgba(0,210,255,0.2); font-size:0.72rem; padding:3px 10px; border-radius:100px; display:inline-block; }
+  body:not(.dark-mode) .tech-badge { background:rgba(13,110,253,0.08); color:#0d6efd; border-color:rgba(13,110,253,0.2); }
 
-  .featured-project-card .project-badge-new {
-    position: absolute; top: 16px; left: 16px;
-    background: var(--accent); color: #000;
-    padding: 4px 12px; border-radius: 100px;
-    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-  .featured-project-card .project-badge-live {
-    position: absolute; top: 16px; right: 16px;
-    background: rgba(46,204,113,0.15); border: 1px solid rgba(46,204,113,0.4);
-    color: #2ecc71; padding: 4px 12px; border-radius: 100px;
-    font-size: 0.7rem; font-weight: 600; letter-spacing: 0.06em;
-    display: flex; align-items: center; gap: 5px;
-  }
-  .live-dot { width: 6px; height: 6px; background: #2ecc71; border-radius: 50%; animation: blink 2s infinite; }
+  .metric-num { font-size:1.3rem; font-weight:700; color:var(--accent); line-height:1; font-family:'Syncopate',sans-serif; }
+  .metric-label { font-size:0.68rem; opacity:0.5; text-transform:uppercase; letter-spacing:0.07em; margin-top:3px; }
 
-  .badge-tech-dark {
-    background: rgba(0,210,255,0.08); color: #00d2ff;
-    border: 1px solid rgba(0,210,255,0.2);
-    font-size: 0.72rem; padding: 3px 10px; border-radius: 100px;
-    font-family: 'Space Grotesk', monospace;
-  }
-  body:not(.dark-mode) .badge-tech-dark {
-    background: rgba(13,110,253,0.08); color: #0d6efd;
-    border-color: rgba(13,110,253,0.2);
-  }
-
-  .project-metrics { display: flex; gap: 1.5rem; }
-  .metric { text-align: center; }
-  .metric-num { font-size: 1.2rem; font-weight: 700; color: var(--accent); font-family: 'Syncopate', sans-serif; }
-  .metric-label { font-size: 0.7rem; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.07em; }
-  body:not(.dark-mode) .metric-label { color: #6c757d; }
-
-  /* ─── WHO ─── */
-  .about-section-img {
-    width: 200px; height: 200px; object-fit: cover;
-    border-radius: 50%; border: 4px solid var(--accent);
-    box-shadow: 0 0 40px rgba(0,210,255,0.2);
-  }
-
-  /* ─── EXPERTISE CARDS ─── */
   .expertise-card {
-    border-radius: 16px; padding: 2rem;
-    border: 1px solid rgba(255,255,255,0.06);
-    transition: all 0.35s ease;
-    height: 100%;
+    border-radius:18px; padding:2rem; border:1px solid rgba(255,255,255,0.06);
+    transition:all 0.35s ease; height:100%;
   }
-  body.dark-mode .expertise-card { background: #0a0f1d; }
-  body:not(.dark-mode) .expertise-card { background: #f8f9fa; border-color: #dee2e6; }
-  .expertise-card:hover { transform: translateY(-8px); border-color: var(--accent); box-shadow: 0 12px 32px rgba(0,210,255,0.1); }
-  .expertise-icon { font-size: 2.2rem; margin-bottom: 1rem; }
+  body.dark-mode .expertise-card { background:#0a0f1d; }
+  body:not(.dark-mode) .expertise-card { background:#f8f9fa; border-color:#dee2e6; }
+  .expertise-card:hover { transform:translateY(-8px); border-color:var(--accent); box-shadow:0 12px 32px rgba(0,210,255,0.1); }
 
-  /* ─── TESTIMONIALS ─── */
-  .testi-card {
-    border-radius: 16px; padding: 2rem;
-    border: 1px solid rgba(255,255,255,0.06);
-    transition: border-color 0.3s;
-  }
-  body.dark-mode .testi-card { background: #0a0f1d; }
-  body:not(.dark-mode) .testi-card { background: #fff; box-shadow: 0 2px 12px rgba(0,0,0,0.05); }
-  .testi-card:hover { border-color: rgba(0,210,255,0.3); }
-  .testi-avatar {
-    width: 44px; height: 44px; border-radius: 50%;
-    background: rgba(0,210,255,0.1); border: 1px solid rgba(0,210,255,0.3);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 0.85rem; font-weight: 700; color: #00d2ff;
-    font-family: monospace; flex-shrink: 0;
-  }
-
-  /* ─── CTA ─── */
-  .cta-wrap {
-    background: linear-gradient(135deg, #0d6efd 0%, #00d2ff 100%);
-    border-radius: 30px; padding: 5rem 3rem; text-align: center;
-    position: relative; overflow: hidden;
-  }
-  .cta-wrap::before {
-    content: '';
-    position: absolute; inset: 0;
-    background-image: radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px);
-    background-size: 22px 22px;
-  }
-
-  /* ─── STACK PILLS ─── */
   .stack-pill {
-    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 100px; padding: 0.45rem 1rem;
-    font-size: 0.8rem; color: rgba(255,255,255,0.65);
-    display: inline-flex; align-items: center; gap: 6px;
-    transition: all 0.2s;
+    background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.09);
+    border-radius:100px; padding:0.4rem 0.9rem; font-size:0.78rem; color:rgba(255,255,255,0.6);
+    display:inline-block; transition:all 0.2s; margin:3px;
   }
-  .stack-pill:hover { border-color: var(--accent); color: var(--accent); }
-  body:not(.dark-mode) .stack-pill { background: #f1f3f5; border-color: #dee2e6; color: #495057; }
-  body:not(.dark-mode) .stack-pill:hover { border-color: #0d6efd; color: #0d6efd; }
+  .stack-pill:hover { border-color:var(--accent); color:var(--accent); }
+  body:not(.dark-mode) .stack-pill { background:#f1f3f5; border-color:#dee2e6; color:#495057; }
+  body:not(.dark-mode) .stack-pill:hover { border-color:#0d6efd; color:#0d6efd; }
+
+  .testi-card { border-radius:16px; padding:2rem; border:1px solid rgba(255,255,255,0.06); transition:border-color 0.3s; }
+  body.dark-mode .testi-card { background:#0a0f1d; }
+  body:not(.dark-mode) .testi-card { background:#fff; box-shadow:0 2px 12px rgba(0,0,0,0.05); border-color:#dee2e6; }
+  .testi-card:hover { border-color:rgba(0,210,255,0.3); }
+  .testi-avatar { width:44px; height:44px; border-radius:50%; background:rgba(0,210,255,0.1); border:1px solid rgba(0,210,255,0.3); display:flex; align-items:center; justify-content:center; font-size:0.85rem; font-weight:700; color:#00d2ff; font-family:monospace; flex-shrink:0; }
+
+  .cta-wrap { background:linear-gradient(135deg,#0d6efd 0%,#00d2ff 100%); border-radius:30px; padding:5rem 3rem; text-align:center; position:relative; overflow:hidden; }
+  .cta-wrap::before { content:''; position:absolute; inset:0; background-image:radial-gradient(rgba(255,255,255,0.06) 1px,transparent 1px); background-size:22px 22px; }
+
+  .about-img { width:200px; height:200px; object-fit:cover; border-radius:50%; border:4px solid var(--accent); box-shadow:0 0 40px rgba(0,210,255,0.2); }
+
+  @media(max-width:768px) {
+    .hero-stats-row { gap:1.5rem !important; }
+    .feat-card-img, .feat-img-placeholder { height:200px; }
+  }
 </style>
 
-<!-- ════ HERO ════ -->
+<!-- HERO -->
 <section class="hero-section text-white text-center">
   <div class="overlay"></div>
   <div class="container position-relative z-1">
-    <img src="{% static 'core/images/uase_logo_white.png' %}" alt="UASE Logo" class="img-fluid mb-4 mx-auto d-block hero-logo-style">
+    <img src="{% static 'core/images/uase_logo_white.png' %}" alt="UASE Logo" class="img-fluid mb-4 mx-auto d-block" style="max-height:85px;filter:drop-shadow(0 0 18px rgba(0,210,255,0.4))">
     <div class="hero-badge mb-3">
       <span class="hero-badge-dot"></span>
       Available for New Projects
     </div>
     <h1 class="display-2 fw-black mb-3">
       Building Digital Products<br>
-      <span style="color: var(--accent);">That Actually Work.</span>
+      <span style="color:var(--accent)">That Actually Work.</span>
     </h1>
-    <p class="lead mb-4 opacity-75 mx-auto" style="max-width:600px">
-      Full-Stack Software Engineer based in Nigeria. I build scalable web applications,
-      SaaS platforms, and mobile solutions — from concept to production.
+    <p class="lead mb-5 opacity-75 mx-auto" style="max-width:580px">
+      Full-Stack Software Engineer based in Nigeria. I build scalable SaaS platforms,
+      web applications, and mobile solutions — from concept to production.
     </p>
     <div class="d-flex flex-wrap gap-3 justify-content-center mb-5">
       <a href="{% url 'portfolio' %}" class="btn btn-primary btn-lg px-5 rounded-pill shadow-lg">View Portfolio</a>
-      <a href="{% url 'contact' %}" class="btn btn-outline-light btn-lg px-5 rounded-pill">Hire Me →</a>
+      <a href="{% url 'contact' %}" class="btn btn-outline-light btn-lg px-5 rounded-pill">Hire Me &rarr;</a>
     </div>
-    <div class="hero-stats">
+    <div class="d-flex gap-4 justify-content-center flex-wrap hero-stats-row">
       <div>
         <div class="hero-stat-num">5+</div>
         <div class="hero-stat-label">Years Experience</div>
@@ -199,69 +125,63 @@
   </div>
 </section>
 
-<!-- ════ FEATURED PROJECTS ════ -->
+<!-- FEATURED PROJECTS -->
 <section class="container py-5 my-5">
   <div class="text-center mb-5">
-    <div class="featured-label justify-content-center">Flagship Projects</div>
+    <div class="section-label justify-content-center">Flagship Projects</div>
     <h2 class="display-5 fw-bold">Work That Defines My Craft</h2>
-    <p class="opacity-75 mx-auto mt-2" style="max-width:520px">
-      Two of my most complex, production-grade systems — each solving real problems at scale.
-    </p>
+    <p class="opacity-75 mx-auto mt-2" style="max-width:520px">Two of my most complex, production-grade systems — each solving real problems at scale.</p>
   </div>
 
   {% for project_slug, project in featured_projects %}
   <div class="row g-5 align-items-center mb-5 {% if forloop.counter == 2 %}flex-md-row-reverse{% endif %}">
     <div class="col-md-6">
-      <div class="featured-project-card">
+      <div class="feat-card">
         <div class="overflow-hidden position-relative" style="border-radius:16px 16px 0 0">
           {% if project.thumbnail %}
             <img src="{% static 'core/images/projects/'|add:project.thumbnail %}"
-                 class="project-img w-100"
-                 alt="{{ project.title }}"
+                 class="feat-card-img" alt="{{ project.title }}"
                  onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-            <div class="project-img-placeholder" style="display:none">🖥️</div>
+            <div class="feat-img-placeholder" style="display:none">&#128187;</div>
           {% else %}
-            <div class="project-img-placeholder">🖥️</div>
+            <div class="feat-img-placeholder">&#128187;</div>
           {% endif %}
           {% if forloop.counter == 1 %}
-            <span class="project-badge-new">⭐ Featured</span>
-          {% elif forloop.counter == 2 %}
-            <span class="project-badge-new" style="background:#e74c3c">🩸 Healthcare</span>
+            <span class="badge-feat">&#11088; Featured</span>
+          {% else %}
+            <span class="badge-feat" style="background:#e74c3c">&#128138; Healthcare</span>
           {% endif %}
           {% if project.live_demo_link %}
-            <span class="project-badge-live"><span class="live-dot"></span>Live</span>
+            <span class="badge-live"><span class="live-dot"></span>Live</span>
           {% endif %}
         </div>
       </div>
     </div>
     <div class="col-md-6">
-      <div class="featured-label">{{ project.client_type }}</div>
+      <div class="section-label">{{ project.client_type }}</div>
       <h2 class="fw-bold h2 mb-3">{{ project.title }}</h2>
       <p class="opacity-75 mb-4" style="font-size:0.97rem;line-height:1.8">{{ project.tagline }}</p>
-
-      <div class="d-flex flex-wrap gap-2 mb-4">
+      <div class="mb-4">
         {% for tech in project.technologies|slice:":6" %}
-          <span class="badge-tech-dark">{{ tech }}</span>
+          <span class="tech-badge me-1 mb-1">{{ tech }}</span>
         {% endfor %}
       </div>
-
-      <div class="project-metrics mb-4">
-        <div class="metric">
+      <div class="d-flex gap-4 mb-4">
+        <div>
           <div class="metric-num">{{ project.features|length }}</div>
           <div class="metric-label">Features</div>
         </div>
-        <div class="metric">
+        <div>
           <div class="metric-num">{{ project.technologies|length }}+</div>
           <div class="metric-label">Technologies</div>
         </div>
         {% if project.screenshots %}
-        <div class="metric">
+        <div>
           <div class="metric-num">{{ project.screenshots|length }}</div>
           <div class="metric-label">Screenshots</div>
         </div>
         {% endif %}
       </div>
-
       <div class="d-flex flex-wrap gap-3">
         <a href="{% url 'project_detail' project_slug=project_slug %}" class="btn btn-primary rounded-pill px-4">
           Full Case Study <i class="bi bi-arrow-right ms-1"></i>
@@ -274,33 +194,29 @@
       </div>
     </div>
   </div>
-  {% if not forloop.last %}
-  <hr style="border-color:rgba(255,255,255,0.06); margin: 3rem 0;">
-  {% endif %}
+  {% if not forloop.last %}<hr style="border-color:rgba(255,255,255,0.06);margin:2rem 0">{% endif %}
   {% endfor %}
 
   <div class="text-center mt-4">
     <a href="{% url 'portfolio' %}" class="btn btn-outline-primary rounded-pill px-5">
-      View All {{ featured_projects|length }}+ Projects <i class="bi bi-grid ms-2"></i>
+      View All Projects <i class="bi bi-grid ms-2"></i>
     </a>
   </div>
 </section>
 
-<!-- ════ WHO I AM ════ -->
-<section class="py-5 my-3" style="background: rgba(0,0,0,0.03)">
+<!-- ABOUT -->
+<section class="py-5 my-3" style="background:rgba(0,0,0,0.03)">
   <div class="container">
     <div class="row align-items-center g-5">
       <div class="col-md-3 text-center">
-        <img src="{% static 'core/images/usty_headshot.jpg' %}" alt="Usty" class="about-section-img">
+        <img src="{% static 'core/images/usty_headshot.jpg' %}" alt="Usty" class="about-img">
         <div class="mt-3">
-          <div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);font-weight:600">
-            Muhammedmustapha Abdullahi
-          </div>
-          <div style="font-size:0.82rem;opacity:0.55;margin-top:4px">// Usty · Founder, UASE Tech Studio</div>
+          <div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);font-weight:600">Muhammedmustapha Abdullahi</div>
+          <div style="font-size:0.8rem;opacity:0.5;margin-top:4px">// Usty &bull; Founder, UASE Tech Studio</div>
         </div>
       </div>
       <div class="col-md-9">
-        <div class="featured-label">About Me</div>
+        <div class="section-label">About Me</div>
         <h2 class="fw-bold h1 mb-3">Engineering with Precision.<br>Delivering with Purpose.</h2>
         <p class="opacity-75 mb-3">
           I'm a Computer Science graduate and full-stack software engineer who builds systems that go beyond the surface.
@@ -308,16 +224,23 @@
           delivery into end-to-end solutions that solve real problems.
         </p>
         <p class="opacity-75 mb-4">
-          Through UASE Tech Studio, I've shipped production systems for Nigerian dealerships, blood banks, campuses,
+          Through UASE Tech Studio, I've shipped production systems for Nigerian car dealerships, blood banks, campuses,
           cinemas, and legal institutions — always with a focus on clean code, scalable design, and measurable impact.
         </p>
-        <div class="d-flex flex-wrap gap-2 mb-4">
-          {% for tech in "Python,Django,Next.js,FastAPI,MongoDB,React,TypeScript,Node.js,Tailwind CSS,Capacitor"|split:"," %}
-          <span class="stack-pill">{{ tech }}</span>
-          {% endfor %}
+        <div class="mb-4">
+          <span class="stack-pill">Python</span>
+          <span class="stack-pill">Django</span>
+          <span class="stack-pill">Next.js</span>
+          <span class="stack-pill">FastAPI</span>
+          <span class="stack-pill">MongoDB</span>
+          <span class="stack-pill">React</span>
+          <span class="stack-pill">TypeScript</span>
+          <span class="stack-pill">Node.js</span>
+          <span class="stack-pill">Tailwind CSS</span>
+          <span class="stack-pill">Capacitor</span>
         </div>
         <div class="d-flex gap-3 flex-wrap">
-          <a href="{% url 'about' %}" class="btn btn-primary rounded-pill px-4">Full Story →</a>
+          <a href="{% url 'about' %}" class="btn btn-primary rounded-pill px-4">Full Story &rarr;</a>
           <a href="{% url 'resume' %}" class="btn btn-outline-secondary rounded-pill px-4"><i class="bi bi-file-earmark-person me-2"></i>View Resume</a>
         </div>
       </div>
@@ -325,69 +248,68 @@
   </div>
 </section>
 
-<!-- ════ CORE EXPERTISE ════ -->
+<!-- CORE EXPERTISE -->
 <section class="container py-5 my-5">
   <div class="text-center mb-5">
-    <div class="featured-label justify-content-center">Services</div>
+    <div class="section-label justify-content-center">Services</div>
     <h2 class="display-6 fw-bold">Core Expertise</h2>
+    <p class="opacity-75 mx-auto mt-2" style="max-width:480px">End-to-end digital solutions — from architecture to deployment.</p>
   </div>
   <div class="row g-4">
     <div class="col-md-3 col-6">
       <div class="expertise-card">
-        <div class="expertise-icon">🌐</div>
+        <div style="font-size:2rem;margin-bottom:1rem">&#127760;</div>
         <h5 class="fw-bold mb-2">Web Apps</h5>
-        <p class="small opacity-75 mb-3">Scalable platforms with Django, React, Next.js, and Node.js — from MVPs to enterprise dashboards.</p>
-        <a href="{% url 'service_detail' 'web-development' %}" class="btn btn-link p-0 text-primary small">Learn More →</a>
+        <p class="small opacity-75 mb-3">Scalable platforms with Django, React, Next.js — from MVPs to enterprise dashboards.</p>
+        <a href="{% url 'service_detail' 'web-development' %}" class="btn btn-link p-0 text-primary small">Learn More &rarr;</a>
       </div>
     </div>
     <div class="col-md-3 col-6">
       <div class="expertise-card">
-        <div class="expertise-icon">📱</div>
+        <div style="font-size:2rem;margin-bottom:1rem">&#128241;</div>
         <h5 class="fw-bold mb-2">Mobile Apps</h5>
-        <p class="small opacity-75 mb-3">Android APKs using Capacitor — same codebase, native performance across platforms.</p>
-        <a href="{% url 'service_detail' 'mobile-app-development' %}" class="btn btn-link p-0 text-primary small">Learn More →</a>
+        <p class="small opacity-75 mb-3">Android APKs using Capacitor — cross-platform, native performance.</p>
+        <a href="{% url 'service_detail' 'mobile-app-development' %}" class="btn btn-link p-0 text-primary small">Learn More &rarr;</a>
       </div>
     </div>
     <div class="col-md-3 col-6">
       <div class="expertise-card">
-        <div class="expertise-icon">⚙️</div>
-        <h5 class="fw-bold mb-2">SaaS & APIs</h5>
-        <p class="small opacity-75 mb-3">FastAPI, multi-tenant architectures, JWT auth, REST APIs, and automated backend workflows.</p>
-        <a href="{% url 'service_detail' 'software-development' %}" class="btn btn-link p-0 text-primary small">Learn More →</a>
+        <div style="font-size:2rem;margin-bottom:1rem">&#9881;&#65039;</div>
+        <h5 class="fw-bold mb-2">SaaS &amp; APIs</h5>
+        <p class="small opacity-75 mb-3">FastAPI, multi-tenant architectures, JWT auth, REST APIs, and automated workflows.</p>
+        <a href="{% url 'service_detail' 'software-development' %}" class="btn btn-link p-0 text-primary small">Learn More &rarr;</a>
       </div>
     </div>
     <div class="col-md-3 col-6">
       <div class="expertise-card">
-        <div class="expertise-icon">🎓</div>
+        <div style="font-size:2rem;margin-bottom:1rem">&#127891;</div>
         <h5 class="fw-bold mb-2">IT Training</h5>
-        <p class="small opacity-75 mb-3">SIWES mentorship, final-year project support, and hands-on dev training for students.</p>
-        <a href="{% url 'service_detail' 'it-support-administration' %}" class="btn btn-link p-0 text-primary small">Learn More →</a>
+        <p class="small opacity-75 mb-3">SIWES mentorship, final-year project support, and hands-on dev training.</p>
+        <a href="{% url 'service_detail' 'it-support-administration' %}" class="btn btn-link p-0 text-primary small">Learn More &rarr;</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ════ TESTIMONIALS ════ -->
+<!-- TESTIMONIALS -->
 {% if testimonials %}
-<section class="py-5 my-3" style="background: rgba(0,0,0,0.03)">
+<section class="py-5 my-3" style="background:rgba(0,0,0,0.03)">
   <div class="container">
     <div class="text-center mb-5">
-      <div class="featured-label justify-content-center">Social Proof</div>
+      <div class="section-label justify-content-center">Social Proof</div>
       <h2 class="display-6 fw-bold">What Clients Say</h2>
     </div>
     <div class="row g-4">
       {% for testimonial in testimonials %}
       <div class="col-md-6 col-lg-4">
         <div class="testi-card h-100">
-          <div class="mb-3" style="font-size:1.8rem;color:var(--accent);line-height:1">"</div>
+          <div class="mb-3" style="font-size:1.8rem;color:var(--accent);line-height:1">&ldquo;</div>
           <p class="fst-italic opacity-75 mb-4" style="font-size:0.93rem;line-height:1.8">{{ testimonial.content }}</p>
           <div class="d-flex align-items-center gap-3 mt-auto">
             <div class="testi-avatar">{{ testimonial.author_name|first }}{{ testimonial.author_name|last }}</div>
             <div>
               <div style="font-size:0.88rem;font-weight:600">{{ testimonial.author_name }}</div>
-              {% if testimonial.author_title %}
-              <div style="font-size:0.75rem;opacity:0.5">{{ testimonial.author_title }}</div>
-              {% endif %}
+              {% if testimonial.author_title %}<div style="font-size:0.75rem;opacity:0.5">{{ testimonial.author_title }}</div>{% endif %}
             </div>
           </div>
         </div>
@@ -398,18 +320,18 @@
 </section>
 {% endif %}
 
-<!-- ════ CTA ════ -->
+<!-- CTA -->
 <section class="container py-5 my-5">
   <div class="cta-wrap">
     <div class="position-relative z-1">
-      <div class="featured-label justify-content-center text-white opacity-75 mb-3">Let's Build</div>
+      <div class="section-label justify-content-center" style="color:rgba(255,255,255,0.8)">Let's Build</div>
       <h2 class="display-5 fw-bold text-white mb-3">Have an Idea? Let's Make It Real.</h2>
       <p class="lead text-white opacity-75 mb-4">
-        Whether it's a SaaS platform, a mobile app, or a student project — I'm here to help you build it right.
+        Whether it's a SaaS platform, a mobile app, or a student project — I'll help you build it right.
       </p>
       <div class="d-flex gap-3 justify-content-center flex-wrap">
         <a href="{% url 'contact' %}" class="btn btn-light btn-lg px-5 py-3 fw-bold text-primary rounded-pill">
-          Get Free Consultation →
+          Get Free Consultation &rarr;
         </a>
         <a href="{% url 'portfolio' %}" class="btn btn-outline-light btn-lg px-5 py-3 rounded-pill">
           View Portfolio
@@ -423,19 +345,11 @@
 {% block scripts %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 <script>
-  // Scroll-reveal for sections
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('animate__fadeInUp');
-        observer.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.08 });
-
-  document.querySelectorAll('section').forEach(s => {
-    s.classList.add('animate__animated');
-    observer.observe(s);
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('animate__fadeInUp'); obs.unobserve(e.target); }
   });
+}, { threshold: 0.08 });
+document.querySelectorAll('section').forEach(s => { s.classList.add('animate__animated'); obs.observe(s); });
 </script>
 {% endblock %}
