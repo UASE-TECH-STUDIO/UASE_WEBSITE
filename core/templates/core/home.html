@@ -1,257 +1,441 @@
 {% extends 'core/layout.html' %}
 {% load static %}
 
-{% block title %}UASE Tech Studio - Crafting Digital Excellence{% endblock %}
+{% block title %}UASE Tech Studio — Full-Stack Software Engineer | Nigeria{% endblock %}
 
 {% block content %}
 <style>
-    /* 1. HERO SECTION & LAYOUT */
-    .hero-section {
-        background: url("{% static 'core/images/about_journey.jpg' %}") no-repeat center center;
-        background-size: cover;
-        min-height: 85vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        overflow: hidden;
-        margin-top: -3rem; 
-        border-radius: 0 0 50px 50px;
-    }
+  /* ─── HERO ─── */
+  .hero-section {
+    background: url("{% static 'core/images/about_journey.jpg' %}") no-repeat center center;
+    background-size: cover;
+    min-height: 90vh;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+    margin-top: -3rem;
+    border-radius: 0 0 60px 60px;
+  }
+  .hero-section .overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(5,8,16,0.92) 0%, rgba(5,8,16,0.65) 100%);
+    z-index: 0;
+  }
+  .hero-logo-style { max-height: 90px; filter: drop-shadow(0 0 18px rgba(0,210,255,0.4)); }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(0,210,255,0.1); border: 1px solid rgba(0,210,255,0.25);
+    color: #00d2ff; padding: 6px 16px; border-radius: 100px;
+    font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase;
+    font-family: 'Space Grotesk', sans-serif; font-weight: 500;
+    margin-bottom: 1.5rem;
+  }
+  .hero-badge-dot { width: 7px; height: 7px; background: #2ecc71; border-radius: 50%; animation: blink 2s infinite; }
+  @keyframes blink { 0%,100%{opacity:1}50%{opacity:0.3} }
+  .hero-stats { display: flex; gap: 2.5rem; justify-content: center; flex-wrap: wrap; margin-top: 2.5rem; }
+  .hero-stat-num { font-size: 2rem; font-weight: 700; color: #00d2ff; line-height: 1; font-family: 'Syncopate', sans-serif; }
+  .hero-stat-label { font-size: 0.75rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
 
-    .hero-section .overlay {
-        position: absolute;
-        top: 0; left: 0; width: 100%; height: 100%;
-        background: linear-gradient(135deg, rgba(5, 8, 16, 0.85) 0%, rgba(5, 8, 16, 0.6) 100%);
-        z-index: 0;
-    }
+  /* ─── FEATURED PROJECTS ─── */
+  .featured-label {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--accent); font-weight: 600; margin-bottom: 0.75rem;
+  }
+  .featured-label::before { content: ''; display: block; width: 20px; height: 1px; background: var(--accent); }
 
-    .hero-logo-style {
-        max-height: 100px;
-        filter: drop-shadow(0 0 15px rgba(0, 210, 255, 0.5));
-    }
+  .featured-project-card {
+    border-radius: 20px; overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+    position: relative;
+  }
+  body.dark-mode .featured-project-card { background: #0a0f1d; }
+  body:not(.dark-mode) .featured-project-card { background: #fff; box-shadow: 0 4px 24px rgba(0,0,0,0.07); }
 
-    /* 2. GLASSMORPHISM & CARDS */
-    .card-glass {
-        background: rgba(255, 255, 255, 0.02);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 20px;
-        transition: all 0.3s ease;
-    }
+  .featured-project-card:hover { transform: translateY(-8px); border-color: var(--accent); box-shadow: 0 20px 50px rgba(0,210,255,0.12); }
 
-    .transform-on-hover:hover {
-        transform: translateY(-12px) scale(1.02);
-        box-shadow: 0 20px 40px rgba(0, 210, 255, 0.15) !important;
-    }
+  .featured-project-card .project-img {
+    width: 100%; height: 280px; object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  .featured-project-card:hover .project-img { transform: scale(1.04); }
+  .project-img-placeholder {
+    width: 100%; height: 280px;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #0a0f1d, #111827);
+    font-size: 4rem; opacity: 0.3;
+  }
 
-    /* 3. DARK MODE COMPATIBILITY */
-    body.dark-mode .bg-light {
-        background-color: #161b22 !important;
-        border: 1px solid #30363d;
-    }
+  .featured-project-card .project-badge-new {
+    position: absolute; top: 16px; left: 16px;
+    background: var(--accent); color: #000;
+    padding: 4px 12px; border-radius: 100px;
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .featured-project-card .project-badge-live {
+    position: absolute; top: 16px; right: 16px;
+    background: rgba(46,204,113,0.15); border: 1px solid rgba(46,204,113,0.4);
+    color: #2ecc71; padding: 4px 12px; border-radius: 100px;
+    font-size: 0.7rem; font-weight: 600; letter-spacing: 0.06em;
+    display: flex; align-items: center; gap: 5px;
+  }
+  .live-dot { width: 6px; height: 6px; background: #2ecc71; border-radius: 50%; animation: blink 2s infinite; }
 
-    body.dark-mode .testimonial {
-        background: #0d1117 !important;
-        border-color: #30363d !important;
-    }
+  .badge-tech-dark {
+    background: rgba(0,210,255,0.08); color: #00d2ff;
+    border: 1px solid rgba(0,210,255,0.2);
+    font-size: 0.72rem; padding: 3px 10px; border-radius: 100px;
+    font-family: 'Space Grotesk', monospace;
+  }
+  body:not(.dark-mode) .badge-tech-dark {
+    background: rgba(13,110,253,0.08); color: #0d6efd;
+    border-color: rgba(13,110,253,0.2);
+  }
 
-    /* 4. UTILITIES */
-    .call-to-action-bg {
-        background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
-        border-radius: 30px;
-    }
+  .project-metrics { display: flex; gap: 1.5rem; }
+  .metric { text-align: center; }
+  .metric-num { font-size: 1.2rem; font-weight: 700; color: var(--accent); font-family: 'Syncopate', sans-serif; }
+  .metric-label { font-size: 0.7rem; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.07em; }
+  body:not(.dark-mode) .metric-label { color: #6c757d; }
 
-    .badge-tech {
-        background: rgba(0, 210, 255, 0.1);
-        color: var(--accent);
-        font-family: 'Space Grotesk', sans-serif;
-        padding: 0.5rem 1rem;
-    }
+  /* ─── WHO ─── */
+  .about-section-img {
+    width: 200px; height: 200px; object-fit: cover;
+    border-radius: 50%; border: 4px solid var(--accent);
+    box-shadow: 0 0 40px rgba(0,210,255,0.2);
+  }
+
+  /* ─── EXPERTISE CARDS ─── */
+  .expertise-card {
+    border-radius: 16px; padding: 2rem;
+    border: 1px solid rgba(255,255,255,0.06);
+    transition: all 0.35s ease;
+    height: 100%;
+  }
+  body.dark-mode .expertise-card { background: #0a0f1d; }
+  body:not(.dark-mode) .expertise-card { background: #f8f9fa; border-color: #dee2e6; }
+  .expertise-card:hover { transform: translateY(-8px); border-color: var(--accent); box-shadow: 0 12px 32px rgba(0,210,255,0.1); }
+  .expertise-icon { font-size: 2.2rem; margin-bottom: 1rem; }
+
+  /* ─── TESTIMONIALS ─── */
+  .testi-card {
+    border-radius: 16px; padding: 2rem;
+    border: 1px solid rgba(255,255,255,0.06);
+    transition: border-color 0.3s;
+  }
+  body.dark-mode .testi-card { background: #0a0f1d; }
+  body:not(.dark-mode) .testi-card { background: #fff; box-shadow: 0 2px 12px rgba(0,0,0,0.05); }
+  .testi-card:hover { border-color: rgba(0,210,255,0.3); }
+  .testi-avatar {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: rgba(0,210,255,0.1); border: 1px solid rgba(0,210,255,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.85rem; font-weight: 700; color: #00d2ff;
+    font-family: monospace; flex-shrink: 0;
+  }
+
+  /* ─── CTA ─── */
+  .cta-wrap {
+    background: linear-gradient(135deg, #0d6efd 0%, #00d2ff 100%);
+    border-radius: 30px; padding: 5rem 3rem; text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .cta-wrap::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+
+  /* ─── STACK PILLS ─── */
+  .stack-pill {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 100px; padding: 0.45rem 1rem;
+    font-size: 0.8rem; color: rgba(255,255,255,0.65);
+    display: inline-flex; align-items: center; gap: 6px;
+    transition: all 0.2s;
+  }
+  .stack-pill:hover { border-color: var(--accent); color: var(--accent); }
+  body:not(.dark-mode) .stack-pill { background: #f1f3f5; border-color: #dee2e6; color: #495057; }
+  body:not(.dark-mode) .stack-pill:hover { border-color: #0d6efd; color: #0d6efd; }
 </style>
 
-<main class="home-page"> 
+<!-- ════ HERO ════ -->
+<section class="hero-section text-white text-center">
+  <div class="overlay"></div>
+  <div class="container position-relative z-1">
+    <img src="{% static 'core/images/uase_logo_white.png' %}" alt="UASE Logo" class="img-fluid mb-4 mx-auto d-block hero-logo-style">
+    <div class="hero-badge mb-3">
+      <span class="hero-badge-dot"></span>
+      Available for New Projects
+    </div>
+    <h1 class="display-2 fw-black mb-3">
+      Building Digital Products<br>
+      <span style="color: var(--accent);">That Actually Work.</span>
+    </h1>
+    <p class="lead mb-4 opacity-75 mx-auto" style="max-width:600px">
+      Full-Stack Software Engineer based in Nigeria. I build scalable web applications,
+      SaaS platforms, and mobile solutions — from concept to production.
+    </p>
+    <div class="d-flex flex-wrap gap-3 justify-content-center mb-5">
+      <a href="{% url 'portfolio' %}" class="btn btn-primary btn-lg px-5 rounded-pill shadow-lg">View Portfolio</a>
+      <a href="{% url 'contact' %}" class="btn btn-outline-light btn-lg px-5 rounded-pill">Hire Me →</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-num">5+</div>
+        <div class="hero-stat-label">Years Experience</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">20+</div>
+        <div class="hero-stat-label">Projects Delivered</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">10+</div>
+        <div class="hero-stat-label">Happy Clients</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <section class="hero-section text-white text-center">
-        <div class="overlay"></div> 
-        <div class="container position-relative z-1">
-            <div class="row justify-content-center">
-                <div class="col-lg-10">
-                    <img src="{% static 'core/images/uase_logo_white.png' %}" alt="UASE Logo" class="img-fluid mb-4 mx-auto d-block hero-logo-style animate__animated animate__zoomIn">
-                    <h1 class="display-2 fw-black mb-3 animate__animated animate__fadeInDown">Crafting Tomorrow's <span style="color: var(--accent);">Digital</span> Experiences</h1>
-                    <p class="lead mb-5 opacity-75 animate__animated animate__fadeInUp animate__delay-1s">Innovating bespoke web, mobile, and software solutions that drive growth and empower your vision.</p>
-                    <div class="d-grid gap-3 d-sm-flex justify-content-sm-center animate__animated animate__fadeInUp animate__delay-2s">
-                        <a href="{% url 'services' %}" class="btn btn-primary btn-lg px-5 rounded-pill shadow-lg">Our Services</a>
-                        <a href="{% url 'portfolio' %}" class="btn btn-outline-light btn-lg px-5 rounded-pill">View Portfolio</a>
-                    </div>
-                </div>
-            </div>
+<!-- ════ FEATURED PROJECTS ════ -->
+<section class="container py-5 my-5">
+  <div class="text-center mb-5">
+    <div class="featured-label justify-content-center">Flagship Projects</div>
+    <h2 class="display-5 fw-bold">Work That Defines My Craft</h2>
+    <p class="opacity-75 mx-auto mt-2" style="max-width:520px">
+      Two of my most complex, production-grade systems — each solving real problems at scale.
+    </p>
+  </div>
+
+  {% for project_slug, project in featured_projects %}
+  <div class="row g-5 align-items-center mb-5 {% if forloop.counter == 2 %}flex-md-row-reverse{% endif %}">
+    <div class="col-md-6">
+      <div class="featured-project-card">
+        <div class="overflow-hidden position-relative" style="border-radius:16px 16px 0 0">
+          {% if project.thumbnail %}
+            <img src="{% static 'core/images/projects/'|add:project.thumbnail %}"
+                 class="project-img w-100"
+                 alt="{{ project.title }}"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="project-img-placeholder" style="display:none">🖥️</div>
+          {% else %}
+            <div class="project-img-placeholder">🖥️</div>
+          {% endif %}
+          {% if forloop.counter == 1 %}
+            <span class="project-badge-new">⭐ Featured</span>
+          {% elif forloop.counter == 2 %}
+            <span class="project-badge-new" style="background:#e74c3c">🩸 Healthcare</span>
+          {% endif %}
+          {% if project.live_demo_link %}
+            <span class="project-badge-live"><span class="live-dot"></span>Live</span>
+          {% endif %}
         </div>
-    </section>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="featured-label">{{ project.client_type }}</div>
+      <h2 class="fw-bold h2 mb-3">{{ project.title }}</h2>
+      <p class="opacity-75 mb-4" style="font-size:0.97rem;line-height:1.8">{{ project.tagline }}</p>
 
-    <section class="container py-5 my-5 text-center">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <h2 class="display-6 fw-bold mb-4">The <span class="text-primary">Studio</span> Difference</h2>
-                <p class="lead opacity-75">
-                    UASE Tech Studio is a dynamic technology firm dedicated to transforming innovative ideas into powerful digital realities. Founded by Muhammedmustapha Abdullahi (Usty), we specialize in delivering bespoke solutions that redefine expectations.
-                </p>
-            </div>
+      <div class="d-flex flex-wrap gap-2 mb-4">
+        {% for tech in project.technologies|slice:":6" %}
+          <span class="badge-tech-dark">{{ tech }}</span>
+        {% endfor %}
+      </div>
+
+      <div class="project-metrics mb-4">
+        <div class="metric">
+          <div class="metric-num">{{ project.features|length }}</div>
+          <div class="metric-label">Features</div>
         </div>
-    </section>
-
-    <section class="container py-5 my-5 bg-light rounded-5 shadow-sm p-5">
-        <div class="row align-items-center">
-            <div class="col-md-4 text-center mb-4 mb-md-0">
-                <div class="position-relative d-inline-block">
-                    <img src="{% static 'core/images/usty_headshot.jpg' %}" alt="Usty" class="img-fluid rounded-circle shadow-lg" style="width: 220px; height: 220px; object-fit: cover; border: 5px solid #00d2ff;">
-                </div>
-            </div>
-            <div class="col-md-8">
-                <h2 class="h1 fw-bold mb-3">Meet Usty: Architecting Excellence</h2>
-                <p class="opacity-75">
-                    A Computer Science graduate with a relentless pursuit of full-stack perfection. Usty ensures every project is approached with a holistic understanding, combining technical mastery with strategic innovation to drive lasting value.
-                </p>
-            </div>
+        <div class="metric">
+          <div class="metric-num">{{ project.technologies|length }}+</div>
+          <div class="metric-label">Technologies</div>
         </div>
-    </section>
-
-    <section class="container py-5 my-5">
-        <h2 class="display-6 fw-bold text-center mb-5">Core Expertise</h2>
-        <div class="row g-4">
-            <div class="col-md-3">
-                <div class="card h-100 border-0 transform-on-hover card-glass p-3">
-                    <div class="card-body">
-                        <i class="bi bi-browser-chrome display-5 text-primary mb-3"></i>
-                        <h5 class="fw-bold">Web Apps</h5>
-                        <p class="small opacity-75">Scalable platforms built with Django, React, and Node.js.</p>
-                        <a href="{% url 'service_detail' 'web-development' %}" class="btn btn-link text-primary p-0">Learn More</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card h-100 border-0 transform-on-hover card-glass p-3">
-                    <div class="card-body">
-                        <i class="bi bi-phone-vibrate display-5 text-success mb-3"></i>
-                        <h5 class="fw-bold">Mobile Apps</h5>
-                        <p class="small opacity-75">High-performing Android apps using Capacitor & Native tech.</p>
-                        <a href="{% url 'service_detail' 'mobile-app-development' %}" class="btn btn-link text-success p-0">Learn More</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card h-100 border-0 transform-on-hover card-glass p-3">
-                    <div class="card-body">
-                        <i class="bi bi-cpu display-5 text-info mb-3"></i>
-                        <h5 class="fw-bold">Custom Software</h5>
-                        <p class="small opacity-75">Python-based automation and complex process solvers.</p>
-                        <a href="{% url 'service_detail' 'software-development' %}" class="btn btn-link text-info p-0">Learn More</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card h-100 border-0 transform-on-hover card-glass p-3">
-                    <div class="card-body">
-                        <i class="bi bi-shield-lock display-5 text-warning mb-3"></i>
-                        <h5 class="fw-bold">IT Admin</h5>
-                        <p class="small opacity-75">Network diagnostics and proactive maintenance.</p>
-                        <a href="{% url 'service_detail' 'it-support-administration' %}" class="btn btn-link text-warning p-0">Learn More</a>
-                    </div>
-                </div>
-            </div>
+        {% if project.screenshots %}
+        <div class="metric">
+          <div class="metric-num">{{ project.screenshots|length }}</div>
+          <div class="metric-label">Screenshots</div>
         </div>
-    </section>
+        {% endif %}
+      </div>
 
-    <section class="container py-5 my-5">
-        <h2 class="display-6 fw-bold text-center mb-5">Our Work in Action</h2>
-        <div id="featuredProjectsCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <div class="row align-items-center g-5">
-                        <div class="col-md-7">
-                            <img src="{% static 'core/images/crime_tracking_system_screenshot_1.jpg' %}" class="img-fluid rounded-4 shadow-lg" alt="Crime Tracking">
-                        </div>
-                        <div class="col-md-5">
-                            <h3 class="fw-bold h2">Crime Tracking System</h3>
-                            <p class="opacity-75">A robust PHP/MySQL web application for crime reporting and public safety analysis.</p>
-                            <div class="d-flex flex-wrap gap-2 mb-4">
-                                <span class="badge badge-tech">PHP</span>
-                                <span class="badge badge-tech">MySQL</span>
-                                <span class="badge badge-tech">Bootstrap</span>
-                            </div>
-                            <a href="{% url 'project_detail' 'crime-tracking-system' %}" class="btn btn-primary px-4 py-2">Details</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <div class="row align-items-center g-5">
-                        <div class="col-md-7">
-                            <img src="{% static 'core/images/food_ordering_app_screenshot_1.jpg' %}" class="img-fluid rounded-4 shadow-lg" alt="Food App">
-                        </div>
-                        <div class="col-md-5">
-                            <h3 class="fw-bold h2">Food Ordering App</h3>
-                            <p class="opacity-75">React.js/Node.js application converted to Android APK via Capacitor.</p>
-                            <div class="d-flex flex-wrap gap-2 mb-4">
-                                <span class="badge badge-tech">React</span>
-                                <span class="badge badge-tech">Node.js</span>
-                                <span class="badge badge-tech">Capacitor</span>
-                            </div>
-                            <a href="{% url 'project_detail' 'food-ordering-app' %}" class="btn btn-primary px-4 py-2">Details</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#featuredProjectsCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon bg-dark rounded-circle" aria-hidden="true"></span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#featuredProjectsCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon bg-dark rounded-circle" aria-hidden="true"></span>
-            </button>
+      <div class="d-flex flex-wrap gap-3">
+        <a href="{% url 'project_detail' project_slug=project_slug %}" class="btn btn-primary rounded-pill px-4">
+          Full Case Study <i class="bi bi-arrow-right ms-1"></i>
+        </a>
+        {% if project.live_demo_link %}
+          <a href="{{ project.live_demo_link }}" target="_blank" rel="noopener" class="btn btn-outline-secondary rounded-pill px-4">
+            Live Demo <i class="bi bi-box-arrow-up-right ms-1"></i>
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% if not forloop.last %}
+  <hr style="border-color:rgba(255,255,255,0.06); margin: 3rem 0;">
+  {% endif %}
+  {% endfor %}
+
+  <div class="text-center mt-4">
+    <a href="{% url 'portfolio' %}" class="btn btn-outline-primary rounded-pill px-5">
+      View All {{ featured_projects|length }}+ Projects <i class="bi bi-grid ms-2"></i>
+    </a>
+  </div>
+</section>
+
+<!-- ════ WHO I AM ════ -->
+<section class="py-5 my-3" style="background: rgba(0,0,0,0.03)">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-md-3 text-center">
+        <img src="{% static 'core/images/usty_headshot.jpg' %}" alt="Usty" class="about-section-img">
+        <div class="mt-3">
+          <div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);font-weight:600">
+            Muhammedmustapha Abdullahi
+          </div>
+          <div style="font-size:0.82rem;opacity:0.55;margin-top:4px">// Usty · Founder, UASE Tech Studio</div>
         </div>
-    </section>
-
-    <section class="container py-5 my-5 text-center bg-light rounded-5 shadow-sm p-5">
-        <h2 class="fw-bold mb-5">Partner Feedback</h2>
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                {% for testimonial in testimonials %}
-                <div class="testimonial p-4 mb-4 rounded-4 text-start bg-white shadow-sm">
-                    <p class="lead fst-italic">"{{ testimonial.content }}"</p>
-                    <strong class="text-primary">— {{ testimonial.author_name }}</strong>
-                    {% if testimonial.author_title %}<span class="text-muted small">, {{ testimonial.author_title }}</span>{% endif %}
-                </div>
-                {% empty %}
-                <p class="opacity-50">No testimonials yet.</p>
-                {% endfor %}
-            </div>
+      </div>
+      <div class="col-md-9">
+        <div class="featured-label">About Me</div>
+        <h2 class="fw-bold h1 mb-3">Engineering with Precision.<br>Delivering with Purpose.</h2>
+        <p class="opacity-75 mb-3">
+          I'm a Computer Science graduate and full-stack software engineer who builds systems that go beyond the surface.
+          From SaaS platforms to healthcare tools, I combine backend architecture, modern frontend design, and mobile
+          delivery into end-to-end solutions that solve real problems.
+        </p>
+        <p class="opacity-75 mb-4">
+          Through UASE Tech Studio, I've shipped production systems for Nigerian dealerships, blood banks, campuses,
+          cinemas, and legal institutions — always with a focus on clean code, scalable design, and measurable impact.
+        </p>
+        <div class="d-flex flex-wrap gap-2 mb-4">
+          {% for tech in "Python,Django,Next.js,FastAPI,MongoDB,React,TypeScript,Node.js,Tailwind CSS,Capacitor"|split:"," %}
+          <span class="stack-pill">{{ tech }}</span>
+          {% endfor %}
         </div>
-    </section>
+        <div class="d-flex gap-3 flex-wrap">
+          <a href="{% url 'about' %}" class="btn btn-primary rounded-pill px-4">Full Story →</a>
+          <a href="{% url 'resume' %}" class="btn btn-outline-secondary rounded-pill px-4"><i class="bi bi-file-earmark-person me-2"></i>View Resume</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <section class="container py-5 my-5 text-center call-to-action-bg text-white shadow-lg p-5">
-        <h2 class="display-5 fw-bold mb-3">Ready to Build Your Next Big Idea?</h2>
-        <p class="lead mb-4 opacity-75">Let's connect and transform your concepts into digital solutions.</p>
-        <a href="{% url 'contact' %}" class="btn btn-light btn-lg px-5 py-3 fw-bold text-primary rounded-pill animate__animated animate__pulse animate__infinite">Get Free Consultation</a>
-    </section>
+<!-- ════ CORE EXPERTISE ════ -->
+<section class="container py-5 my-5">
+  <div class="text-center mb-5">
+    <div class="featured-label justify-content-center">Services</div>
+    <h2 class="display-6 fw-bold">Core Expertise</h2>
+  </div>
+  <div class="row g-4">
+    <div class="col-md-3 col-6">
+      <div class="expertise-card">
+        <div class="expertise-icon">🌐</div>
+        <h5 class="fw-bold mb-2">Web Apps</h5>
+        <p class="small opacity-75 mb-3">Scalable platforms with Django, React, Next.js, and Node.js — from MVPs to enterprise dashboards.</p>
+        <a href="{% url 'service_detail' 'web-development' %}" class="btn btn-link p-0 text-primary small">Learn More →</a>
+      </div>
+    </div>
+    <div class="col-md-3 col-6">
+      <div class="expertise-card">
+        <div class="expertise-icon">📱</div>
+        <h5 class="fw-bold mb-2">Mobile Apps</h5>
+        <p class="small opacity-75 mb-3">Android APKs using Capacitor — same codebase, native performance across platforms.</p>
+        <a href="{% url 'service_detail' 'mobile-app-development' %}" class="btn btn-link p-0 text-primary small">Learn More →</a>
+      </div>
+    </div>
+    <div class="col-md-3 col-6">
+      <div class="expertise-card">
+        <div class="expertise-icon">⚙️</div>
+        <h5 class="fw-bold mb-2">SaaS & APIs</h5>
+        <p class="small opacity-75 mb-3">FastAPI, multi-tenant architectures, JWT auth, REST APIs, and automated backend workflows.</p>
+        <a href="{% url 'service_detail' 'software-development' %}" class="btn btn-link p-0 text-primary small">Learn More →</a>
+      </div>
+    </div>
+    <div class="col-md-3 col-6">
+      <div class="expertise-card">
+        <div class="expertise-icon">🎓</div>
+        <h5 class="fw-bold mb-2">IT Training</h5>
+        <p class="small opacity-75 mb-3">SIWES mentorship, final-year project support, and hands-on dev training for students.</p>
+        <a href="{% url 'service_detail' 'it-support-administration' %}" class="btn btn-link p-0 text-primary small">Learn More →</a>
+      </div>
+    </div>
+  </div>
+</section>
 
-</main>
+<!-- ════ TESTIMONIALS ════ -->
+{% if testimonials %}
+<section class="py-5 my-3" style="background: rgba(0,0,0,0.03)">
+  <div class="container">
+    <div class="text-center mb-5">
+      <div class="featured-label justify-content-center">Social Proof</div>
+      <h2 class="display-6 fw-bold">What Clients Say</h2>
+    </div>
+    <div class="row g-4">
+      {% for testimonial in testimonials %}
+      <div class="col-md-6 col-lg-4">
+        <div class="testi-card h-100">
+          <div class="mb-3" style="font-size:1.8rem;color:var(--accent);line-height:1">"</div>
+          <p class="fst-italic opacity-75 mb-4" style="font-size:0.93rem;line-height:1.8">{{ testimonial.content }}</p>
+          <div class="d-flex align-items-center gap-3 mt-auto">
+            <div class="testi-avatar">{{ testimonial.author_name|first }}{{ testimonial.author_name|last }}</div>
+            <div>
+              <div style="font-size:0.88rem;font-weight:600">{{ testimonial.author_name }}</div>
+              {% if testimonial.author_title %}
+              <div style="font-size:0.75rem;opacity:0.5">{{ testimonial.author_title }}</div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- ════ CTA ════ -->
+<section class="container py-5 my-5">
+  <div class="cta-wrap">
+    <div class="position-relative z-1">
+      <div class="featured-label justify-content-center text-white opacity-75 mb-3">Let's Build</div>
+      <h2 class="display-5 fw-bold text-white mb-3">Have an Idea? Let's Make It Real.</h2>
+      <p class="lead text-white opacity-75 mb-4">
+        Whether it's a SaaS platform, a mobile app, or a student project — I'm here to help you build it right.
+      </p>
+      <div class="d-flex gap-3 justify-content-center flex-wrap">
+        <a href="{% url 'contact' %}" class="btn btn-light btn-lg px-5 py-3 fw-bold text-primary rounded-pill">
+          Get Free Consultation →
+        </a>
+        <a href="{% url 'portfolio' %}" class="btn btn-outline-light btn-lg px-5 py-3 rounded-pill">
+          View Portfolio
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
 {% endblock %}
 
 {% block scripts %}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('animate__fadeInUp');
-                    }
-                });
-            }, { threshold: 0.1 });
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+<script>
+  // Scroll-reveal for sections
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('animate__fadeInUp');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
 
-            document.querySelectorAll('section').forEach(section => {
-                section.classList.add('animate__animated');
-                observer.observe(section);
-            });
-        });
-    </script>
+  document.querySelectorAll('section').forEach(s => {
+    s.classList.add('animate__animated');
+    observer.observe(s);
+  });
+</script>
 {% endblock %}

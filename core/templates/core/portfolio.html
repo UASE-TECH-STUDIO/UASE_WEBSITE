@@ -117,6 +117,22 @@
         </div>
     </div>
 
+    <!-- FEATURED BANNER -->
+    <div class="mb-5 p-4 p-md-5 rounded-4 position-relative overflow-hidden" style="background: linear-gradient(135deg, #0a0f1d 0%, #111827 100%); border: 1px solid rgba(0,210,255,0.15);">
+        <div class="position-absolute top-0 start-0 w-100 h-100" style="background-image:radial-gradient(rgba(0,210,255,0.04) 1px, transparent 1px);background-size:24px 24px;"></div>
+        <div class="row align-items-center position-relative z-1 g-4">
+            <div class="col-lg-7">
+                <span class="badge mb-2 px-3 py-2" style="background:rgba(0,210,255,0.1);color:#00d2ff;border:1px solid rgba(0,210,255,0.2);font-size:0.72rem;letter-spacing:0.08em;">⭐ FEATURED — FLAGSHIP PROJECTS</span>
+                <h2 class="fw-bold text-white mb-2">CARSTRIMS &amp; BloodLink</h2>
+                <p class="mb-0" style="color:rgba(255,255,255,0.6);font-size:0.95rem;">My two most complex, production-grade systems. A full multi-tenant car dealer SaaS for the Nigerian market, and a healthcare blood donation platform — both live and shipping.</p>
+            </div>
+            <div class="col-lg-5 d-flex gap-3 flex-wrap">
+                <a href="{% url 'project_detail' 'carstrims-car-dealer-platform' %}" class="btn btn-primary rounded-pill px-4">CARSTRIMS Case Study →</a>
+                <a href="{% url 'project_detail' 'bloodlink-blood-donor-management' %}" class="btn btn-outline-light rounded-pill px-4">BloodLink Case Study →</a>
+            </div>
+        </div>
+    </div>
+
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" id="portfolio-grid">
         {% for project_slug, project in projects.items %}
         <div class="col portfolio-item animate__animated" data-category="{{ project.category }}">
