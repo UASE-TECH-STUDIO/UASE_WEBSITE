@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <title>{% block title %}UASE Tech Studio — Software Engineering & ICT Solutions{% endblock %}</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <meta name="description" content="UASE Tech Studio — We architect solutions, design systems, and build production-grade software. Full-stack engineering, SaaS platforms, mobile apps, and IT services from Nigeria.">
   <link rel="icon" type="image/png" href="{% static 'core/images/uase_logo_white.png' %}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,40 +14,26 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="{% static 'core/style.css' %}">
   <style>
+    /* ═══ DESIGN TOKENS ═══ */
     :root {
       --c-bg: #06080f;
       --c-bg2: #0b0f1a;
       --c-surface: #111827;
       --c-border: rgba(255,255,255,0.07);
-      --c-border2: rgba(255,255,255,0.12);
+      --c-border2: rgba(255,255,255,0.13);
       --c-gold: #e8a045;
       --c-gold2: #f5c070;
       --c-gold-glow: rgba(232,160,69,0.15);
-      --c-blue: #3b8fff;
       --c-text: #e8eaf2;
       --c-text2: #8891a8;
       --c-text3: #4a5168;
       --radius: 12px;
       --radius-lg: 18px;
-      --nav-h: 70px;
+      --nav-h: 64px;
       --font: 'Plus Jakarta Sans', sans-serif;
       --font-mono: 'DM Mono', monospace;
-      --transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+      --ease: cubic-bezier(0.4,0,0.2,1);
     }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: var(--font);
-      background: var(--c-bg);
-      color: var(--c-text);
-      font-size: 16px;
-      line-height: 1.7;
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-    }
-
-    /* ── LIGHT MODE ── */
     body.light-mode {
       --c-bg: #f7f8fc;
       --c-bg2: #ffffff;
@@ -59,204 +45,269 @@
       --c-text3: #9aa0b0;
     }
 
-    h1, h2, h3, h4, h5, h6 {
+    /* ═══ RESET ═══ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    img { max-width: 100%; height: auto; display: block; }
+
+    body {
       font-family: var(--font);
-      font-weight: 700;
+      background: var(--c-bg);
       color: var(--c-text);
-      line-height: 1.2;
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      min-width: 320px;
     }
 
-    /* ── NAV ── */
+    h1,h2,h3,h4,h5,h6 { font-family: var(--font); font-weight: 700; color: var(--c-text); line-height: 1.2; }
+
+    /* ═══ NAV ═══ */
     #site-nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
       height: var(--nav-h);
       display: flex; align-items: center;
-      padding: 0 5%;
-      background: rgba(6,8,15,0.8);
+      padding: 0 clamp(1rem, 5%, 5%);
+      background: rgba(6,8,15,0.88);
       backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border-bottom: 0.5px solid var(--c-border);
-      transition: background 0.3s;
+      transition: background 0.3s var(--ease);
     }
-    body.light-mode #site-nav { background: rgba(247,248,252,0.9); }
+    body.light-mode #site-nav { background: rgba(247,248,252,0.94); }
 
-    .nav-inner { width: 100%; max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+    .nav-inner {
+      width: 100%; max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    }
 
     .nav-logo {
-      display: flex; align-items: center; gap: 10px;
-      text-decoration: none; font-weight: 800; font-size: 1.1rem;
-      color: var(--c-text); letter-spacing: 0.02em;
+      display: flex; align-items: center; gap: 8px;
+      text-decoration: none; font-weight: 800; font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+      color: var(--c-text); flex-shrink: 0;
     }
     .nav-logo-mark {
-      width: 32px; height: 32px;
-      background: var(--c-gold);
-      border-radius: 8px;
+      width: 30px; height: 30px; min-width: 30px;
+      background: var(--c-gold); border-radius: 7px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 0.75rem; font-weight: 900; color: #000;
-      font-family: var(--font-mono);
+      font-size: 0.7rem; font-weight: 900; color: #000; font-family: var(--font-mono);
     }
-    .nav-logo span { color: var(--c-gold); }
+    .nav-logo-text { display: flex; align-items: center; gap: 4px; }
+    .nav-logo-text span { color: var(--c-gold); }
 
     .nav-links {
-      display: flex; align-items: center; gap: 0.25rem; list-style: none;
+      display: flex; align-items: center; gap: 2px; list-style: none;
+      flex-wrap: nowrap;
     }
     .nav-links a {
-      color: var(--c-text2); text-decoration: none; font-size: 0.85rem;
-      font-weight: 500; padding: 0.45rem 0.85rem; border-radius: 8px;
-      transition: var(--transition);
+      color: var(--c-text2); text-decoration: none; font-size: 0.83rem;
+      font-weight: 500; padding: 0.4rem 0.75rem; border-radius: 8px;
+      transition: all 0.25s var(--ease); white-space: nowrap;
     }
     .nav-links a:hover { color: var(--c-text); background: var(--c-border); }
-
     .nav-cta {
-      background: var(--c-gold); color: #000 !important;
-      padding: 0.45rem 1.2rem !important; border-radius: 8px !important;
-      font-weight: 700 !important; font-size: 0.82rem !important;
-      transition: var(--transition) !important;
+      background: var(--c-gold) !important; color: #000 !important;
+      font-weight: 700 !important; border-radius: 8px !important;
     }
     .nav-cta:hover { background: var(--c-gold2) !important; transform: translateY(-1px); }
 
-    .nav-controls { display: flex; align-items: center; gap: 0.5rem; }
+    .nav-controls { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
 
     .theme-btn {
-      width: 36px; height: 36px; border-radius: 8px;
+      width: 34px; height: 34px; border-radius: 8px; min-width: 34px;
       background: var(--c-surface); border: 0.5px solid var(--c-border2);
-      color: var(--c-text2); cursor: pointer; display: flex;
-      align-items: center; justify-content: center; font-size: 0.9rem;
-      transition: var(--transition);
+      color: var(--c-text2); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.88rem; transition: all 0.25s var(--ease);
     }
     .theme-btn:hover { color: var(--c-gold); border-color: var(--c-gold); }
 
+    /* Hamburger — always rendered, shown/hidden via CSS */
     .hamburger {
-      display: none; flex-direction: column; gap: 5px;
-      cursor: pointer; background: none; border: none; padding: 4px;
+      display: none; flex-direction: column; justify-content: center;
+      gap: 4px; cursor: pointer; background: none; border: none;
+      padding: 5px; width: 34px; height: 34px; flex-shrink: 0;
     }
-    .hamburger span { display: block; width: 22px; height: 1.5px; background: var(--c-text2); border-radius: 2px; transition: 0.3s; }
+    .hamburger span {
+      display: block; width: 20px; height: 1.5px;
+      background: var(--c-text2); border-radius: 2px;
+      transition: all 0.3s var(--ease); transform-origin: center;
+    }
+    .hamburger.active span:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
+    .hamburger.active span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .hamburger.active span:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
 
+    /* Mobile menu */
     .mobile-nav {
-      display: none; position: fixed; top: var(--nav-h); left: 0; right: 0; z-index: 999;
-      background: rgba(6,8,15,0.98); backdrop-filter: blur(24px);
+      position: fixed; top: var(--nav-h); left: 0; right: 0; z-index: 998;
+      background: rgba(6,8,15,0.98);
+      backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
       border-bottom: 0.5px solid var(--c-border);
-      padding: 1.5rem 5%; flex-direction: column; gap: 0.5rem;
+      padding: 0 clamp(1rem,5%,5%);
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.4s var(--ease), padding 0.3s var(--ease);
     }
-    body.light-mode .mobile-nav { background: rgba(247,248,252,0.98); }
-    .mobile-nav.open { display: flex; }
-    .mobile-nav a { color: var(--c-text2); text-decoration: none; font-size: 1rem; padding: 0.6rem 0.5rem; border-bottom: 0.5px solid var(--c-border); }
-    .mobile-nav a:last-child { border-bottom: none; }
-    .mobile-nav a:hover { color: var(--c-gold); }
+    body.light-mode .mobile-nav { background: rgba(247,248,252,0.99); }
+    .mobile-nav.open { max-height: 400px; padding: 1rem clamp(1rem,5%,5%) 1.5rem; }
 
-    /* ── MAIN CONTENT ── */
+    .mobile-nav a {
+      display: flex; align-items: center; justify-content: space-between;
+      color: var(--c-text2); text-decoration: none; font-size: 1rem;
+      font-weight: 500; padding: 0.85rem 0;
+      border-bottom: 0.5px solid var(--c-border);
+      transition: color 0.2s; -webkit-tap-highlight-color: transparent;
+    }
+    .mobile-nav a:last-child { border-bottom: none; }
+    .mobile-nav a:hover, .mobile-nav a:active { color: var(--c-gold); }
+    .mobile-nav a.mobile-cta { color: var(--c-gold); font-weight: 700; }
+
+    /* ═══ MAIN ═══ */
     main { padding-top: var(--nav-h); }
 
-    /* ── GLOBAL UTILITIES ── */
+    /* ═══ GLOBAL UTILITIES ═══ */
     .sec-label {
       display: inline-flex; align-items: center; gap: 8px;
-      font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+      font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
       color: var(--c-gold); font-weight: 600; font-family: var(--font-mono);
     }
-    .sec-label::before { content: ''; display: block; width: 16px; height: 1px; background: var(--c-gold); }
-
-    .gold-text { color: var(--c-gold); }
-    .mono { font-family: var(--font-mono); }
+    .sec-label::before { content:''; display:block; width:14px; height:1px; background:var(--c-gold); }
 
     .tag {
       display: inline-block; background: rgba(232,160,69,0.1);
       border: 0.5px solid rgba(232,160,69,0.25);
       color: var(--c-gold); padding: 3px 10px; border-radius: 100px;
-      font-size: 0.72rem; font-family: var(--font-mono);
-    }
-    body.light-mode .tag { background: rgba(232,160,69,0.08); }
-
-    .glow-line {
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--c-gold), transparent);
-      opacity: 0.3;
+      font-size: 0.7rem; font-family: var(--font-mono);
     }
 
-    /* ── FOOTER ── */
-    #site-footer {
-      background: var(--c-bg2);
-      border-top: 0.5px solid var(--c-border);
-      padding: 3.5rem 5% 2rem;
-      margin-top: 0;
-    }
-    .footer-inner { max-width: 1200px; margin: 0 auto; }
-    .footer-grid { display: grid; grid-template-columns: 1.8fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
-    .footer-logo { font-weight: 800; font-size: 1.1rem; color: var(--c-text); display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; }
-    .footer-desc { font-size: 0.85rem; color: var(--c-text3); line-height: 1.75; }
-    .footer-col h5 { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-text3); font-family: var(--font-mono); margin-bottom: 1rem; font-weight: 500; }
-    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
-    .footer-col ul a { color: var(--c-text3); text-decoration: none; font-size: 0.87rem; transition: color 0.2s; }
-    .footer-col ul a:hover { color: var(--c-gold); }
-    .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; padding-top: 1.5rem; border-top: 0.5px solid var(--c-border); font-size: 0.8rem; color: var(--c-text3); }
-    .social-link { width: 34px; height: 34px; border-radius: 8px; background: var(--c-surface); border: 0.5px solid var(--c-border2); display: flex; align-items: center; justify-content: center; color: var(--c-text3); text-decoration: none; font-size: 0.85rem; transition: var(--transition); }
-    .social-link:hover { border-color: var(--c-gold); color: var(--c-gold); }
-
-    /* ── CARDS ── */
-    .uase-card {
-      background: var(--c-surface);
-      border: 0.5px solid var(--c-border);
-      border-radius: var(--radius-lg);
-      transition: var(--transition);
-    }
-    .uase-card:hover { border-color: var(--c-border2); transform: translateY(-3px); }
-
-    /* ── BUTTONS ── */
+    /* ═══ GLOBAL BUTTONS ═══ */
     .btn-gold {
       background: var(--c-gold); color: #000;
-      padding: 0.7rem 1.8rem; border-radius: var(--radius);
-      font-weight: 700; text-decoration: none; font-size: 0.88rem;
+      padding: 0.75rem 1.75rem; border-radius: var(--radius);
+      font-weight: 700; text-decoration: none;
+      font-size: clamp(0.82rem, 2vw, 0.9rem);
       display: inline-flex; align-items: center; gap: 8px;
-      transition: var(--transition); border: none; cursor: pointer;
+      transition: all 0.25s var(--ease); border: none; cursor: pointer;
+      white-space: nowrap; -webkit-tap-highlight-color: transparent;
     }
     .btn-gold:hover { background: var(--c-gold2); color: #000; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(232,160,69,0.25); }
 
     .btn-outline-gold {
       background: transparent; color: var(--c-gold);
-      padding: 0.7rem 1.8rem; border-radius: var(--radius);
-      font-weight: 600; text-decoration: none; font-size: 0.88rem;
+      padding: 0.75rem 1.75rem; border-radius: var(--radius);
+      font-weight: 600; text-decoration: none;
+      font-size: clamp(0.82rem, 2vw, 0.9rem);
       display: inline-flex; align-items: center; gap: 8px;
-      border: 0.5px solid var(--c-gold); transition: var(--transition);
+      border: 0.5px solid var(--c-gold); transition: all 0.25s var(--ease);
+      white-space: nowrap; -webkit-tap-highlight-color: transparent;
     }
     .btn-outline-gold:hover { background: var(--c-gold-glow); color: var(--c-gold); transform: translateY(-2px); }
 
     .btn-ghost {
       background: var(--c-surface); color: var(--c-text2);
-      padding: 0.7rem 1.8rem; border-radius: var(--radius);
-      font-weight: 500; text-decoration: none; font-size: 0.88rem;
+      padding: 0.75rem 1.75rem; border-radius: var(--radius);
+      font-weight: 500; text-decoration: none;
+      font-size: clamp(0.82rem, 2vw, 0.9rem);
       display: inline-flex; align-items: center; gap: 8px;
-      border: 0.5px solid var(--c-border2); transition: var(--transition);
+      border: 0.5px solid var(--c-border2); transition: all 0.25s var(--ease);
+      white-space: nowrap; -webkit-tap-highlight-color: transparent;
     }
     .btn-ghost:hover { border-color: var(--c-gold); color: var(--c-gold); transform: translateY(-2px); }
 
-    /* ── RESPONSIVE ── */
-    @media (max-width: 900px) {
-      .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    /* ═══ FOOTER ═══ */
+    #site-footer {
+      background: var(--c-bg2);
+      border-top: 0.5px solid var(--c-border);
+      padding: clamp(2.5rem,6vw,3.5rem) clamp(1rem,5%,5%) 2rem;
     }
-    @media (max-width: 640px) {
-      .nav-links { display: none; }
-      .hamburger { display: flex; }
-      .footer-grid { grid-template-columns: 1fr; gap: 1.5rem; }
-      .footer-bottom { flex-direction: column; text-align: center; }
+    .footer-inner { max-width: 1200px; margin: 0 auto; }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.8fr 1fr 1fr 1fr;
+      gap: clamp(1.5rem,4vw,3rem);
+      margin-bottom: 2.5rem;
     }
+    .footer-logo {
+      font-weight: 800; font-size: 1.05rem; color: var(--c-text);
+      display: flex; align-items: center; gap: 8px; margin-bottom: 0.85rem;
+    }
+    .footer-desc { font-size: 0.84rem; color: var(--c-text3); line-height: 1.75; max-width: 280px; }
+    .footer-col h5 {
+      font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--c-text3); font-family: var(--font-mono); margin-bottom: 1rem; font-weight: 500;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; }
+    .footer-col ul a { color: var(--c-text3); text-decoration: none; font-size: 0.86rem; transition: color 0.2s; }
+    .footer-col ul a:hover { color: var(--c-gold); }
+    .footer-bottom {
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 1rem;
+      padding-top: 1.5rem; border-top: 0.5px solid var(--c-border);
+      font-size: 0.78rem; color: var(--c-text3);
+    }
+    .social-link {
+      width: 34px; height: 34px; border-radius: 8px;
+      background: var(--c-surface); border: 0.5px solid var(--c-border2);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--c-text3); text-decoration: none; font-size: 0.85rem;
+      transition: all 0.25s var(--ease); -webkit-tap-highlight-color: transparent;
+    }
+    .social-link:hover { border-color: var(--c-gold); color: var(--c-gold); }
 
-    /* ── SCROLL REVEAL ── */
-    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    /* ═══ SCROLL REVEAL ═══ */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s var(--ease), transform 0.65s var(--ease); }
     .reveal.visible { opacity: 1; transform: none; }
     .reveal-d1 { transition-delay: 0.1s; }
     .reveal-d2 { transition-delay: 0.2s; }
     .reveal-d3 { transition-delay: 0.3s; }
     .reveal-d4 { transition-delay: 0.4s; }
+
+    /* ═══ RESPONSIVE BREAKPOINTS ═══ */
+
+    /* Tablet landscape / small desktop: hide some nav items */
+    @media (max-width: 1024px) {
+      .nav-links li:nth-child(5) { display: none; } /* hide Graphics from nav at tablet */
+    }
+
+    /* Tablet portrait */
+    @media (max-width: 900px) {
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+      .footer-desc { max-width: 100%; }
+    }
+
+    /* Mobile — show hamburger, hide nav links */
+    @media (max-width: 768px) {
+      :root { --nav-h: 58px; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+    }
+
+    /* Small mobile */
+    @media (max-width: 480px) {
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 1.5rem 1rem; }
+      .footer-bottom { flex-direction: column; text-align: center; gap: 0.75rem; }
+      .btn-gold, .btn-ghost, .btn-outline-gold { padding: 0.7rem 1.3rem; font-size: 0.84rem; }
+    }
+
+    /* Very small phones */
+    @media (max-width: 375px) {
+      :root { --nav-h: 54px; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .nav-logo-text { font-size: 0.9rem; }
+    }
   </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav id="site-nav">
+<!-- ═══ NAV ═══ -->
+<nav id="site-nav" role="navigation" aria-label="Main navigation">
   <div class="nav-inner">
-    <a href="{% url 'home' %}" class="nav-logo">
-      <div class="nav-logo-mark">U</div>
-      UASE <span>&nbsp;Studio</span>
+    <a href="{% url 'home' %}" class="nav-logo" aria-label="UASE Tech Studio Home">
+      <div class="nav-logo-mark" aria-hidden="true">U</div>
+      <div class="nav-logo-text">UASE <span>&nbsp;Studio</span></div>
     </a>
-    <ul class="nav-links">
+
+    <ul class="nav-links" role="list">
       <li><a href="{% url 'home' %}">Home</a></li>
       <li><a href="{% url 'about' %}">About</a></li>
       <li><a href="{% url 'services' %}">Services</a></li>
@@ -264,42 +315,42 @@
       <li><a href="{% url 'graphics_portfolio' %}">Graphics</a></li>
       <li><a href="{% url 'contact' %}" class="nav-cta">Get in Touch</a></li>
     </ul>
+
     <div class="nav-controls">
-      <button class="theme-btn" id="themeToggle" title="Toggle theme">
-        <i class="bi bi-sun-fill" id="themeIcon"></i>
+      <button class="theme-btn" id="themeToggle" aria-label="Toggle light/dark mode">
+        <i class="bi bi-sun-fill" id="themeIcon" aria-hidden="true"></i>
       </button>
-      <button class="hamburger" id="hamburger" aria-label="Menu">
+      <button class="hamburger" id="hamburger" aria-label="Open navigation menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
     </div>
   </div>
 </nav>
 
-<nav class="mobile-nav" id="mobileNav">
-  <a href="{% url 'home' %}" onclick="closeMobile()">Home</a>
-  <a href="{% url 'about' %}" onclick="closeMobile()">About</a>
-  <a href="{% url 'services' %}" onclick="closeMobile()">Services</a>
-  <a href="{% url 'portfolio' %}" onclick="closeMobile()">Portfolio</a>
-  <a href="{% url 'graphics_portfolio' %}" onclick="closeMobile()">Graphics</a>
-  <a href="{% url 'contact' %}" onclick="closeMobile()" style="color:var(--c-gold);font-weight:700">Get in Touch &rarr;</a>
-</nav>
+<!-- Mobile nav -->
+<div class="mobile-nav" id="mobileNav" role="navigation" aria-label="Mobile navigation">
+  <a href="{% url 'home' %}" onclick="closeMobile()">Home <i class="bi bi-chevron-right" aria-hidden="true"></i></a>
+  <a href="{% url 'about' %}" onclick="closeMobile()">About <i class="bi bi-chevron-right" aria-hidden="true"></i></a>
+  <a href="{% url 'services' %}" onclick="closeMobile()">Services <i class="bi bi-chevron-right" aria-hidden="true"></i></a>
+  <a href="{% url 'portfolio' %}" onclick="closeMobile()">Portfolio <i class="bi bi-chevron-right" aria-hidden="true"></i></a>
+  <a href="{% url 'graphics_portfolio' %}" onclick="closeMobile()">Graphics <i class="bi bi-chevron-right" aria-hidden="true"></i></a>
+  <a href="{% url 'contact' %}" onclick="closeMobile()" class="mobile-cta">Get in Touch &rarr;</a>
+</div>
 
-<main>
-  {% block content %}{% endblock %}
-</main>
+<main>{% block content %}{% endblock %}</main>
 
-<!-- FOOTER -->
-<footer id="site-footer">
+<!-- ═══ FOOTER ═══ -->
+<footer id="site-footer" role="contentinfo">
   <div class="footer-inner">
     <div class="footer-grid">
       <div>
         <div class="footer-logo">
-          <div class="nav-logo-mark">U</div>
+          <div class="nav-logo-mark" aria-hidden="true">U</div>
           UASE Tech Studio
         </div>
         <p class="footer-desc">
           We architect solutions, design systems, and ship production-grade software.
-          A software engineering company built on precision, trust, and real impact — based in Nigeria.
+          A software engineering company built on precision, trust, and real impact &mdash; based in Nigeria.
         </p>
       </div>
       <div class="footer-col">
@@ -325,19 +376,19 @@
         <h5>Connect</h5>
         <ul>
           <li><a href="{% url 'contact' %}">Contact Us</a></li>
-          <li><a href="https://github.com/UASE-TECH-STUDIO" target="_blank">GitHub</a></li>
-          <li><a href="https://wa.me/2349133549399" target="_blank">WhatsApp</a></li>
-          <li><a href="https://linkedin.com/in/muhammedmustapha-abdullahi-bb897a309/" target="_blank">LinkedIn</a></li>
+          <li><a href="https://github.com/UASE-TECH-STUDIO" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://wa.me/2349133549399" target="_blank" rel="noopener">WhatsApp</a></li>
+          <li><a href="https://linkedin.com/in/muhammedmustapha-abdullahi-bb897a309/" target="_blank" rel="noopener">LinkedIn</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
       <span>&copy; 2026 UASE Tech Studio. Engineered by Usty. All rights reserved.</span>
-      <div style="display:flex;gap:0.5rem">
-        <a href="https://github.com/UASE-TECH-STUDIO" target="_blank" class="social-link"><i class="bi bi-github"></i></a>
-        <a href="https://wa.me/2349133549399" target="_blank" class="social-link"><i class="bi bi-whatsapp"></i></a>
-        <a href="https://linkedin.com/in/muhammedmustapha-abdullahi-bb897a309/" target="_blank" class="social-link"><i class="bi bi-linkedin"></i></a>
-        <a href="{% url 'contact' %}" class="social-link"><i class="bi bi-envelope-fill"></i></a>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <a href="https://github.com/UASE-TECH-STUDIO" target="_blank" rel="noopener" class="social-link" aria-label="GitHub"><i class="bi bi-github" aria-hidden="true"></i></a>
+        <a href="https://wa.me/2349133549399" target="_blank" rel="noopener" class="social-link" aria-label="WhatsApp"><i class="bi bi-whatsapp" aria-hidden="true"></i></a>
+        <a href="https://linkedin.com/in/muhammedmustapha-abdullahi-bb897a309/" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn"><i class="bi bi-linkedin" aria-hidden="true"></i></a>
+        <a href="{% url 'contact' %}" class="social-link" aria-label="Email"><i class="bi bi-envelope-fill" aria-hidden="true"></i></a>
       </div>
     </div>
   </div>
@@ -345,37 +396,80 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-  // Theme
-  const saved = localStorage.getItem('uase-theme') || 'dark';
-  const icon = document.getElementById('themeIcon');
-  if (saved === 'light') { document.body.classList.add('light-mode'); icon.className = 'bi bi-moon-stars-fill'; }
-  document.getElementById('themeToggle').addEventListener('click', () => {
-    const isLight = document.body.classList.toggle('light-mode');
+(function() {
+  // ── THEME ──
+  var savedTheme = localStorage.getItem('uase-theme') || 'dark';
+  var icon = document.getElementById('themeIcon');
+  if (savedTheme === 'light') {
+    document.body.classList.add('light-mode');
+    icon.className = 'bi bi-moon-stars-fill';
+  }
+  document.getElementById('themeToggle').addEventListener('click', function() {
+    var isLight = document.body.classList.toggle('light-mode');
     icon.className = isLight ? 'bi bi-moon-stars-fill' : 'bi bi-sun-fill';
     localStorage.setItem('uase-theme', isLight ? 'light' : 'dark');
+    // Update mobile nav bg
+    updateNavBg();
   });
 
-  // Mobile nav
-  function closeMobile() { document.getElementById('mobileNav').classList.remove('open'); }
-  document.getElementById('hamburger').addEventListener('click', () => {
-    document.getElementById('mobileNav').classList.toggle('open');
-  });
-  document.addEventListener('click', e => {
-    if (!document.getElementById('site-nav').contains(e.target) && !document.getElementById('mobileNav').contains(e.target)) closeMobile();
+  // ── NAV SCROLL ──
+  function updateNavBg() {
+    var nav = document.getElementById('site-nav');
+    var light = document.body.classList.contains('light-mode');
+    if (window.scrollY > 40) {
+      nav.style.background = light ? 'rgba(247,248,252,0.99)' : 'rgba(6,8,15,0.99)';
+    } else {
+      nav.style.background = light ? 'rgba(247,248,252,0.94)' : 'rgba(6,8,15,0.88)';
+    }
+  }
+  window.addEventListener('scroll', updateNavBg, { passive: true });
+
+  // ── MOBILE NAV ──
+  var hamburger = document.getElementById('hamburger');
+  var mobileNav = document.getElementById('mobileNav');
+  var isOpen = false;
+
+  function closeMobile() {
+    isOpen = false;
+    mobileNav.classList.remove('open');
+    hamburger.classList.remove('active');
+    hamburger.setAttribute('aria-expanded', 'false');
+  }
+  window.closeMobile = closeMobile;
+
+  hamburger.addEventListener('click', function(e) {
+    e.stopPropagation();
+    isOpen = !isOpen;
+    mobileNav.classList.toggle('open', isOpen);
+    hamburger.classList.toggle('active', isOpen);
+    hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
   });
 
-  // Nav scroll effect
-  window.addEventListener('scroll', () => {
-    document.getElementById('site-nav').style.background = window.scrollY > 40
-      ? (document.body.classList.contains('light-mode') ? 'rgba(247,248,252,0.98)' : 'rgba(6,8,15,0.98)')
-      : (document.body.classList.contains('light-mode') ? 'rgba(247,248,252,0.9)' : 'rgba(6,8,15,0.8)');
+  document.addEventListener('click', function(e) {
+    if (isOpen && !document.getElementById('site-nav').contains(e.target) && !mobileNav.contains(e.target)) {
+      closeMobile();
+    }
   });
 
-  // Scroll reveal
-  const revealObs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); } });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+  // Close on escape
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && isOpen) closeMobile();
+  });
+
+  // ── SCROLL REVEAL ──
+  var revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var revObs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) { e.target.classList.add('visible'); revObs.unobserve(e.target); }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+    revealEls.forEach(function(el) { revObs.observe(el); });
+  } else {
+    // Fallback for old browsers
+    revealEls.forEach(function(el) { el.classList.add('visible'); });
+  }
+})();
 </script>
 {% block scripts %}{% endblock %}
 </body>
