@@ -261,7 +261,7 @@ projects_data = {
             'carstrims0.jpg', 'carstrims1.jpg', 'carstrims2.jpg', 'carstrims3.jpg',
             'carstrims4.jpg', 'carstrims5.jpg', 'carstrims6.jpg', 'carstrims7.jpg',
         ],
-        'live_demo_link': 'https://carstrims.vercel.app',
+        'live_demo_link': 'https://carstrims-app.vercel.app/',
         'github_link': 'https://github.com/UASE-TECH-STUDIO',
         'problem_solution': {
             'problem': (
@@ -333,7 +333,7 @@ projects_data = {
             'blood14.jpeg', 'blood15.jpeg', 'blood16.jpeg', 'blood17.jpeg',
             'blood18.jpeg', 'blood19.jpeg', 'blood20.jpeg', 'blood21.jpeg',
         ],
-        'live_demo_link': 'https://blood-donor-app-pied.vercel.app/',
+        'live_demo_link': 'https://blood-link-9icw.vercel.app/',
         'github_link': 'https://github.com/UASE-TECH-STUDIO',
         'problem_solution': {
             'problem': (
@@ -483,7 +483,7 @@ projects_data = {
         'blood14.jpg', 'blood15.jpg', 'blood16.jpg', 'blood17.jpg', 'blood18.jpg', 'blood19.jpg', 'blood20.jpg',
         'blood21.jpg', 'blood22.jpg',
     ],
-    'live_demo_link': 'https://blood-donor-app-pied.vercel.app/',
+    'live_demo_link': 'https://blood-link-9icw.vercel.app/',
     'github_link': 'https://github.com/UASE-TECH-STUDIO',
     'problem_solution': {
         'problem': 'Blood shortages and delayed donor discovery during emergencies.',
@@ -1285,8 +1285,6 @@ def home(request):
     testimonials = paginator.get_page(page_number)
     featured_projects = [
         ('carstrims-car-dealer-platform', projects_data['carstrims-car-dealer-platform']),
-        ('bloodlink-blood-donor-management', projects_data['bloodlink-blood-donor-management']),
-        ('food-ordering-app', projects_data['food-ordering-app']),
     ]
     return render(request, 'core/home.html', {
         'testimonials': testimonials,

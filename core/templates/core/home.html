@@ -1,355 +1,516 @@
 {% extends 'core/layout.html' %}
 {% load static %}
-
-{% block title %}UASE Tech Studio — Full-Stack Software Engineer | Nigeria{% endblock %}
-
+{% block title %}UASE Tech Studio — Software Engineering & ICT Solutions | Nigeria{% endblock %}
 {% block content %}
 <style>
-  .hero-section {
-    background: url("{% static 'core/images/about_journey.jpg' %}") no-repeat center center / cover;
-    min-height: 92vh; display: flex; align-items: center; justify-content: center;
-    position: relative; overflow: hidden; margin-top: -3rem; border-radius: 0 0 60px 60px;
+  /* ── HERO ── */
+  .hero {
+    min-height: calc(100vh - var(--nav-h));
+    display: flex; align-items: center;
+    position: relative; overflow: hidden;
+    padding: 80px 5% 60px;
   }
-  .hero-section .overlay {
+  .hero-bg {
     position: absolute; inset: 0;
-    background: linear-gradient(135deg, rgba(5,8,16,0.93) 0%, rgba(5,8,16,0.62) 100%); z-index: 0;
+    background: url("{% static 'core/images/about_journey.jpg' %}") no-repeat center center / cover;
+    filter: brightness(0.18);
   }
-  .hero-badge {
+  .hero-grid {
+    position: absolute; inset: 0; opacity: 0.04;
+    background-image: linear-gradient(var(--c-border2) 1px, transparent 1px),
+                      linear-gradient(90deg, var(--c-border2) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+  .hero-glow {
+    position: absolute; top: -10%; right: -5%;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(232,160,69,0.07) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .hero-inner { position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; width: 100%; }
+  .hero-kicker {
     display: inline-flex; align-items: center; gap: 8px;
-    background: rgba(0,210,255,0.1); border: 1px solid rgba(0,210,255,0.25);
-    color: #00d2ff; padding: 6px 18px; border-radius: 100px;
-    font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500;
+    background: rgba(232,160,69,0.08); border: 0.5px solid rgba(232,160,69,0.25);
+    padding: 5px 14px; border-radius: 100px;
+    font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--c-gold); font-family: var(--font-mono); margin-bottom: 1.75rem;
   }
-  .hero-badge-dot { width: 7px; height: 7px; background: #2ecc71; border-radius: 50%; animation: blink 2s infinite; }
-  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
-  .hero-stat-num { font-size: 2rem; font-weight: 700; color: #00d2ff; line-height: 1; font-family: 'Syncopate', sans-serif; }
-  .hero-stat-label { font-size: 0.72rem; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+  .avail-dot { width: 7px; height: 7px; background: #2ecc71; border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.7)} }
 
-  .section-label {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
-    color: var(--accent); font-weight: 600; margin-bottom: 0.5rem;
+  .hero-h1 {
+    font-size: clamp(2.5rem, 6vw, 4.2rem);
+    font-weight: 800; line-height: 1.1;
+    letter-spacing: -0.03em; margin-bottom: 1.5rem;
+    color: var(--c-text);
   }
-  .section-label::before { content:''; display:block; width:18px; height:1px; background:var(--accent); }
+  .hero-h1 em { font-style: normal; color: var(--c-gold); }
 
-  .feat-card {
-    border-radius: 20px; overflow: hidden;
-    border: 1px solid rgba(255,255,255,0.08); transition: all 0.4s ease;
+  .hero-sub {
+    font-size: 1.05rem; color: var(--c-text2);
+    max-width: 560px; line-height: 1.8; margin-bottom: 2.5rem; font-weight: 400;
   }
-  body.dark-mode .feat-card { background: #0a0f1d; }
-  body:not(.dark-mode) .feat-card { background:#fff; box-shadow:0 4px 24px rgba(0,0,0,0.07); border-color:#dee2e6; }
-  .feat-card:hover { transform: translateY(-8px); border-color: var(--accent); box-shadow: 0 20px 50px rgba(0,210,255,0.12); }
-  .feat-card-img { width:100%; height:270px; object-fit:cover; transition: transform 0.5s ease; display:block; }
-  .feat-card:hover .feat-card-img { transform:scale(1.04); }
-  .feat-img-placeholder { width:100%; height:270px; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,#0a0f1d,#111827); font-size:4rem; opacity:0.25; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 3.5rem; }
+  .hero-stats { display: flex; gap: 3rem; flex-wrap: wrap; }
+  .stat-val { font-size: 2.2rem; font-weight: 800; color: var(--c-gold); line-height: 1; font-family: var(--font-mono); }
+  .stat-lbl { font-size: 0.72rem; color: var(--c-text3); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
 
-  .badge-feat { position:absolute; top:14px; left:14px; background:var(--accent); color:#000; padding:4px 12px; border-radius:100px; font-size:0.7rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; }
-  .badge-live { position:absolute; top:14px; right:14px; background:rgba(46,204,113,0.15); border:1px solid rgba(46,204,113,0.4); color:#2ecc71; padding:4px 12px; border-radius:100px; font-size:0.7rem; font-weight:600; display:flex; align-items:center; gap:5px; }
-  .live-dot { width:6px; height:6px; background:#2ecc71; border-radius:50%; animation:blink 2s infinite; }
-
-  .tech-badge { background:rgba(0,210,255,0.08); color:#00d2ff; border:1px solid rgba(0,210,255,0.2); font-size:0.72rem; padding:3px 10px; border-radius:100px; display:inline-block; }
-  body:not(.dark-mode) .tech-badge { background:rgba(13,110,253,0.08); color:#0d6efd; border-color:rgba(13,110,253,0.2); }
-
-  .metric-num { font-size:1.3rem; font-weight:700; color:var(--accent); line-height:1; font-family:'Syncopate',sans-serif; }
-  .metric-label { font-size:0.68rem; opacity:0.5; text-transform:uppercase; letter-spacing:0.07em; margin-top:3px; }
-
-  .expertise-card {
-    border-radius:18px; padding:2rem; border:1px solid rgba(255,255,255,0.06);
-    transition:all 0.35s ease; height:100%;
+  /* ── MARQUEE STRIP ── */
+  .marquee-strip {
+    background: var(--c-surface); border-top: 0.5px solid var(--c-border); border-bottom: 0.5px solid var(--c-border);
+    padding: 14px 0; overflow: hidden; white-space: nowrap;
   }
-  body.dark-mode .expertise-card { background:#0a0f1d; }
-  body:not(.dark-mode) .expertise-card { background:#f8f9fa; border-color:#dee2e6; }
-  .expertise-card:hover { transform:translateY(-8px); border-color:var(--accent); box-shadow:0 12px 32px rgba(0,210,255,0.1); }
+  .marquee-inner { display: inline-flex; animation: marquee 28s linear infinite; gap: 0; }
+  .marquee-item { padding: 0 2rem; font-size: 0.78rem; color: var(--c-text3); font-family: var(--font-mono); letter-spacing: 0.06em; }
+  .marquee-dot { color: var(--c-gold); margin-right: 2rem; }
+  @keyframes marquee { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
 
-  .stack-pill {
-    background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.09);
-    border-radius:100px; padding:0.4rem 0.9rem; font-size:0.78rem; color:rgba(255,255,255,0.6);
-    display:inline-block; transition:all 0.2s; margin:3px;
+  /* ── CARSTRIMS FEATURE ── */
+  .flagship-wrap { padding: 100px 5%; }
+  .flagship-inner { max-width: 1200px; margin: 0 auto; }
+  .flagship-card {
+    background: var(--c-surface);
+    border: 0.5px solid var(--c-border);
+    border-radius: 24px; overflow: hidden;
+    display: grid; grid-template-columns: 1.1fr 1fr;
+    position: relative;
   }
-  .stack-pill:hover { border-color:var(--accent); color:var(--accent); }
-  body:not(.dark-mode) .stack-pill { background:#f1f3f5; border-color:#dee2e6; color:#495057; }
-  body:not(.dark-mode) .stack-pill:hover { border-color:#0d6efd; color:#0d6efd; }
+  .flagship-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--c-gold), transparent);
+  }
+  .flagship-img-wrap { position: relative; overflow: hidden; min-height: 420px; }
+  .flagship-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+  .flagship-card:hover .flagship-img-wrap img { transform: scale(1.04); }
+  .flagship-img-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(6,8,15,0.4) 0%, transparent 60%);
+  }
+  .flagship-badges { position: absolute; top: 20px; left: 20px; display: flex; flex-direction: column; gap: 8px; }
+  .fbadge-hot { background: var(--c-gold); color: #000; font-size: 0.68rem; font-weight: 800; letter-spacing: 0.08em; padding: 4px 12px; border-radius: 100px; font-family: var(--font-mono); }
+  .fbadge-live { background: rgba(46,204,113,0.15); border: 0.5px solid rgba(46,204,113,0.4); color: #2ecc71; font-size: 0.68rem; font-weight: 600; padding: 4px 12px; border-radius: 100px; display: flex; align-items: center; gap: 5px; font-family: var(--font-mono); }
+  .flive-dot { width: 5px; height: 5px; background: #2ecc71; border-radius: 50%; animation: pulse 2s infinite; }
 
-  .testi-card { border-radius:16px; padding:2rem; border:1px solid rgba(255,255,255,0.06); transition:border-color 0.3s; }
-  body.dark-mode .testi-card { background:#0a0f1d; }
-  body:not(.dark-mode) .testi-card { background:#fff; box-shadow:0 2px 12px rgba(0,0,0,0.05); border-color:#dee2e6; }
-  .testi-card:hover { border-color:rgba(0,210,255,0.3); }
-  .testi-avatar { width:44px; height:44px; border-radius:50%; background:rgba(0,210,255,0.1); border:1px solid rgba(0,210,255,0.3); display:flex; align-items:center; justify-content:center; font-size:0.85rem; font-weight:700; color:#00d2ff; font-family:monospace; flex-shrink:0; }
+  .flagship-body { padding: 3rem; display: flex; flex-direction: column; justify-content: center; }
+  .flagship-type { font-size: 0.72rem; color: var(--c-gold); font-family: var(--font-mono); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.75rem; }
+  .flagship-title { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 800; margin-bottom: 1rem; line-height: 1.2; }
+  .flagship-desc { color: var(--c-text2); font-size: 0.95rem; line-height: 1.8; margin-bottom: 1.5rem; }
+  .flagship-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 2rem; }
+  .flagship-metrics { display: flex; gap: 2rem; margin-bottom: 2rem; padding: 1.25rem; background: rgba(232,160,69,0.05); border: 0.5px solid rgba(232,160,69,0.15); border-radius: var(--radius); }
+  .fm-val { font-size: 1.4rem; font-weight: 800; color: var(--c-gold); font-family: var(--font-mono); line-height: 1; }
+  .fm-lbl { font-size: 0.68rem; color: var(--c-text3); text-transform: uppercase; letter-spacing: 0.07em; margin-top: 3px; }
+  .flagship-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
 
-  .cta-wrap { background:linear-gradient(135deg,#0d6efd 0%,#00d2ff 100%); border-radius:30px; padding:5rem 3rem; text-align:center; position:relative; overflow:hidden; }
-  .cta-wrap::before { content:''; position:absolute; inset:0; background-image:radial-gradient(rgba(255,255,255,0.06) 1px,transparent 1px); background-size:22px 22px; }
+  /* ── WHY US ── */
+  .why-wrap { padding: 100px 5%; background: var(--c-bg2); border-top: 0.5px solid var(--c-border); border-bottom: 0.5px solid var(--c-border); }
+  .why-inner { max-width: 1200px; margin: 0 auto; }
+  .why-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.5rem; margin-top: 3.5rem; }
+  .why-card { background: var(--c-bg); border: 0.5px solid var(--c-border); border-radius: var(--radius-lg); padding: 2rem; transition: var(--transition); }
+  .why-card:hover { border-color: var(--c-gold); transform: translateY(-4px); }
+  .why-icon { font-size: 1.8rem; margin-bottom: 1.2rem; }
+  .why-card h4 { font-size: 1rem; font-weight: 700; margin-bottom: 0.6rem; }
+  .why-card p { font-size: 0.85rem; color: var(--c-text2); line-height: 1.7; }
 
-  .about-img { width:200px; height:200px; object-fit:cover; border-radius:50%; border:4px solid var(--accent); box-shadow:0 0 40px rgba(0,210,255,0.2); }
+  /* ── ABOUT STRIP ── */
+  .about-strip { padding: 100px 5%; }
+  .about-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.3fr; gap: 80px; align-items: center; }
+  .about-img-frame { position: relative; }
+  .about-img { width: 100%; aspect-ratio: 3/4; object-fit: cover; border-radius: 20px; border: 0.5px solid var(--c-border); display: block; }
+  .about-badge { position: absolute; bottom: -20px; right: -20px; background: var(--c-gold); color: #000; padding: 1rem 1.25rem; border-radius: var(--radius); text-align: center; }
+  .about-badge-num { font-size: 1.8rem; font-weight: 800; font-family: var(--font-mono); line-height: 1; }
+  .about-badge-lbl { font-size: 0.7rem; font-weight: 700; margin-top: 3px; }
+  .about-text h2 { font-size: clamp(1.8rem, 3.5vw, 2.6rem); margin-bottom: 1.25rem; }
+  .about-text p { color: var(--c-text2); font-size: 0.95rem; margin-bottom: 1rem; line-height: 1.8; }
+  .skill-row { margin-bottom: 0.9rem; }
+  .skill-head { display: flex; justify-content: space-between; font-size: 0.78rem; font-family: var(--font-mono); color: var(--c-text3); margin-bottom: 5px; }
+  .skill-track { height: 3px; background: var(--c-border2); border-radius: 2px; }
+  .skill-fill { height: 100%; background: linear-gradient(90deg, var(--c-gold), var(--c-gold2)); border-radius: 2px; width: 0; transition: width 1.2s cubic-bezier(0.4,0,0.2,1); }
 
-  @media(max-width:768px) {
-    .hero-stats-row { gap:1.5rem !important; }
-    .feat-card-img, .feat-img-placeholder { height:200px; }
+  /* ── SERVICES STRIP ── */
+  .svc-wrap { padding: 100px 5%; background: var(--c-bg2); border-top: 0.5px solid var(--c-border); border-bottom: 0.5px solid var(--c-border); }
+  .svc-inner { max-width: 1200px; margin: 0 auto; }
+  .svc-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.25rem; margin-top: 3.5rem; }
+  .svc-card { background: var(--c-bg); border: 0.5px solid var(--c-border); border-radius: var(--radius-lg); padding: 2rem; transition: var(--transition); position: relative; overflow: hidden; }
+  .svc-card:hover { border-color: var(--c-gold); transform: translateY(-5px); }
+  .svc-card::after { content:''; position:absolute; inset:0; background:radial-gradient(circle at 50% 0%, rgba(232,160,69,0.08), transparent 60%); opacity:0; transition:opacity 0.4s; }
+  .svc-card:hover::after { opacity:1; }
+  .svc-icon { width: 48px; height: 48px; background: rgba(232,160,69,0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; margin-bottom: 1.25rem; }
+  .svc-card h4 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.6rem; }
+  .svc-card p { font-size: 0.85rem; color: var(--c-text2); line-height: 1.7; margin-bottom: 1.25rem; }
+  .svc-link { font-size: 0.82rem; color: var(--c-gold); font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 5px; transition: gap 0.2s; }
+  .svc-link:hover { gap: 10px; }
+
+  /* ── TESTIMONIALS ── */
+  .testi-wrap { padding: 100px 5%; }
+  .testi-inner { max-width: 1200px; margin: 0 auto; }
+  .testi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.25rem; margin-top: 3.5rem; }
+  .testi-card { background: var(--c-surface); border: 0.5px solid var(--c-border); border-radius: var(--radius-lg); padding: 2rem; transition: border-color 0.3s; }
+  .testi-card:hover { border-color: var(--c-border2); }
+  .testi-quote { font-size: 2rem; color: var(--c-gold); line-height: 1; margin-bottom: 1rem; }
+  .testi-text { font-size: 0.9rem; color: var(--c-text2); font-style: italic; line-height: 1.8; margin-bottom: 1.5rem; }
+  .testi-avatar { width: 40px; height: 40px; border-radius: 50%; background: rgba(232,160,69,0.1); border: 0.5px solid rgba(232,160,69,0.3); display: flex; align-items: center; justify-content: center; font-size: 0.82rem; font-weight: 700; color: var(--c-gold); font-family: var(--font-mono); flex-shrink: 0; }
+
+  /* ── CTA ── */
+  .cta-wrap { padding: 80px 5%; }
+  .cta-inner { max-width: 1200px; margin: 0 auto; background: var(--c-surface); border: 0.5px solid var(--c-border2); border-radius: 24px; padding: 5rem 3rem; text-align: center; position: relative; overflow: hidden; }
+  .cta-inner::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,transparent,var(--c-gold),transparent); }
+  .cta-inner::after { content:''; position:absolute; inset:0; background-image:radial-gradient(rgba(232,160,69,0.03) 1px,transparent 1px); background-size:24px 24px; pointer-events:none; }
+  .cta-inner h2 { font-size: clamp(1.8rem, 4vw, 3rem); margin-bottom: 1rem; }
+  .cta-inner p { color: var(--c-text2); max-width: 520px; margin: 0 auto 2.5rem; }
+  .cta-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1024px) {
+    .flagship-card { grid-template-columns: 1fr; }
+    .flagship-img-wrap { min-height: 280px; }
+    .why-grid { grid-template-columns: repeat(2,1fr); }
+    .svc-grid { grid-template-columns: repeat(2,1fr); }
+    .testi-grid { grid-template-columns: repeat(2,1fr); }
+    .about-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .about-badge { right: 0; }
+  }
+  @media (max-width: 640px) {
+    .hero { padding: 60px 5% 50px; }
+    .hero-stats { gap: 1.5rem; }
+    .why-grid, .svc-grid, .testi-grid { grid-template-columns: 1fr; }
+    .flagship-body { padding: 2rem; }
+    .cta-inner { padding: 3rem 1.5rem; }
   }
 </style>
 
 <!-- HERO -->
-<section class="hero-section text-white text-center">
-  <div class="overlay"></div>
-  <div class="container position-relative z-1">
-    <img src="{% static 'core/images/uase_logo_white.png' %}" alt="UASE Logo" class="img-fluid mb-4 mx-auto d-block" style="max-height:85px;filter:drop-shadow(0 0 18px rgba(0,210,255,0.4))">
-    <div class="hero-badge mb-3">
-      <span class="hero-badge-dot"></span>
-      Available for New Projects
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div class="hero-kicker reveal">
+      <span class="avail-dot"></span>
+      Open to new projects &mdash; 2026
     </div>
-    <h1 class="display-2 fw-black mb-3">
-      Building Digital Products<br>
-      <span style="color:var(--accent)">That Actually Work.</span>
+    <h1 class="hero-h1 reveal reveal-d1">
+      We Architect Solutions.<br>
+      We Build Systems <em>That Last.</em>
     </h1>
-    <p class="lead mb-5 opacity-75 mx-auto" style="max-width:580px">
-      Full-Stack Software Engineer based in Nigeria. I build scalable SaaS platforms,
-      web applications, and mobile solutions — from concept to production.
+    <p class="hero-sub reveal reveal-d2">
+      UASE Tech Studio is a software engineering company. We see real-world problems,
+      design technical solutions, and ship production-grade software — web platforms,
+      SaaS systems, mobile apps, and IT infrastructure.
     </p>
-    <div class="d-flex flex-wrap gap-3 justify-content-center mb-5">
-      <a href="{% url 'portfolio' %}" class="btn btn-primary btn-lg px-5 rounded-pill shadow-lg">View Portfolio</a>
-      <a href="{% url 'contact' %}" class="btn btn-outline-light btn-lg px-5 rounded-pill">Hire Me &rarr;</a>
+    <div class="hero-actions reveal reveal-d3">
+      <a href="{% url 'portfolio' %}" class="btn-gold">View Our Work <i class="bi bi-arrow-right"></i></a>
+      <a href="{% url 'contact' %}" class="btn-ghost">Start a Project</a>
     </div>
-    <div class="d-flex gap-4 justify-content-center flex-wrap hero-stats-row">
+    <div class="hero-stats reveal reveal-d4">
       <div>
-        <div class="hero-stat-num">5+</div>
-        <div class="hero-stat-label">Years Experience</div>
+        <div class="stat-val">5+</div>
+        <div class="stat-lbl">Years Building</div>
       </div>
       <div>
-        <div class="hero-stat-num">20+</div>
-        <div class="hero-stat-label">Projects Delivered</div>
+        <div class="stat-val">20+</div>
+        <div class="stat-lbl">Projects Shipped</div>
       </div>
       <div>
-        <div class="hero-stat-num">10+</div>
-        <div class="hero-stat-label">Happy Clients</div>
+        <div class="stat-val">10+</div>
+        <div class="stat-lbl">Happy Clients</div>
+      </div>
+      <div>
+        <div class="stat-val">5</div>
+        <div class="stat-lbl">Live Systems</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FEATURED PROJECTS -->
-<section class="container py-5 my-5">
-  <div class="text-center mb-5">
-    <div class="section-label justify-content-center">Flagship Projects</div>
-    <h2 class="display-5 fw-bold">Work That Defines My Craft</h2>
-    <p class="opacity-75 mx-auto mt-2" style="max-width:520px">Two of my most complex, production-grade systems — each solving real problems at scale.</p>
+<!-- MARQUEE TECH STRIP -->
+<div class="marquee-strip">
+  <div class="marquee-inner">
+    <span class="marquee-item">Python</span><span class="marquee-dot">&bull;</span>
+    <span class="marquee-item">Django</span><span class="marquee-dot">&bull;</span>
+    <span class="marquee-item">FastAPI</span><span class="marquee-dot">&bull;</span>
+    <span class="marquee-item">Next.js 14</span><span class="marquee-dot">&bull;</span>
+    <span class="marquee-item">React</span><span class="marquee-dot">&bull;</span>
+    <span class="marquee-item">TypeScript</span><span class="marquee-dot">&bull;</span>
+    <span class="marquee-item">Node.js</span><span class="marquee-dot">&bull;</span>
+    <span class="marquee-item">MongoDB</span><span class="marquee-dot">&bull;</span>
+    <span class="marquee-item">PostgreSQL</span><span class="marquee-dot">&bull;</span>
+    <span class="marquee-item">Tailwind CSS</span><span class="marquee-dot">&bull;</span>
+    <span class="marquee-item">Capacitor</span><span class="marquee-dot">&bull;</span>
+    <span class="marquee-item">Docker</span><span class="marquee-dot">&bull;</span>
+    <span class="marquee-item">REST API</span><span class="marquee-dot">&bull;</span>
+    <span class="marquee-item">TDD</span><span class="marquee-dot">&bull;</span>
+    <span class="marquee-item">CI/CD</span><span class="marquee-dot">&bull;</span>
+    <span class="marquee-item">Python</span><span class="marquee-dot">&bull;</span>
+    <span class="marquee-item">Django</span><span class="marquee-dot">&bull;</span>
+    <span class="marquee-item">FastAPI</span><span class="marquee-dot">&bull;</span>
+    <span class="marquee-item">Next.js 14</span><span class="marquee-dot">&bull;</span>
+    <span class="marquee-item">React</span><span class="marquee-dot">&bull;</span>
+    <span class="marquee-item">TypeScript</span><span class="marquee-dot">&bull;</span>
+    <span class="marquee-item">Node.js</span><span class="marquee-dot">&bull;</span>
+    <span class="marquee-item">MongoDB</span><span class="marquee-dot">&bull;</span>
+    <span class="marquee-item">Tailwind CSS</span><span class="marquee-dot">&bull;</span>
+    <span class="marquee-item">Capacitor</span><span class="marquee-dot">&bull;</span>
+    <span class="marquee-item">TDD</span><span class="marquee-dot">&bull;</span>
+    <span class="marquee-item">CI/CD</span><span class="marquee-dot">&bull;</span>
   </div>
+</div>
 
-  {% for project_slug, project in featured_projects %}
-  <div class="row g-5 align-items-center mb-5 {% if forloop.counter == 2 %}flex-md-row-reverse{% endif %}">
-    <div class="col-md-6">
-      <div class="feat-card">
-        <div class="overflow-hidden position-relative" style="border-radius:16px 16px 0 0">
-          {% if project.thumbnail %}
-            <img src="{% static 'core/images/projects/'|add:project.thumbnail %}"
-                 class="feat-card-img" alt="{{ project.title }}"
-                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-            <div class="feat-img-placeholder" style="display:none">&#128187;</div>
-          {% else %}
-            <div class="feat-img-placeholder">&#128187;</div>
-          {% endif %}
-          {% if forloop.counter == 1 %}
-            <span class="badge-feat">&#11088; Featured</span>
-          {% else %}
-            <span class="badge-feat" style="background:#e74c3c">&#128138; Healthcare</span>
-          {% endif %}
-          {% if project.live_demo_link %}
-            <span class="badge-live"><span class="live-dot"></span>Live</span>
-          {% endif %}
+<!-- FLAGSHIP: CARSTRIMS -->
+<div class="flagship-wrap">
+  <div class="flagship-inner">
+    <div class="text-center mb-5 reveal">
+      <div class="sec-label" style="justify-content:center">Flagship Product</div>
+      <h2 style="font-size:clamp(1.8rem,4vw,2.8rem);margin-top:0.5rem">Our Most Ambitious Build</h2>
+      <p style="color:var(--c-text2);max-width:520px;margin:0.75rem auto 0;font-size:0.95rem">
+        A production SaaS platform we engineered from scratch &mdash; live, scaling, and solving a real market gap.
+      </p>
+    </div>
+    <div class="flagship-card reveal">
+      <div class="flagship-img-wrap">
+        <img src="{% static 'core/images/projects/carstrims_thumbnail.jpg' %}"
+             alt="CARSTRIMS Car Dealer SaaS Platform"
+             onerror="this.style.display='none'">
+        <div class="flagship-img-overlay"></div>
+        <div class="flagship-badges">
+          <span class="fbadge-hot">&#9889; HOT PROJECT</span>
+          <span class="fbadge-live"><span class="flive-dot"></span>LIVE</span>
+        </div>
+      </div>
+      <div class="flagship-body">
+        <div class="flagship-type">SaaS &bull; Automotive &bull; Nigerian Market</div>
+        <h3 class="flagship-title">CARSTRIMS &mdash; Multi-Tenant Car Dealer Management Platform</h3>
+        <p class="flagship-desc">
+          A full-scale SaaS connecting Nigerian car dealers, partners, staff, and buyers in one platform.
+          Inventory management, sales tracking, financial reporting, push notifications, messaging,
+          appointments, QR codes &mdash; five distinct user roles, all in one system.
+        </p>
+        <div class="flagship-tags">
+          <span class="tag">Next.js 14</span>
+          <span class="tag">FastAPI</span>
+          <span class="tag">MongoDB</span>
+          <span class="tag">TypeScript</span>
+          <span class="tag">Cloudinary</span>
+          <span class="tag">Web Push</span>
+          <span class="tag">JWT Auth</span>
+          <span class="tag">Vercel</span>
+        </div>
+        <div class="flagship-metrics">
+          <div>
+            <div class="fm-val">5</div>
+            <div class="fm-lbl">User Roles</div>
+          </div>
+          <div>
+            <div class="fm-val">14+</div>
+            <div class="fm-lbl">Core Features</div>
+          </div>
+          <div>
+            <div class="fm-val">Live</div>
+            <div class="fm-lbl">Status</div>
+          </div>
+        </div>
+        <div class="flagship-actions">
+          <a href="{% url 'project_detail' 'carstrims-car-dealer-platform' %}" class="btn-gold">Case Study <i class="bi bi-arrow-right"></i></a>
+          <a href="https://carstrims-app.vercel.app/" target="_blank" rel="noopener" class="btn-outline-gold">Live Demo <i class="bi bi-box-arrow-up-right"></i></a>
         </div>
       </div>
     </div>
-    <div class="col-md-6">
-      <div class="section-label">{{ project.client_type }}</div>
-      <h2 class="fw-bold h2 mb-3">{{ project.title }}</h2>
-      <p class="opacity-75 mb-4" style="font-size:0.97rem;line-height:1.8">{{ project.tagline }}</p>
-      <div class="mb-4">
-        {% for tech in project.technologies|slice:":6" %}
-          <span class="tech-badge me-1 mb-1">{{ tech }}</span>
-        {% endfor %}
+  </div>
+</div>
+
+<!-- WHY US -->
+<div class="why-wrap">
+  <div class="why-inner">
+    <div class="reveal" style="max-width:600px">
+      <div class="sec-label">Why UASE Tech Studio</div>
+      <h2 style="font-size:clamp(1.8rem,4vw,2.8rem);margin-top:0.5rem">
+        We Don't Just Code.<br>We Solve Problems.
+      </h2>
+      <p style="color:var(--c-text2);margin-top:0.75rem;font-size:0.95rem;line-height:1.8">
+        Every project starts with a problem statement. We architect the solution before writing a single line of code.
+      </p>
+    </div>
+    <div class="why-grid">
+      <div class="why-card reveal">
+        <div class="why-icon">&#127919;</div>
+        <h4>Problem-First Thinking</h4>
+        <p>We map the real problem before proposing a solution. No bloated features — just what solves the core challenge.</p>
       </div>
-      <div class="d-flex gap-4 mb-4">
-        <div>
-          <div class="metric-num">{{ project.features|length }}</div>
-          <div class="metric-label">Features</div>
-        </div>
-        <div>
-          <div class="metric-num">{{ project.technologies|length }}+</div>
-          <div class="metric-label">Technologies</div>
-        </div>
-        {% if project.screenshots %}
-        <div>
-          <div class="metric-num">{{ project.screenshots|length }}</div>
-          <div class="metric-label">Screenshots</div>
-        </div>
-        {% endif %}
+      <div class="why-card reveal reveal-d1">
+        <div class="why-icon">&#127959;&#65039;</div>
+        <h4>Architecture-Led Development</h4>
+        <p>Every system is planned: database schema, API contracts, user flows, and scalability — before a single line is written.</p>
       </div>
-      <div class="d-flex flex-wrap gap-3">
-        <a href="{% url 'project_detail' project_slug=project_slug %}" class="btn btn-primary rounded-pill px-4">
-          Full Case Study <i class="bi bi-arrow-right ms-1"></i>
-        </a>
-        {% if project.live_demo_link %}
-          <a href="{{ project.live_demo_link }}" target="_blank" rel="noopener" class="btn btn-outline-secondary rounded-pill px-4">
-            Live Demo <i class="bi bi-box-arrow-up-right ms-1"></i>
-          </a>
-        {% endif %}
+      <div class="why-card reveal reveal-d2">
+        <div class="why-icon">&#128273;</div>
+        <h4>Production-Grade Quality</h4>
+        <p>We build for real users, real traffic, and real stakes — with TDD, CI/CD pipelines, and clean maintainable code.</p>
+      </div>
+      <div class="why-card reveal reveal-d3">
+        <div class="why-icon">&#128200;</div>
+        <h4>Delivered &amp; Measurable</h4>
+        <p>We don't just deploy and disappear. Our systems are built to be monitored, iterated on, and scaled over time.</p>
       </div>
     </div>
   </div>
-  {% if not forloop.last %}<hr style="border-color:rgba(255,255,255,0.06);margin:2rem 0">{% endif %}
-  {% endfor %}
-
-  <div class="text-center mt-4">
-    <a href="{% url 'portfolio' %}" class="btn btn-outline-primary rounded-pill px-5">
-      View All Projects <i class="bi bi-grid ms-2"></i>
-    </a>
-  </div>
-</section>
+</div>
 
 <!-- ABOUT -->
-<section class="py-5 my-3" style="background:rgba(0,0,0,0.03)">
-  <div class="container">
-    <div class="row align-items-center g-5">
-      <div class="col-md-3 text-center">
-        <img src="{% static 'core/images/usty_headshot.jpg' %}" alt="Usty" class="about-img">
-        <div class="mt-3">
-          <div style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);font-weight:600">Muhammedmustapha Abdullahi</div>
-          <div style="font-size:0.8rem;opacity:0.5;margin-top:4px">// Usty &bull; Founder, UASE Tech Studio</div>
+<div class="about-strip">
+  <div class="about-inner">
+    <div class="about-img-frame reveal">
+      <img src="{% static 'core/images/about_founder_usty.jpeg' %}" alt="Muhammedmustapha Abdullahi - Usty" class="about-img">
+      <div class="about-badge">
+        <div class="about-badge-num">CS</div>
+        <div class="about-badge-lbl">Graduate<br>ABU</div>
+      </div>
+    </div>
+    <div class="about-text">
+      <div class="sec-label reveal">The Engineer Behind the Studio</div>
+      <h2 class="reveal">Muhammedmustapha Abdullahi &mdash; Usty</h2>
+      <p class="reveal">
+        Founder of UASE Tech Studio. Computer Science graduate from Ahmadu Bello University. Full-stack
+        software engineer with 5+ years building systems that solve real problems &mdash; from SaaS platforms
+        to healthcare tools to legal tech.
+      </p>
+      <p class="reveal">
+        I started this studio with one belief: that great software is built by people who understand
+        the problem first. Every project I take on starts with deep discovery, careful architecture, and a
+        commitment to shipping something that truly works in production.
+      </p>
+      <div style="margin:1.5rem 0 2rem" class="reveal">
+        <div class="skill-row">
+          <div class="skill-head"><span>Backend / APIs</span><span>92%</span></div>
+          <div class="skill-track"><div class="skill-fill" data-w="92"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-head"><span>Frontend / UI</span><span>85%</span></div>
+          <div class="skill-track"><div class="skill-fill" data-w="85"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-head"><span>Mobile (Android)</span><span>78%</span></div>
+          <div class="skill-track"><div class="skill-fill" data-w="78"></div></div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-head"><span>SaaS Architecture</span><span>88%</span></div>
+          <div class="skill-track"><div class="skill-fill" data-w="88"></div></div>
         </div>
       </div>
-      <div class="col-md-9">
-        <div class="section-label">About Me</div>
-        <h2 class="fw-bold h1 mb-3">Engineering with Precision.<br>Delivering with Purpose.</h2>
-        <p class="opacity-75 mb-3">
-          I'm a Computer Science graduate and full-stack software engineer who builds systems that go beyond the surface.
-          From SaaS platforms to healthcare tools, I combine backend architecture, modern frontend design, and mobile
-          delivery into end-to-end solutions that solve real problems.
-        </p>
-        <p class="opacity-75 mb-4">
-          Through UASE Tech Studio, I've shipped production systems for Nigerian car dealerships, blood banks, campuses,
-          cinemas, and legal institutions — always with a focus on clean code, scalable design, and measurable impact.
-        </p>
-        <div class="mb-4">
-          <span class="stack-pill">Python</span>
-          <span class="stack-pill">Django</span>
-          <span class="stack-pill">Next.js</span>
-          <span class="stack-pill">FastAPI</span>
-          <span class="stack-pill">MongoDB</span>
-          <span class="stack-pill">React</span>
-          <span class="stack-pill">TypeScript</span>
-          <span class="stack-pill">Node.js</span>
-          <span class="stack-pill">Tailwind CSS</span>
-          <span class="stack-pill">Capacitor</span>
-        </div>
-        <div class="d-flex gap-3 flex-wrap">
-          <a href="{% url 'about' %}" class="btn btn-primary rounded-pill px-4">Full Story &rarr;</a>
-          <a href="{% url 'resume' %}" class="btn btn-outline-secondary rounded-pill px-4"><i class="bi bi-file-earmark-person me-2"></i>View Resume</a>
-        </div>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap" class="reveal">
+        <a href="{% url 'about' %}" class="btn-gold">Full Story <i class="bi bi-arrow-right"></i></a>
+        <a href="{% url 'resume' %}" class="btn-ghost"><i class="bi bi-file-earmark-person me-1"></i> View Resume</a>
       </div>
     </div>
   </div>
-</section>
+</div>
 
-<!-- CORE EXPERTISE -->
-<section class="container py-5 my-5">
-  <div class="text-center mb-5">
-    <div class="section-label justify-content-center">Services</div>
-    <h2 class="display-6 fw-bold">Core Expertise</h2>
-    <p class="opacity-75 mx-auto mt-2" style="max-width:480px">End-to-end digital solutions — from architecture to deployment.</p>
+<!-- SERVICES -->
+<div class="svc-wrap">
+  <div class="svc-inner">
+    <div class="text-center reveal">
+      <div class="sec-label" style="justify-content:center">What We Deliver</div>
+      <h2 style="font-size:clamp(1.8rem,4vw,2.8rem);margin-top:0.5rem">Services &amp; Capabilities</h2>
+      <p style="color:var(--c-text2);max-width:500px;margin:0.75rem auto 0;font-size:0.95rem">
+        End-to-end software engineering &mdash; from architecture design to production deployment.
+      </p>
+    </div>
+    <div class="svc-grid">
+      <div class="svc-card reveal">
+        <div class="svc-icon">&#127760;</div>
+        <h4>Web Engineering</h4>
+        <p>Scalable web applications and SaaS platforms built with Django, Next.js, FastAPI, and React. From MVPs to enterprise systems.</p>
+        <a href="{% url 'service_detail' 'web-development' %}" class="svc-link">Explore <i class="bi bi-arrow-right"></i></a>
+      </div>
+      <div class="svc-card reveal reveal-d1">
+        <div class="svc-icon">&#128241;</div>
+        <h4>Mobile Applications</h4>
+        <p>High-performance Android applications. Same codebase converted to native APK using Capacitor &mdash; cross-platform without compromise.</p>
+        <a href="{% url 'service_detail' 'mobile-app-development' %}" class="svc-link">Explore <i class="bi bi-arrow-right"></i></a>
+      </div>
+      <div class="svc-card reveal reveal-d2">
+        <div class="svc-icon">&#9881;&#65039;</div>
+        <h4>SaaS &amp; API Systems</h4>
+        <p>Multi-tenant SaaS platforms, REST APIs, authentication systems, and backend automation built for production scale.</p>
+        <a href="{% url 'service_detail' 'software-development' %}" class="svc-link">Explore <i class="bi bi-arrow-right"></i></a>
+      </div>
+      <div class="svc-card reveal">
+        <div class="svc-icon">&#128202;</div>
+        <h4>Data &amp; Analytics</h4>
+        <p>Statistical analysis, research support, Excel automation, and data visualisation using Python, SPSS, and Pandas.</p>
+        <a href="{% url 'service_detail' 'data-analysis-research' %}" class="svc-link">Explore <i class="bi bi-arrow-right"></i></a>
+      </div>
+      <div class="svc-card reveal reveal-d1">
+        <div class="svc-icon">&#128421;&#65039;</div>
+        <h4>IT Support &amp; Admin</h4>
+        <p>Network diagnostics, system administration, infrastructure maintenance, and hardware procurement for businesses.</p>
+        <a href="{% url 'service_detail' 'it-support-administration' %}" class="svc-link">Explore <i class="bi bi-arrow-right"></i></a>
+      </div>
+      <div class="svc-card reveal reveal-d2">
+        <div class="svc-icon">&#127891;</div>
+        <h4>Training &amp; Mentorship</h4>
+        <p>SIWES support, final-year project mentorship, and hands-on tech training for students in Nigeria.</p>
+        <a href="{% url 'service_detail' 'tech-skills-siwes' %}" class="svc-link">Explore <i class="bi bi-arrow-right"></i></a>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:2.5rem" class="reveal">
+      <a href="{% url 'services' %}" class="btn-ghost">All Services <i class="bi bi-grid ms-1"></i></a>
+    </div>
   </div>
-  <div class="row g-4">
-    <div class="col-md-3 col-6">
-      <div class="expertise-card">
-        <div style="font-size:2rem;margin-bottom:1rem">&#127760;</div>
-        <h5 class="fw-bold mb-2">Web Apps</h5>
-        <p class="small opacity-75 mb-3">Scalable platforms with Django, React, Next.js — from MVPs to enterprise dashboards.</p>
-        <a href="{% url 'service_detail' 'web-development' %}" class="btn btn-link p-0 text-primary small">Learn More &rarr;</a>
-      </div>
-    </div>
-    <div class="col-md-3 col-6">
-      <div class="expertise-card">
-        <div style="font-size:2rem;margin-bottom:1rem">&#128241;</div>
-        <h5 class="fw-bold mb-2">Mobile Apps</h5>
-        <p class="small opacity-75 mb-3">Android APKs using Capacitor — cross-platform, native performance.</p>
-        <a href="{% url 'service_detail' 'mobile-app-development' %}" class="btn btn-link p-0 text-primary small">Learn More &rarr;</a>
-      </div>
-    </div>
-    <div class="col-md-3 col-6">
-      <div class="expertise-card">
-        <div style="font-size:2rem;margin-bottom:1rem">&#9881;&#65039;</div>
-        <h5 class="fw-bold mb-2">SaaS &amp; APIs</h5>
-        <p class="small opacity-75 mb-3">FastAPI, multi-tenant architectures, JWT auth, REST APIs, and automated workflows.</p>
-        <a href="{% url 'service_detail' 'software-development' %}" class="btn btn-link p-0 text-primary small">Learn More &rarr;</a>
-      </div>
-    </div>
-    <div class="col-md-3 col-6">
-      <div class="expertise-card">
-        <div style="font-size:2rem;margin-bottom:1rem">&#127891;</div>
-        <h5 class="fw-bold mb-2">IT Training</h5>
-        <p class="small opacity-75 mb-3">SIWES mentorship, final-year project support, and hands-on dev training.</p>
-        <a href="{% url 'service_detail' 'it-support-administration' %}" class="btn btn-link p-0 text-primary small">Learn More &rarr;</a>
-      </div>
-    </div>
-  </div>
-</section>
+</div>
 
 <!-- TESTIMONIALS -->
 {% if testimonials %}
-<section class="py-5 my-3" style="background:rgba(0,0,0,0.03)">
-  <div class="container">
-    <div class="text-center mb-5">
-      <div class="section-label justify-content-center">Social Proof</div>
-      <h2 class="display-6 fw-bold">What Clients Say</h2>
+<div class="testi-wrap">
+  <div class="testi-inner">
+    <div class="text-center mb-5 reveal">
+      <div class="sec-label" style="justify-content:center">Client Voices</div>
+      <h2 style="font-size:clamp(1.8rem,4vw,2.8rem);margin-top:0.5rem">What Our Clients Say</h2>
     </div>
-    <div class="row g-4">
-      {% for testimonial in testimonials %}
-      <div class="col-md-6 col-lg-4">
-        <div class="testi-card h-100">
-          <div class="mb-3" style="font-size:1.8rem;color:var(--accent);line-height:1">&ldquo;</div>
-          <p class="fst-italic opacity-75 mb-4" style="font-size:0.93rem;line-height:1.8">{{ testimonial.content }}</p>
-          <div class="d-flex align-items-center gap-3 mt-auto">
-            <div class="testi-avatar">{{ testimonial.author_name|first }}{{ testimonial.author_name|last }}</div>
-            <div>
-              <div style="font-size:0.88rem;font-weight:600">{{ testimonial.author_name }}</div>
-              {% if testimonial.author_title %}<div style="font-size:0.75rem;opacity:0.5">{{ testimonial.author_title }}</div>{% endif %}
-            </div>
+    <div class="testi-grid">
+      {% for t in testimonials %}
+      <div class="testi-card reveal">
+        <div class="testi-quote">&ldquo;</div>
+        <p class="testi-text">{{ t.content }}</p>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div class="testi-avatar">{{ t.author_name|first }}{{ t.author_name|last }}</div>
+          <div>
+            <div style="font-size:0.88rem;font-weight:600">{{ t.author_name }}</div>
+            {% if t.author_title %}<div style="font-size:0.75rem;color:var(--c-text3)">{{ t.author_title }}</div>{% endif %}
           </div>
         </div>
       </div>
       {% endfor %}
     </div>
   </div>
-</section>
+</div>
 {% endif %}
 
 <!-- CTA -->
-<section class="container py-5 my-5">
-  <div class="cta-wrap">
-    <div class="position-relative z-1">
-      <div class="section-label justify-content-center" style="color:rgba(255,255,255,0.8)">Let's Build</div>
-      <h2 class="display-5 fw-bold text-white mb-3">Have an Idea? Let's Make It Real.</h2>
-      <p class="lead text-white opacity-75 mb-4">
-        Whether it's a SaaS platform, a mobile app, or a student project — I'll help you build it right.
-      </p>
-      <div class="d-flex gap-3 justify-content-center flex-wrap">
-        <a href="{% url 'contact' %}" class="btn btn-light btn-lg px-5 py-3 fw-bold text-primary rounded-pill">
-          Get Free Consultation &rarr;
-        </a>
-        <a href="{% url 'portfolio' %}" class="btn btn-outline-light btn-lg px-5 py-3 rounded-pill">
-          View Portfolio
-        </a>
-      </div>
+<div class="cta-wrap">
+  <div class="cta-inner reveal">
+    <div class="sec-label" style="justify-content:center;margin-bottom:1rem">Let's Build Together</div>
+    <h2>Got a Problem That Needs<br>an Engineering Solution?</h2>
+    <p>We turn complex requirements into reliable, scalable software. Tell us what you're trying to solve.</p>
+    <div class="cta-actions">
+      <a href="{% url 'contact' %}" class="btn-gold">Start a Project <i class="bi bi-arrow-right"></i></a>
+      <a href="{% url 'portfolio' %}" class="btn-ghost">View Our Work</a>
     </div>
   </div>
-</section>
+</div>
 {% endblock %}
 
 {% block scripts %}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 <script>
-const obs = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) { e.target.classList.add('animate__fadeInUp'); obs.unobserve(e.target); }
-  });
-}, { threshold: 0.08 });
-document.querySelectorAll('section').forEach(s => { s.classList.add('animate__animated'); obs.observe(s); });
+  // Skill bar animation
+  const skillObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.skill-fill').forEach(bar => {
+          setTimeout(() => { bar.style.width = bar.dataset.w + '%'; }, 200);
+        });
+        skillObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('.about-text').forEach(el => skillObs.observe(el));
 </script>
 {% endblock %}

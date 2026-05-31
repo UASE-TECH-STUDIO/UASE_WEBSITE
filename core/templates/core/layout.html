@@ -2,253 +2,381 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>{% block title %}UASE TECH-STUDIO | Global ICT & Software Development{% endblock %}</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <meta name="description" content="UASE TECH-STUDIO — professional ICT services, software development, and digital training.">
-  <link rel="icon" type="image/png" href="{% static 'core/images/uase_logo_white.png' %}" />
-  
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Syncopate:wght@700&family=Space+Grotesk:wght@300;400;700&display=swap" rel="stylesheet">
-  
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
-  <link rel="stylesheet" href="{% static 'core/style.css' %}" />
-
+  <meta charset="UTF-8">
+  <title>{% block title %}UASE Tech Studio — Software Engineering & ICT Solutions{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="UASE Tech Studio — We architect solutions, design systems, and build production-grade software. Full-stack engineering, SaaS platforms, mobile apps, and IT services from Nigeria.">
+  <link rel="icon" type="image/png" href="{% static 'core/images/uase_logo_white.png' %}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="{% static 'core/style.css' %}">
   <style>
     :root {
-      --accent: #00d2ff;
-      --accent-dark: #0084ff;
-      --bg-dark: #050810;
-      --bg-card-dark: #0a0f1d;
-      --glass: rgba(255, 255, 255, 0.03);
-      --border: rgba(255, 255, 255, 0.08);
-      --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      --c-bg: #06080f;
+      --c-bg2: #0b0f1a;
+      --c-surface: #111827;
+      --c-border: rgba(255,255,255,0.07);
+      --c-border2: rgba(255,255,255,0.12);
+      --c-gold: #e8a045;
+      --c-gold2: #f5c070;
+      --c-gold-glow: rgba(232,160,69,0.15);
+      --c-blue: #3b8fff;
+      --c-text: #e8eaf2;
+      --c-text2: #8891a8;
+      --c-text3: #4a5168;
+      --radius: 12px;
+      --radius-lg: 18px;
+      --nav-h: 70px;
+      --font: 'Plus Jakarta Sans', sans-serif;
+      --font-mono: 'DM Mono', monospace;
+      --transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: var(--c-bg);
+      color: var(--c-text);
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
 
-    /* Core Styling */
-    body { 
-      font-family: 'Space Grotesk', sans-serif; 
-      transition: var(--transition);
-      background-color: #f8f9fa;
-      color: #212529;
+    /* ── LIGHT MODE ── */
+    body.light-mode {
+      --c-bg: #f7f8fc;
+      --c-bg2: #ffffff;
+      --c-surface: #ffffff;
+      --c-border: rgba(0,0,0,0.08);
+      --c-border2: rgba(0,0,0,0.14);
+      --c-text: #0f1117;
+      --c-text2: #4a5168;
+      --c-text3: #9aa0b0;
     }
 
-    h1, h2, h3, h4, .nav-link { 
-      font-family: 'Syncopate', sans-serif; 
-      text-transform: uppercase; 
-      letter-spacing: 2px; 
-    }
-
-    /* 🌙 Dark Mode Overhaul */
-    body.dark-mode { background-color: var(--bg-dark); color: #e6edf3; }
-    
-    header.dark-mode { 
-      background-color: rgba(5, 8, 16, 0.9) !important; 
-      backdrop-filter: blur(15px);
-      border-bottom: 1px solid var(--border);
-    }
-
-    /* 🌟 Premium Card & Glassmorphism */
-    .card {
-      transition: var(--transition);
-      border-radius: 0 20px 20px 0;
-      border: 1px solid #dee2e6;
-    }
-
-    body.dark-mode .card {
-      background: var(--bg-card-dark) !important;
-      border: 1px solid var(--border) !important;
-      border-left: 4px solid var(--accent) !important;
-      box-shadow: 20px 20px 60px rgba(0,0,0,0.5);
-    }
-
-    .card:hover { transform: translateY(-10px); }
-
-    /* Nav Buttons Upgrade */
-    .btn-outline-light {
-      font-family: 'Space Grotesk';
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font);
       font-weight: 700;
-      font-size: 0.75rem;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      border-radius: 0;
-      padding: 8px 15px;
+      color: var(--c-text);
+      line-height: 1.2;
     }
 
-    body.dark-mode .btn-outline-light {
-      border-color: var(--border);
-      color: #fff;
+    /* ── NAV ── */
+    #site-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      height: var(--nav-h);
+      display: flex; align-items: center;
+      padding: 0 5%;
+      background: rgba(6,8,15,0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 0.5px solid var(--c-border);
+      transition: background 0.3s;
     }
+    body.light-mode #site-nav { background: rgba(247,248,252,0.9); }
 
-    body.dark-mode .btn-outline-light:hover {
-      background-color: var(--accent);
-      border-color: var(--accent);
-      color: #000;
+    .nav-inner { width: 100%; max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none; font-weight: 800; font-size: 1.1rem;
+      color: var(--c-text); letter-spacing: 0.02em;
     }
+    .nav-logo-mark {
+      width: 32px; height: 32px;
+      background: var(--c-gold);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.75rem; font-weight: 900; color: #000;
+      font-family: var(--font-mono);
+    }
+    .nav-logo span { color: var(--c-gold); }
 
-    /* Theme Toggle & Guide */
-    .btn-dark-toggle {
-      border: none;
-      background: var(--glass);
-      color: var(--accent);
-      width: 45px;
-      height: 45px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .nav-links {
+      display: flex; align-items: center; gap: 0.25rem; list-style: none;
+    }
+    .nav-links a {
+      color: var(--c-text2); text-decoration: none; font-size: 0.85rem;
+      font-weight: 500; padding: 0.45rem 0.85rem; border-radius: 8px;
       transition: var(--transition);
     }
+    .nav-links a:hover { color: var(--c-text); background: var(--c-border); }
 
-    .btn-dark-toggle:hover { transform: scale(1.1) rotate(15deg); background: var(--border); }
+    .nav-cta {
+      background: var(--c-gold); color: #000 !important;
+      padding: 0.45rem 1.2rem !important; border-radius: 8px !important;
+      font-weight: 700 !important; font-size: 0.82rem !important;
+      transition: var(--transition) !important;
+    }
+    .nav-cta:hover { background: var(--c-gold2) !important; transform: translateY(-1px); }
 
-    /* 🚀 NEW: Jumping Guide Styles */
-    .theme-guide {
-      position: absolute;
-      top: -45px;
-      right: 0;
-      background: var(--accent);
-      color: #000;
-      padding: 4px 12px;
-      border-radius: 6px;
-      font-size: 0.7rem;
-      font-weight: 800;
-      white-space: nowrap;
-      pointer-events: none;
-      animation: jumpArrow 1.5s infinite;
-      z-index: 1050;
-      box-shadow: 0 4px 15px rgba(0, 210, 255, 0.4);
+    .nav-controls { display: flex; align-items: center; gap: 0.5rem; }
+
+    .theme-btn {
+      width: 36px; height: 36px; border-radius: 8px;
+      background: var(--c-surface); border: 0.5px solid var(--c-border2);
+      color: var(--c-text2); cursor: pointer; display: flex;
+      align-items: center; justify-content: center; font-size: 0.9rem;
+      transition: var(--transition);
+    }
+    .theme-btn:hover { color: var(--c-gold); border-color: var(--c-gold); }
+
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      cursor: pointer; background: none; border: none; padding: 4px;
+    }
+    .hamburger span { display: block; width: 22px; height: 1.5px; background: var(--c-text2); border-radius: 2px; transition: 0.3s; }
+
+    .mobile-nav {
+      display: none; position: fixed; top: var(--nav-h); left: 0; right: 0; z-index: 999;
+      background: rgba(6,8,15,0.98); backdrop-filter: blur(24px);
+      border-bottom: 0.5px solid var(--c-border);
+      padding: 1.5rem 5%; flex-direction: column; gap: 0.5rem;
+    }
+    body.light-mode .mobile-nav { background: rgba(247,248,252,0.98); }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a { color: var(--c-text2); text-decoration: none; font-size: 1rem; padding: 0.6rem 0.5rem; border-bottom: 0.5px solid var(--c-border); }
+    .mobile-nav a:last-child { border-bottom: none; }
+    .mobile-nav a:hover { color: var(--c-gold); }
+
+    /* ── MAIN CONTENT ── */
+    main { padding-top: var(--nav-h); }
+
+    /* ── GLOBAL UTILITIES ── */
+    .sec-label {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--c-gold); font-weight: 600; font-family: var(--font-mono);
+    }
+    .sec-label::before { content: ''; display: block; width: 16px; height: 1px; background: var(--c-gold); }
+
+    .gold-text { color: var(--c-gold); }
+    .mono { font-family: var(--font-mono); }
+
+    .tag {
+      display: inline-block; background: rgba(232,160,69,0.1);
+      border: 0.5px solid rgba(232,160,69,0.25);
+      color: var(--c-gold); padding: 3px 10px; border-radius: 100px;
+      font-size: 0.72rem; font-family: var(--font-mono);
+    }
+    body.light-mode .tag { background: rgba(232,160,69,0.08); }
+
+    .glow-line {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--c-gold), transparent);
+      opacity: 0.3;
     }
 
-    .theme-guide::after {
-      content: "";
-      position: absolute;
-      bottom: -6px;
-      right: 15px;
-      border-left: 6px solid transparent;
-      border-right: 6px solid transparent;
-      border-top: 6px solid var(--accent);
+    /* ── FOOTER ── */
+    #site-footer {
+      background: var(--c-bg2);
+      border-top: 0.5px solid var(--c-border);
+      padding: 3.5rem 5% 2rem;
+      margin-top: 0;
+    }
+    .footer-inner { max-width: 1200px; margin: 0 auto; }
+    .footer-grid { display: grid; grid-template-columns: 1.8fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+    .footer-logo { font-weight: 800; font-size: 1.1rem; color: var(--c-text); display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; }
+    .footer-desc { font-size: 0.85rem; color: var(--c-text3); line-height: 1.75; }
+    .footer-col h5 { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-text3); font-family: var(--font-mono); margin-bottom: 1rem; font-weight: 500; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .footer-col ul a { color: var(--c-text3); text-decoration: none; font-size: 0.87rem; transition: color 0.2s; }
+    .footer-col ul a:hover { color: var(--c-gold); }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; padding-top: 1.5rem; border-top: 0.5px solid var(--c-border); font-size: 0.8rem; color: var(--c-text3); }
+    .social-link { width: 34px; height: 34px; border-radius: 8px; background: var(--c-surface); border: 0.5px solid var(--c-border2); display: flex; align-items: center; justify-content: center; color: var(--c-text3); text-decoration: none; font-size: 0.85rem; transition: var(--transition); }
+    .social-link:hover { border-color: var(--c-gold); color: var(--c-gold); }
+
+    /* ── CARDS ── */
+    .uase-card {
+      background: var(--c-surface);
+      border: 0.5px solid var(--c-border);
+      border-radius: var(--radius-lg);
+      transition: var(--transition);
+    }
+    .uase-card:hover { border-color: var(--c-border2); transform: translateY(-3px); }
+
+    /* ── BUTTONS ── */
+    .btn-gold {
+      background: var(--c-gold); color: #000;
+      padding: 0.7rem 1.8rem; border-radius: var(--radius);
+      font-weight: 700; text-decoration: none; font-size: 0.88rem;
+      display: inline-flex; align-items: center; gap: 8px;
+      transition: var(--transition); border: none; cursor: pointer;
+    }
+    .btn-gold:hover { background: var(--c-gold2); color: #000; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(232,160,69,0.25); }
+
+    .btn-outline-gold {
+      background: transparent; color: var(--c-gold);
+      padding: 0.7rem 1.8rem; border-radius: var(--radius);
+      font-weight: 600; text-decoration: none; font-size: 0.88rem;
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 0.5px solid var(--c-gold); transition: var(--transition);
+    }
+    .btn-outline-gold:hover { background: var(--c-gold-glow); color: var(--c-gold); transform: translateY(-2px); }
+
+    .btn-ghost {
+      background: var(--c-surface); color: var(--c-text2);
+      padding: 0.7rem 1.8rem; border-radius: var(--radius);
+      font-weight: 500; text-decoration: none; font-size: 0.88rem;
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 0.5px solid var(--c-border2); transition: var(--transition);
+    }
+    .btn-ghost:hover { border-color: var(--c-gold); color: var(--c-gold); transform: translateY(-2px); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    }
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .footer-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+      .footer-bottom { flex-direction: column; text-align: center; }
     }
 
-    @keyframes jumpArrow {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-    }
-
-    .guide-hidden { display: none !important; }
-
-    /* Footer */
-    footer.dark-mode {
-      background-color: var(--bg-dark) !important;
-      border-top: 1px solid var(--border);
-    }
-
-    /* Inputs */
-    body.dark-mode .form-control {
-      background-color: #0e1623 !important;
-      border-color: var(--border);
-      color: #fff !important;
-    }
+    /* ── SCROLL REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-d1 { transition-delay: 0.1s; }
+    .reveal-d2 { transition-delay: 0.2s; }
+    .reveal-d3 { transition-delay: 0.3s; }
+    .reveal-d4 { transition-delay: 0.4s; }
   </style>
 </head>
+<body>
 
-<body class="fade-mode">
-  <header id="header" class="bg-dark text-white py-3 sticky-top">
-    <div class="container d-flex justify-content-between align-items-center flex-wrap">
-      <h1 class="h4 m-0 fw-black" style="font-family: 'Montserrat'; letter-spacing: -1px;">
-        UASE <span style="color: var(--accent);">TECH-STUDIO</span>
-      </h1>
+<!-- NAV -->
+<nav id="site-nav">
+  <div class="nav-inner">
+    <a href="{% url 'home' %}" class="nav-logo">
+      <div class="nav-logo-mark">U</div>
+      UASE <span>&nbsp;Studio</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="{% url 'home' %}">Home</a></li>
+      <li><a href="{% url 'about' %}">About</a></li>
+      <li><a href="{% url 'services' %}">Services</a></li>
+      <li><a href="{% url 'portfolio' %}">Portfolio</a></li>
+      <li><a href="{% url 'graphics_portfolio' %}">Graphics</a></li>
+      <li><a href="{% url 'contact' %}" class="nav-cta">Get in Touch</a></li>
+    </ul>
+    <div class="nav-controls">
+      <button class="theme-btn" id="themeToggle" title="Toggle theme">
+        <i class="bi bi-sun-fill" id="themeIcon"></i>
+      </button>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
 
-      <nav class="d-flex flex-wrap align-items-center gap-2 position-relative">
-        <a href="{% url 'home' %}" class="btn btn-outline-light btn-sm">Home</a>
-        <a href="{% url 'about' %}" class="btn btn-outline-light btn-sm">About</a>
-        <a href="{% url 'services' %}" class="btn btn-outline-light btn-sm">Services</a>
-        <a href="{% url 'portfolio' %}" class="btn btn-outline-light btn-sm">Portfolio</a>
-        <a href="{% url 'graphics_portfolio' %}" class="btn btn-outline-light btn-sm">Graphics</a>
-        <a href="{% url 'contact' %}" class="btn btn-outline-light btn-sm">Contact</a>
+<nav class="mobile-nav" id="mobileNav">
+  <a href="{% url 'home' %}" onclick="closeMobile()">Home</a>
+  <a href="{% url 'about' %}" onclick="closeMobile()">About</a>
+  <a href="{% url 'services' %}" onclick="closeMobile()">Services</a>
+  <a href="{% url 'portfolio' %}" onclick="closeMobile()">Portfolio</a>
+  <a href="{% url 'graphics_portfolio' %}" onclick="closeMobile()">Graphics</a>
+  <a href="{% url 'contact' %}" onclick="closeMobile()" style="color:var(--c-gold);font-weight:700">Get in Touch &rarr;</a>
+</nav>
 
-        {% if user.is_authenticated %}
-          <form action="{% url 'logout' %}" method="post" style="display:inline;">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-danger btn-sm rounded-0">Logout</button>
-          </form>
-        {% else %}
-          <a href="{% url 'login' %}" class="btn btn-warning btn-sm rounded-0 text-dark fw-bold">Login</a>
-        {% endif %}
+<main>
+  {% block content %}{% endblock %}
+</main>
 
-        <div id="themeGuide" class="theme-guide">
-          <span id="guideText">Switch Mode</span>
+<!-- FOOTER -->
+<footer id="site-footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">
+          <div class="nav-logo-mark">U</div>
+          UASE Tech Studio
         </div>
-
-        <button id="darkModeToggle" class="btn-dark-toggle ms-3" title="Toggle Dark Mode">
-          <i class="bi bi-moon-stars-fill"></i>
-        </button>
-      </nav>
-    </div>
-  </header>
-
-  <main class="container my-5 fade-mode">
-    {% block content %}
-    {% endblock %}
-  </main>
-
-  <footer id="footer" class="text-center py-5 mt-5">
-    <div class="container">
-      <div class="mb-3">
-        <span class="fw-bold" style="letter-spacing: 5px;">UASE TECH-STUDIO</span>
+        <p class="footer-desc">
+          We architect solutions, design systems, and ship production-grade software.
+          A software engineering company built on precision, trust, and real impact — based in Nigeria.
+        </p>
       </div>
-      <p class="opacity-50 small">&copy; 2026 Crafted with Excellence by Usty. All rights reserved.</p>
+      <div class="footer-col">
+        <h5>Services</h5>
+        <ul>
+          <li><a href="{% url 'service_detail' 'web-development' %}">Web Engineering</a></li>
+          <li><a href="{% url 'service_detail' 'mobile-app-development' %}">Mobile Apps</a></li>
+          <li><a href="{% url 'service_detail' 'software-development' %}">SaaS &amp; APIs</a></li>
+          <li><a href="{% url 'service_detail' 'it-support-administration' %}">IT Support</a></li>
+          <li><a href="{% url 'graphics_portfolio' %}">Graphics &amp; Design</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="{% url 'about' %}">About Usty</a></li>
+          <li><a href="{% url 'portfolio' %}">Portfolio</a></li>
+          <li><a href="{% url 'resume' %}">Resume / CV</a></li>
+          <li><a href="{% url 'services' %}">All Services</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Connect</h5>
+        <ul>
+          <li><a href="{% url 'contact' %}">Contact Us</a></li>
+          <li><a href="https://github.com/UASE-TECH-STUDIO" target="_blank">GitHub</a></li>
+          <li><a href="https://wa.me/2349133549399" target="_blank">WhatsApp</a></li>
+          <li><a href="https://linkedin.com/in/muhammedmustapha-abdullahi-bb897a309/" target="_blank">LinkedIn</a></li>
+        </ul>
+      </div>
     </div>
-  </footer>
+    <div class="footer-bottom">
+      <span>&copy; 2026 UASE Tech Studio. Engineered by Usty. All rights reserved.</span>
+      <div style="display:flex;gap:0.5rem">
+        <a href="https://github.com/UASE-TECH-STUDIO" target="_blank" class="social-link"><i class="bi bi-github"></i></a>
+        <a href="https://wa.me/2349133549399" target="_blank" class="social-link"><i class="bi bi-whatsapp"></i></a>
+        <a href="https://linkedin.com/in/muhammedmustapha-abdullahi-bb897a309/" target="_blank" class="social-link"><i class="bi bi-linkedin"></i></a>
+        <a href="{% url 'contact' %}" class="social-link"><i class="bi bi-envelope-fill"></i></a>
+      </div>
+    </div>
+  </div>
+</footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // Theme
+  const saved = localStorage.getItem('uase-theme') || 'dark';
+  const icon = document.getElementById('themeIcon');
+  if (saved === 'light') { document.body.classList.add('light-mode'); icon.className = 'bi bi-moon-stars-fill'; }
+  document.getElementById('themeToggle').addEventListener('click', () => {
+    const isLight = document.body.classList.toggle('light-mode');
+    icon.className = isLight ? 'bi bi-moon-stars-fill' : 'bi bi-sun-fill';
+    localStorage.setItem('uase-theme', isLight ? 'light' : 'dark');
+  });
 
-  <script>
-    const toggleBtn = document.getElementById('darkModeToggle');
-    const themeGuide = document.getElementById('themeGuide');
-    const guideText = document.getElementById('guideText');
-    const body = document.body;
-    const header = document.getElementById('header');
-    const footer = document.getElementById('footer');
+  // Mobile nav
+  function closeMobile() { document.getElementById('mobileNav').classList.remove('open'); }
+  document.getElementById('hamburger').addEventListener('click', () => {
+    document.getElementById('mobileNav').classList.toggle('open');
+  });
+  document.addEventListener('click', e => {
+    if (!document.getElementById('site-nav').contains(e.target) && !document.getElementById('mobileNav').contains(e.target)) closeMobile();
+  });
 
-    const setTheme = (theme) => {
-      if (theme === 'dark') {
-        body.classList.add('dark-mode');
-        header.classList.add('dark-mode');
-        footer.classList.add('dark-mode');
-        toggleBtn.innerHTML = '<i class="bi bi-sun-fill"></i>';
-        guideText.innerText = "Switch to Light Mode";
-      } else {
-        body.classList.remove('dark-mode');
-        header.classList.remove('dark-mode');
-        footer.classList.remove('dark-mode');
-        toggleBtn.innerHTML = '<i class="bi bi-moon-stars-fill"></i>';
-        guideText.innerText = "Switch to Dark Mode";
-      }
-    };
+  // Nav scroll effect
+  window.addEventListener('scroll', () => {
+    document.getElementById('site-nav').style.background = window.scrollY > 40
+      ? (document.body.classList.contains('light-mode') ? 'rgba(247,248,252,0.98)' : 'rgba(6,8,15,0.98)')
+      : (document.body.classList.contains('light-mode') ? 'rgba(247,248,252,0.9)' : 'rgba(6,8,15,0.8)');
+  });
 
-    // Initialize Theme
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    setTheme(savedTheme);
-
-    // Hide guide if they've used it before
-    if(localStorage.getItem('themeGuideHidden') === 'true') {
-        themeGuide.classList.add('guide-hidden');
-    }
-
-    toggleBtn.addEventListener('click', () => {
-      const isDark = body.classList.contains('dark-mode');
-      const newTheme = isDark ? 'light' : 'dark';
-      setTheme(newTheme);
-      localStorage.setItem('theme', newTheme);
-      
-      // Hide guide permanently after first click
-      themeGuide.classList.add('guide-hidden');
-      localStorage.setItem('themeGuideHidden', 'true');
-    });
-  </script>
-
-  {% block scripts %}{% endblock %}
+  // Scroll reveal
+  const revealObs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+</script>
+{% block scripts %}{% endblock %}
 </body>
 </html>
