@@ -144,9 +144,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Resend Email
 RESEND_API_KEY = os.environ.get("RESEND_API_KEY")
 
-# Email identities
-DEFAULT_FROM_EMAIL = "UASE Tech Studio <uasetechstudio.com>"
-CONTACT_RECIPIENT_EMAIL = os.environ.get("CONTACT_RECIPIENT_EMAIL")
+# Email — using Resend onboarding sender (works without domain verification)
+DEFAULT_FROM_EMAIL = "UASE Tech Studio <onboarding@resend.dev>"
+# Where admin notifications are delivered — set CONTACT_RECIPIENT_EMAIL env var on Render
+CONTACT_RECIPIENT_EMAIL = os.environ.get("CONTACT_RECIPIENT_EMAIL", "uasetechstudio@gmail.com")
 
 # reCAPTCHA
 RECAPTCHA_SECRET_KEY = os.environ.get("RECAPTCHA_SECRET_KEY")

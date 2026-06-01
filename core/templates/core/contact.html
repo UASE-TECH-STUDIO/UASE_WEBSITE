@@ -1,200 +1,343 @@
 {% extends 'core/layout.html' %}
 {% load static %}
-
-{% block title %}Contact Us | UASE Tech Studio - Let's Connect{% endblock %}
-
+{% block title %}Contact UASE Tech Studio — Start Your Project{% endblock %}
 {% block content %}
 <style>
-    /* 1. HERO SECTION */
-    .hero-section {
-        background: url("{% static 'core/images/contact_hero.jpg' %}") no-repeat center center;
-        background-size: cover;
-        min-height: 40vh;
-        display: flex;
-        align-items: center;
-        margin-top: -3rem;
-        border-radius: 0 0 50px 50px;
-    }
-    .hero-section .overlay {
-        background: linear-gradient(135deg, rgba(5, 8, 16, 0.85) 0%, rgba(5, 8, 16, 0.6) 100%);
-    }
+  .page-pad { padding-left: clamp(1rem,5%,5%); padding-right: clamp(1rem,5%,5%); }
 
-    /* 2. CONTACT CARD - High Contrast */
-    .contact-card {
-        background: #ffffff;
-        border: 1px solid #dee2e6;
-        border-radius: 30px;
-        padding: 3rem;
-        box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.1);
-    }
-    
-    /* FIXED LINE BELOW */
-    .form-label { color: #212529; font-weight: bold; margin-bottom: 0.5rem; display: block; }
-    
-    .form-control {
-        background: #f8f9fa !important;
-        border: 1px solid #ced4da !important;
-        color: #212529 !important;
-        border-radius: 12px;
-        padding: 0.8rem 1.2rem;
-    }
-    .form-control:focus {
-        border-color: #0d6efd !important;
-        background: #ffffff !important;
-        box-shadow: 0 0 10px rgba(13, 110, 253, 0.15);
-    }
+  /* ── HERO ── */
+  .contact-hero {
+    background: linear-gradient(135deg, var(--c-bg) 0%, var(--c-bg2) 100%);
+    border-bottom: 0.5px solid var(--c-border);
+    padding: clamp(3rem,8vw,5rem) clamp(1rem,5%,5%) clamp(2.5rem,6vw,4rem);
+    text-align: center; position: relative; overflow: hidden;
+  }
+  .contact-hero::before {
+    content: ''; position: absolute; inset: 0; z-index: 0;
+    background-image: radial-gradient(rgba(232,160,69,0.04) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+  .contact-hero-inner { position: relative; z-index: 1; max-width: 640px; margin: 0 auto; }
+  .contact-hero h1 { font-size: clamp(2rem,6vw,3.5rem); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 1rem; }
+  .contact-hero h1 span { color: var(--c-gold); }
+  .contact-hero p { color: var(--c-text2); font-size: clamp(0.95rem,2.5vw,1.05rem); line-height: 1.8; }
 
-    /* 3. CONTACT TILES */
-    .contact-tile {
-        background: #ffffff;
-        border: 1px solid #dee2e6;
-        border-radius: 20px;
-        padding: 1.5rem;
-        transition: all 0.3s ease;
-        text-decoration: none !important;
-        display: block;
-    }
-    .contact-tile:hover {
-        border-color: #0d6efd;
-        transform: translateX(10px);
-    }
+  /* ── LAYOUT ── */
+  .contact-wrap { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.4fr; gap: clamp(2rem,5vw,4rem); padding: clamp(3rem,8vw,5rem) clamp(1rem,5%,5%); }
 
-    /* DARK MODE OVERRIDES */
-    body.dark-mode .contact-card, body.dark-mode .contact-tile { 
-        background: rgba(255, 255, 255, 0.05); 
-        border-color: rgba(255, 255, 255, 0.1);
-    }
-    body.dark-mode .form-control {
-        background: rgba(255, 255, 255, 0.05) !important;
-        border-color: rgba(255, 255, 255, 0.1) !important;
-        color: white !important;
-    }
-    body.dark-mode .form-label { color: white; }
+  /* ── LEFT — INFO ── */
+  .contact-info h2 { font-size: clamp(1.3rem,3vw,1.8rem); font-weight: 800; margin-bottom: 0.5rem; }
+  .contact-info > p { color: var(--c-text2); font-size: 0.92rem; line-height: 1.8; margin-bottom: 2rem; }
+
+  .info-tile {
+    background: var(--c-surface); border: 0.5px solid var(--c-border);
+    border-radius: var(--radius-lg); padding: 1.25rem 1.5rem;
+    margin-bottom: 0.85rem; transition: all 0.25s var(--ease);
+    text-decoration: none; display: block;
+  }
+  .info-tile:hover { border-color: var(--c-gold); transform: translateX(4px); }
+  .info-tile-label { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-gold); font-family: var(--font-mono); font-weight: 600; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 6px; }
+  .info-tile-label i { font-size: 0.9rem; }
+  .info-tile-val { font-size: 0.9rem; color: var(--c-text); font-weight: 500; }
+  .info-tile-val a { color: var(--c-text2); text-decoration: none; display: block; font-size: 0.87rem; transition: color 0.2s; }
+  .info-tile-val a:hover { color: var(--c-gold); }
+
+  .contact-divider { height: 0.5px; background: var(--c-border); margin: 1.5rem 0; }
+
+  .social-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.5rem; }
+  .soc-btn {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: var(--c-surface); border: 0.5px solid var(--c-border2);
+    color: var(--c-text2); text-decoration: none; padding: 7px 14px;
+    border-radius: 8px; font-size: 0.8rem; font-weight: 500;
+    transition: all 0.2s var(--ease); -webkit-tap-highlight-color: transparent;
+  }
+  .soc-btn:hover { border-color: var(--c-gold); color: var(--c-gold); }
+
+  /* ── RIGHT — FORM ── */
+  .contact-form-card {
+    background: var(--c-surface); border: 0.5px solid var(--c-border);
+    border-radius: clamp(16px,3vw,20px); padding: clamp(1.75rem,4vw,2.5rem);
+    position: relative; overflow: hidden;
+  }
+  .contact-form-card::before {
+    content:''; position:absolute; top:0; left:0; right:0; height:2px;
+    background: linear-gradient(90deg, transparent, var(--c-gold), transparent);
+  }
+  .contact-form-card h2 { font-size: clamp(1.2rem,3vw,1.5rem); font-weight: 800; margin-bottom: 0.4rem; }
+  .contact-form-card > p { font-size: 0.88rem; color: var(--c-text2); margin-bottom: 1.75rem; }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  .field { margin-bottom: 1.1rem; }
+  .field label {
+    display: block; font-size: 0.78rem; font-weight: 600;
+    color: var(--c-text2); margin-bottom: 6px;
+    letter-spacing: 0.04em; font-family: var(--font-mono);
+  }
+  .field input, .field textarea, .field select {
+    width: 100%; background: var(--c-bg);
+    border: 0.5px solid var(--c-border2);
+    border-radius: var(--radius); color: var(--c-text);
+    padding: 0.75rem 1rem; font-size: 0.92rem;
+    font-family: var(--font); transition: border-color 0.2s, box-shadow 0.2s;
+    -webkit-appearance: none; appearance: none;
+    outline: none;
+  }
+  body.light-mode .field input,
+  body.light-mode .field textarea,
+  body.light-mode .field select {
+    background: #f7f8fc; border-color: #d0d4dc; color: #0f1117;
+  }
+  .field input:focus, .field textarea:focus, .field select:focus {
+    border-color: var(--c-gold);
+    box-shadow: 0 0 0 3px rgba(232,160,69,0.12);
+  }
+  .field input::placeholder, .field textarea::placeholder { color: var(--c-text3); }
+  .field textarea { resize: vertical; min-height: 120px; }
+
+  .budget-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
+  .budget-pill {
+    border: 0.5px solid var(--c-border2); border-radius: 100px;
+    padding: 5px 14px; font-size: 0.78rem; color: var(--c-text2);
+    cursor: pointer; transition: all 0.2s; user-select: none;
+    background: var(--c-bg); -webkit-tap-highlight-color: transparent;
+  }
+  .budget-pill.active, .budget-pill:hover { border-color: var(--c-gold); color: var(--c-gold); background: rgba(232,160,69,0.08); }
+
+  .submit-btn {
+    width: 100%; background: var(--c-gold); color: #000;
+    border: none; border-radius: var(--radius); padding: 0.9rem;
+    font-size: 1rem; font-weight: 700; cursor: pointer;
+    font-family: var(--font); transition: all 0.25s var(--ease);
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    margin-top: 0.5rem; -webkit-tap-highlight-color: transparent;
+  }
+  .submit-btn:hover:not(:disabled) { background: var(--c-gold2); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(232,160,69,0.3); }
+  .submit-btn:disabled { opacity: 0.65; cursor: not-allowed; }
+
+  .spinner { width: 16px; height: 16px; border: 2px solid rgba(0,0,0,0.3); border-top-color: #000; border-radius: 50%; animation: spin 0.7s linear infinite; display: none; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .form-msg { margin-top: 1rem; padding: 0.85rem 1.1rem; border-radius: var(--radius); font-size: 0.88rem; font-weight: 500; display: none; }
+  .form-msg.success { background: rgba(46,204,113,0.1); border: 0.5px solid rgba(46,204,113,0.3); color: #2ecc71; }
+  .form-msg.error { background: rgba(231,76,60,0.1); border: 0.5px solid rgba(231,76,60,0.3); color: #e74c3c; }
+
+  /* recaptcha override */
+  .g-recaptcha { transform-origin: left; margin-bottom: 0.5rem; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .contact-wrap { grid-template-columns: 1fr; gap: 2rem; }
+  }
+  @media (max-width: 640px) {
+    .form-row { grid-template-columns: 1fr; gap: 0; }
+    .contact-form-card { padding: 1.5rem; }
+  }
+  @media (max-width: 375px) {
+    .g-recaptcha { transform: scale(0.9); }
+  }
 </style>
 
-<section class="hero-section position-relative text-white">
-    <div class="overlay position-absolute top-0 start-0 w-100 h-100"></div>
-    <div class="container position-relative z-1 text-center">
-        <h1 class="display-3 fw-bold animate__animated animate__fadeInDown">Get in <span class="text-primary">Touch</span></h1>
-        <p class="lead mt-3 opacity-75 mx-auto animate__animated animate__fadeInUp" style="max-width: 700px;">
-            Have a project in mind or a question? Our team is ready to help you innovate and grow.
-        </p>
+<!-- HERO -->
+<div class="contact-hero">
+  <div class="contact-hero-inner">
+    <div class="sec-label reveal" style="justify-content:center">Let's Build Together</div>
+    <h1 class="reveal">Start a <span>Project</span><br>With Us</h1>
+    <p class="reveal">Whether you need a SaaS platform, a mobile app, or a website &mdash; we want to hear about your problem and architect the right solution.</p>
+  </div>
+</div>
+
+<!-- CONTACT BODY -->
+<div class="contact-wrap">
+
+  <!-- LEFT — INFO -->
+  <div class="contact-info reveal">
+    <h2>How to Reach Us</h2>
+    <p>We respond to all enquiries within 24 hours. WhatsApp is fastest for urgent conversations.</p>
+
+    <div class="info-tile">
+      <div class="info-tile-label"><i class="bi bi-envelope-fill"></i>Email</div>
+      <div class="info-tile-val">
+        <a href="mailto:uasetechstudio@gmail.com">uasetechstudio@gmail.com</a>
+        <a href="mailto:ustyventures@gmail.com">ustyventures@gmail.com</a>
+      </div>
     </div>
-</section>
 
-<section class="container my-5 py-5">
-    <div class="row g-5">
-        <div class="col-lg-5">
-            <h2 class="fw-bold mb-4 text-dark">Contact Information</h2>
-            
-            <div class="contact-tile mb-3">
-                <h6 class="text-primary fw-bold mb-2"><i class="bi bi-envelope-fill me-2"></i>Email Us</h6>
-                <a href="mailto:uasetechstudio@gmail.com" class="d-block text-secondary text-decoration-none">uasetechstudio@gmail.com</a>
-                <a href="mailto:ustyventures@gmail.com" class="d-block text-secondary text-decoration-none">ustyventures@gmail.com</a>
-            </div>
+    <div class="info-tile" href="#">
+      <div class="info-tile-label"><i class="bi bi-telephone-fill"></i>Phone &amp; WhatsApp</div>
+      <div class="info-tile-val" style="display:flex;flex-direction:column;gap:0.5rem;margin-top:0.25rem">
+        <div style="display:flex;align-items:center;gap:0.75rem">
+          <span>&#127475;&#127468; Nigeria</span>
+          <a href="tel:+2349133549399" class="soc-btn" style="padding:5px 12px;font-size:0.78rem"><i class="bi bi-telephone"></i>Call</a>
+          <a href="https://wa.me/2349133549399" target="_blank" class="soc-btn" style="padding:5px 12px;font-size:0.78rem"><i class="bi bi-whatsapp"></i>WhatsApp</a>
+        </div>
+        <div style="display:flex;align-items:center;gap:0.75rem">
+          <span>&#127482;&#127480; USA</span>
+          <a href="tel:+12135579828" class="soc-btn" style="padding:5px 12px;font-size:0.78rem"><i class="bi bi-telephone"></i>Call</a>
+          <a href="https://wa.me/12135579828" target="_blank" class="soc-btn" style="padding:5px 12px;font-size:0.78rem"><i class="bi bi-whatsapp"></i>WhatsApp</a>
+        </div>
+      </div>
+    </div>
 
-            <div class="contact-tile mb-3">
-                <h6 class="text-primary fw-bold mb-3"><i class="bi bi-telephone-fill me-2"></i>Call / WhatsApp</h6>
-                <div class="d-flex align-items-center mb-3">
-                    <span class="fs-4 me-3">🇳🇬</span>
-                    <a href="tel:+2349133549399" class="btn btn-sm btn-outline-secondary rounded-pill me-2">Call</a>
-                    <a href="https://wa.me/2349133549399" target="_blank" class="btn btn-sm btn-outline-success rounded-pill">WhatsApp</a>
-                </div>
-                <div class="d-flex align-items-center">
-                    <span class="fs-4 me-3">🇺🇸</span>
-                    <a href="tel:+12135579828" class="btn btn-sm btn-outline-secondary rounded-pill me-2">Call</a>
-                    <a href="https://wa.me/12135579828" target="_blank" class="btn btn-sm btn-outline-success rounded-pill">WhatsApp</a>
-                </div>
-            </div>
+    <div class="info-tile">
+      <div class="info-tile-label"><i class="bi bi-geo-alt-fill"></i>Based In</div>
+      <div class="info-tile-val">Nigeria &mdash; Serving clients globally</div>
+    </div>
 
-            <div class="mt-5">
-                <h6 class="fw-bold mb-3 text-dark">Follow Our Journey</h6>
-                <div class="d-flex gap-3">
-                    <a href="https://www.facebook.com/profile.php?id=61583526124519" class="social-link text-primary"><i class="bi bi-facebook"></i></a>
-                    <a href="https://x.com/uasetechstudio" class="social-link text-info"><i class="bi bi-twitter-x"></i></a>
-                    <a href="https://www.linkedin.com/in/muhammedmustapha-abdullahi-bb897a309" class="social-link text-primary"><i class="bi bi-linkedin"></i></a>
-                    <a href="https://www.instagram.com/uase_tech_studio/" class="social-link text-danger"><i class="bi bi-instagram"></i></a>
-                    <a href="https://www.youtube.com/@UASE_TECH-STUDIOS" class="social-link text-danger"><i class="bi bi-youtube"></i></a>
-                </div>
-            </div>
+    <div class="info-tile">
+      <div class="info-tile-label"><i class="bi bi-clock-fill"></i>Response Time</div>
+      <div class="info-tile-val">Within 24 hours &mdash; usually same day</div>
+    </div>
+
+    <div class="contact-divider"></div>
+
+    <div style="font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--c-text3);font-family:var(--font-mono);margin-bottom:0.75rem">Follow Our Journey</div>
+    <div class="social-row">
+      <a href="https://www.facebook.com/profile.php?id=61583526124519" target="_blank" rel="noopener" class="soc-btn"><i class="bi bi-facebook"></i>Facebook</a>
+      <a href="https://x.com/uasetechstudio" target="_blank" rel="noopener" class="soc-btn"><i class="bi bi-twitter-x"></i>Twitter</a>
+      <a href="https://www.linkedin.com/in/muhammedmustapha-abdullahi-bb897a309" target="_blank" rel="noopener" class="soc-btn"><i class="bi bi-linkedin"></i>LinkedIn</a>
+      <a href="https://www.instagram.com/uase_tech_studio/" target="_blank" rel="noopener" class="soc-btn"><i class="bi bi-instagram"></i>Instagram</a>
+      <a href="https://github.com/UASE-TECH-STUDIO" target="_blank" rel="noopener" class="soc-btn"><i class="bi bi-github"></i>GitHub</a>
+    </div>
+  </div>
+
+  <!-- RIGHT — FORM -->
+  <div class="reveal">
+    <div class="contact-form-card">
+      <h2>Send Us a Message</h2>
+      <p>Fill in the details below and we'll get back to you with a clear plan.</p>
+
+      <form id="contactForm" method="post" novalidate>
+        {% csrf_token %}
+        <div class="form-row">
+          <div class="field">
+            <label for="id_name">Full Name *</label>
+            <input type="text" name="name" id="id_name" placeholder="Muhammed Usty" required autocomplete="name">
+          </div>
+          <div class="field">
+            <label for="id_email">Email Address *</label>
+            <input type="email" name="email" id="id_email" placeholder="you@example.com" required autocomplete="email">
+          </div>
         </div>
 
-        <div class="col-lg-7">
-            <div class="contact-card border-0">
-                <h2 class="fw-bold mb-4 text-dark">Send a Message</h2>
-                <form id="contactForm" method="post" novalidate>
-                    {% csrf_token %}
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label" for="id_name">Full Name</label>
-                            <input type="text" name="name" id="id_name" class="form-control" placeholder="MUHAMMED USTY" required>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label" for="id_email">Email Address</label>
-                            <input type="email" name="email" id="id_email" class="form-control" placeholder="uasetechstudio@gmail.com" required>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="id_subject">Subject</label>
-                        <input type="text" name="subject" id="id_subject" class="form-control" placeholder="How can we help?" required>
-                    </div>
-                    <div class="mb-4">
-                        <label class="form-label" for="id_message">Your Message</label>
-                        <textarea name="message" id="id_message" rows="5" class="form-control" placeholder="Tell us about your project..." required></textarea>
-                    </div>
-                    <div class="mb-4">
-                        <div class="g-recaptcha" data-sitekey="6LebklMrAAAAAJkzWLHS1WrCUY8DACIAlFxkFsz3"></div>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-lg w-100 rounded-pill py-3 fw-bold shadow-sm" id="submitBtn">
-                        <span id="btnText">Send Message</span>
-                        <span id="btnSpinner" class="spinner-border spinner-border-sm ms-2 d-none"></span>
-                    </button>
-                </form>
-                <div id="formResponse" class="mt-3"></div>
-            </div>
+        <div class="field">
+          <label for="id_subject">Subject *</label>
+          <input type="text" name="subject" id="id_subject" placeholder="e.g. I need a SaaS platform built" required>
         </div>
+
+        <div class="field">
+          <label>Budget Range</label>
+          <div class="budget-pills" id="budgetPills">
+            <span class="budget-pill" data-val="Under ₦100k">Under ₦100k</span>
+            <span class="budget-pill" data-val="₦100k–500k">₦100k–500k</span>
+            <span class="budget-pill" data-val="₦500k–1M">₦500k–1M</span>
+            <span class="budget-pill" data-val="₦1M+">₦1M+</span>
+            <span class="budget-pill" data-val="Let's discuss">Let's discuss</span>
+          </div>
+          <input type="hidden" name="budget" id="budgetInput">
+        </div>
+
+        <div class="field">
+          <label for="id_message">Your Message *</label>
+          <textarea name="message" id="id_message" rows="5" placeholder="Tell us about your project, what problem you're trying to solve, and any specific requirements..." required></textarea>
+        </div>
+
+        <div class="field">
+          <div class="g-recaptcha" data-sitekey="6LebklMrAAAAAJkzWLHS1WrCUY8DACIAlFxkFsz3"></div>
+        </div>
+
+        <button type="submit" class="submit-btn" id="submitBtn">
+          <span id="btnText">Send Message</span>
+          <div class="spinner" id="btnSpinner"></div>
+          <i class="bi bi-arrow-right" id="btnArrow"></i>
+        </button>
+      </form>
+
+      <div class="form-msg" id="formMsg"></div>
     </div>
-</section>
+  </div>
+</div>
 
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-    const form = document.getElementById("contactForm");
-    const responseDiv = document.getElementById("formResponse");
-    const submitBtn = document.getElementById("submitBtn");
-    const btnText = document.getElementById("btnText");
-    const btnSpinner = document.getElementById("btnSpinner");
-
-    form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        responseDiv.innerHTML = '';
-        submitBtn.disabled = true;
-        btnSpinner.classList.remove("d-none");
-        btnText.textContent = "Sending...";
-
-        try {
-            const res = await fetch("{% url 'contact' %}", {
-                method: "POST",
-                headers: { 'X-CSRFToken': '{{ csrf_token }}' },
-                body: new FormData(form)
-            });
-
-            const data = await res.json();
-            if (data.success) {
-                responseDiv.innerHTML = `<div class="alert alert-success rounded-3 shadow-sm">🚀 ${data.message}</div>`;
-                form.reset();
-                if (typeof grecaptcha !== "undefined") grecaptcha.reset();
-            } else {
-                responseDiv.innerHTML = `<div class="alert alert-danger rounded-3 shadow-sm">❌ ${data.message || 'Error occurred'}</div>`;
-            }
-        } catch (error) {
-            responseDiv.innerHTML = `<div class="alert alert-danger rounded-3 shadow-sm">❌ Server error. Please try again later.</div>`;
-        } finally {
-            submitBtn.disabled = false;
-            btnSpinner.classList.add("d-none");
-            btnText.textContent = "Send Message";
-        }
+(function() {
+  // Budget pills
+  var pills = document.querySelectorAll('.budget-pill');
+  var budgetInput = document.getElementById('budgetInput');
+  pills.forEach(function(pill) {
+    pill.addEventListener('click', function() {
+      pills.forEach(function(p) { p.classList.remove('active'); });
+      pill.classList.add('active');
+      budgetInput.value = pill.dataset.val;
     });
-});
+  });
+
+  // Form submission
+  var form = document.getElementById('contactForm');
+  var submitBtn = document.getElementById('submitBtn');
+  var btnText = document.getElementById('btnText');
+  var btnSpinner = document.getElementById('btnSpinner');
+  var btnArrow = document.getElementById('btnArrow');
+  var formMsg = document.getElementById('formMsg');
+
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    formMsg.style.display = 'none';
+    formMsg.className = 'form-msg';
+
+    // Client-side validation
+    var name = document.getElementById('id_name').value.trim();
+    var email = document.getElementById('id_email').value.trim();
+    var subject = document.getElementById('id_subject').value.trim();
+    var message = document.getElementById('id_message').value.trim();
+
+    if (!name || !email || !subject || !message) {
+      formMsg.textContent = 'Please fill in all required fields.';
+      formMsg.className = 'form-msg error';
+      formMsg.style.display = 'block';
+      return;
+    }
+
+    // Show loading
+    submitBtn.disabled = true;
+    btnText.textContent = 'Sending...';
+    btnSpinner.style.display = 'block';
+    btnArrow.style.display = 'none';
+
+    try {
+      var fd = new FormData(form);
+      var res = await fetch("{% url 'contact' %}", {
+        method: 'POST',
+        headers: { 'X-CSRFToken': '{{ csrf_token }}' },
+        body: fd
+      });
+      var data = await res.json();
+
+      if (data.success) {
+        formMsg.textContent = '&#10003; Message sent! We will get back to you within 24 hours.';
+        formMsg.className = 'form-msg success';
+        formMsg.style.display = 'block';
+        form.reset();
+        pills.forEach(function(p) { p.classList.remove('active'); });
+        budgetInput.value = '';
+        if (typeof grecaptcha !== 'undefined') grecaptcha.reset();
+      } else {
+        formMsg.textContent = data.message || 'Something went wrong. Please try again.';
+        formMsg.className = 'form-msg error';
+        formMsg.style.display = 'block';
+      }
+    } catch (err) {
+      formMsg.textContent = 'Network error. Please check your connection and try again.';
+      formMsg.className = 'form-msg error';
+      formMsg.style.display = 'block';
+    } finally {
+      submitBtn.disabled = false;
+      btnText.textContent = 'Send Message';
+      btnSpinner.style.display = 'none';
+      btnArrow.style.display = '';
+    }
+  });
+})();
 </script>
 {% endblock %}

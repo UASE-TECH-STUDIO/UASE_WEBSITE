@@ -1278,11 +1278,50 @@ def get_client_ip(request):
     return request.META.get('REMOTE_ADDR')
 
 
+# Hardcoded fallback testimonials (shown if DB is empty / not yet loaded)
+FALLBACK_TESTIMONIALS = [
+    {
+        "author_name": "Rashida Ibrahim",
+        "author_title": "SIWES Student — ABU Zaria",
+        "content": "UASE Tech Studio didn't just help me complete my SIWES project — they actually taught me how to think like a developer. Usty walked me through the entire backend architecture. I submitted the best project in my department.",
+        "rating": 5,
+    },
+    {
+        "author_name": "James Okoro",
+        "author_title": "Project Lead — Community Safety Initiative",
+        "content": "We needed a crime tracking system that was functional and easy to use. UASE Tech Studio delivered exactly that. The platform is fast, accurate, and has helped our community coordinators respond faster to incidents.",
+        "rating": 5,
+    },
+    {
+        "author_name": "Ibrahim Musa",
+        "author_title": "Dealer Admin — CARSTRIMS Platform",
+        "content": "The CARSTRIMS platform is unbelievable. I manage my entire inventory, track every sale, handle partner cars, and get financial reports in one click. It replaced four different tools we were using before.",
+        "rating": 5,
+    },
+    {
+        "author_name": "Dr. Ngozi Okonkwo",
+        "author_title": "Hospital Administrator — Lagos",
+        "content": "BloodLink transformed how we coordinate blood donations. Before, we were making phone calls for hours. Now the system matches donors instantly and notifies everyone automatically. This platform saves lives.",
+        "rating": 5,
+    },
+    {
+        "author_name": "Fatima Bello",
+        "author_title": "Business Owner — Lagos",
+        "content": "Before UASE built our platform we managed everything on WhatsApp and paper. Now customers browse our inventory online and our sales have doubled in three months. Genuinely life-changing for our business.",
+        "rating": 5,
+    },
+    {
+        "author_name": "Aisha Yusuf",
+        "author_title": "Final Year CS Student — UNIZIK",
+        "content": "I came to Usty with a half-built final year project and a week left. He restructured the entire codebase, added authentication and a proper dashboard, and helped me present it confidently. I passed with distinction.",
+        "rating": 5,
+    },
+]
+
+
 def home(request):
-    testimonial_list = Testimonial.objects.order_by('-created_at')
-    paginator = Paginator(testimonial_list, 5)
-    page_number = request.GET.get('page')
-    testimonials = paginator.get_page(page_number)
+    db_testimonials = list(Testimonial.objects.filter(is_approved=True).order_by('-created_at')[:6])
+    testimonials = db_testimonials if db_testimonials else FALLBACK_TESTIMONIALS
     featured_projects = [
         ('carstrims-car-dealer-platform', projects_data['carstrims-car-dealer-platform']),
     ]
@@ -1482,7 +1521,7 @@ def contact(request):
             "ip_address": ip_address,
             "country": country,
         })
-        send_user_confirmation(form.cleaned_data["name"], form.cleaned_data["email"])
+        send_user_confirmation(form.cleaned_data["name"], form.cleaned_data["email"], form.cleaned_data.get("subject", ""))
     except:
         return JsonResponse({"success": False, "message": "❌ Message saved but email delivery failed."})
 
