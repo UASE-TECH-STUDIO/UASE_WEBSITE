@@ -1478,30 +1478,40 @@ def contact(request):
         return render(request, "core/contact.html", {"form": ContactForm()})
 
     form = ContactForm(request.POST)
-    recaptcha_token = request.POST.get("g-recaptcha-response")
 
-    try:
-        r = requests.post(
-            "https://www.google.com/recaptcha/api/siteverify",
-            data={
-                "secret": settings.RECAPTCHA_SECRET_KEY,
-                "response": recaptcha_token,
-                "remoteip": request.META.get("REMOTE_ADDR"),
-            }, timeout=5
-        ).json()
-    except Exception:
-        return JsonResponse({"success": False, "message": "❌ reCAPTCHA verification failed."})
+    # reCAPTCHA — only enforce if secret key is configured
+    recaptcha_key = getattr(settings, "RECAPTCHA_SECRET_KEY", None)
+    if recaptcha_key:
+        recaptcha_token = request.POST.get("g-recaptcha-response", "")
+        try:
+            r = requests.post(
+                "https://www.google.com/recaptcha/api/siteverify",
+                data={
+                    "secret": recaptcha_key,
+                    "response": recaptcha_token,
+                    "remoteip": request.META.get("REMOTE_ADDR"),
+                }, timeout=5
+            ).json()
+            if not r.get("success"):
+                return JsonResponse({"success": False, "message": "❌ reCAPTCHA verification failed. Please try again."})
+        except Exception as e:
+            import logging
+            logging.getLogger(__name__).warning(f"reCAPTCHA check failed: {e}")
+            # Do not block submission if reCAPTCHA service itself is down
 
-    if not r.get("success") or not form.is_valid():
-        return JsonResponse({"success": False, "message": "❌ Invalid submission or reCAPTCHA failed.", "errors": form.errors})
+    if not form.is_valid():
+        errors = "; ".join([f"{k}: {v[0]}" for k, v in form.errors.items()])
+        return JsonResponse({"success": False, "message": f"❌ Please fix the following: {errors}"})
 
     ip_address = get_client_ip(request)
     country = "Unknown"
     try:
         geo = requests.get(f"https://ipapi.co/{ip_address}/json/", timeout=4).json()
         country = geo.get("country_name", "Unknown")
-    except: pass
+    except Exception:
+        pass
 
+    # Save to database
     ContactMessage.objects.create(
         name=form.cleaned_data["name"],
         email=form.cleaned_data["email"],
@@ -1512,20 +1522,37 @@ def contact(request):
         country=country,
     )
 
-    try:
-        send_admin_notification({
-            "name": form.cleaned_data["name"],
-            "email": form.cleaned_data["email"],
-            "subject": form.cleaned_data.get("subject"),
-            "message": form.cleaned_data["message"],
-            "ip_address": ip_address,
-            "country": country,
-        })
-        send_user_confirmation(form.cleaned_data["name"], form.cleaned_data["email"], form.cleaned_data.get("subject", ""))
-    except:
-        return JsonResponse({"success": False, "message": "❌ Message saved but email delivery failed."})
+    # Send emails — log full error if it fails
+    import logging
+    import traceback
+    logger = logging.getLogger(__name__)
 
-    return JsonResponse({"success": True, "message": "✅ Message sent successfully!"})
+    email_data = {
+        "name": form.cleaned_data["name"],
+        "email": form.cleaned_data["email"],
+        "subject": form.cleaned_data.get("subject", "New Enquiry"),
+        "message": form.cleaned_data["message"],
+        "budget": request.POST.get("budget", "Not specified"),
+        "ip_address": ip_address,
+        "country": country,
+    }
+
+    try:
+        send_admin_notification(email_data)
+    except Exception as e:
+        logger.error(f"Admin notification failed: {traceback.format_exc()}")
+
+    try:
+        send_user_confirmation(
+            form.cleaned_data["name"],
+            form.cleaned_data["email"],
+            form.cleaned_data.get("subject", "")
+        )
+    except Exception as e:
+        logger.error(f"User confirmation failed: {traceback.format_exc()}")
+
+    # Always return success if message was saved — email is best-effort
+    return JsonResponse({"success": True, "message": "✅ Message sent! We will get back to you within 24 hours."})
 
 # ===============================
 # ADMISSIONS / REGISTRATION
