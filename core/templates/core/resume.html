@@ -4,495 +4,575 @@
 
 {% block content %}
 <style>
-  /* ── PAGE LAYOUT ── */
-  .resume-page {
-    padding: clamp(2rem,6vw,4rem) clamp(1rem,5%,5%);
-    max-width: 1000px; margin: 0 auto;
-  }
+/* ════════════════════════════════════════
+   SCREEN STYLES
+════════════════════════════════════════ */
+.resume-page {
+  padding: clamp(1.5rem,5vw,3rem) clamp(1rem,5%,5%);
+  max-width: 980px; margin: 0 auto;
+}
 
-  /* ── TOP ACTIONS BAR ── */
-  .resume-topbar {
-    display: flex; align-items: center; justify-content: space-between;
-    flex-wrap: wrap; gap: 1rem;
-    margin-bottom: clamp(1.5rem,4vw,2.5rem);
-  }
-  .resume-topbar-left { display: flex; flex-direction: column; gap: 4px; }
-  .resume-topbar-label {
-    font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--c-gold); font-family: var(--font-mono); font-weight: 600;
-    display: flex; align-items: center; gap: 6px;
-  }
-  .resume-topbar-label::before { content:''; width:14px; height:1px; background:var(--c-gold); }
-  .resume-topbar-title { font-size: clamp(1.3rem,4vw,1.8rem); font-weight: 800; color: var(--c-text); }
-  .resume-topbar-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+/* Top action bar */
+.resume-topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 0.75rem;
+  margin-bottom: clamp(1.25rem,3vw,2rem);
+}
+.resume-topbar-left { display: flex; flex-direction: column; gap: 3px; }
+.resume-topbar-eyebrow {
+  font-size: 0.67rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--c-gold); font-family: var(--font-mono); font-weight: 600;
+  display: flex; align-items: center; gap: 6px;
+}
+.resume-topbar-eyebrow::before { content:''; width:12px; height:1px; background:var(--c-gold); }
+.resume-topbar-title { font-size: clamp(1.2rem,4vw,1.7rem); font-weight: 800; }
+.resume-topbar-btns { display: flex; gap: 0.6rem; flex-wrap: wrap; }
 
-  .btn-download {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: var(--c-gold); color: #000;
-    padding: 0.65rem 1.4rem; border-radius: 10px;
-    font-weight: 700; font-size: 0.85rem; text-decoration: none;
-    transition: all 0.25s; border: none; cursor: pointer;
-    font-family: var(--font);
-  }
-  .btn-download:hover { background: var(--c-gold2); color: #000; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(232,160,69,0.3); }
+.rbtn {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 0.6rem 1.3rem; border-radius: 9px; font-size: 0.84rem;
+  font-weight: 700; cursor: pointer; transition: all 0.22s;
+  font-family: var(--font); border: none; text-decoration: none;
+  white-space: nowrap;
+}
+.rbtn-primary { background: var(--c-gold); color: #000; }
+.rbtn-primary:hover { background: var(--c-gold2); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(232,160,69,0.3); }
+.rbtn-secondary { background: var(--c-surface); color: var(--c-text2); border: 0.5px solid var(--c-border2); }
+.rbtn-secondary:hover { border-color: var(--c-gold); color: var(--c-gold); }
+.rbtn:disabled { opacity: 0.6; cursor: wait; }
 
-  .btn-print {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: var(--c-surface); color: var(--c-text2);
-    padding: 0.65rem 1.4rem; border-radius: 10px;
-    font-weight: 600; font-size: 0.85rem; text-decoration: none;
-    border: 0.5px solid var(--c-border2); cursor: pointer;
-    transition: all 0.25s; font-family: var(--font);
-  }
-  .btn-print:hover { border-color: var(--c-gold); color: var(--c-gold); }
+/* PDF generating overlay */
+.pdf-overlay {
+  display: none; position: fixed; inset: 0; z-index: 9999;
+  background: rgba(6,8,15,0.85); align-items: center; justify-content: center;
+  flex-direction: column; gap: 1rem;
+}
+.pdf-overlay.active { display: flex; }
+.pdf-spinner {
+  width: 44px; height: 44px; border: 3px solid rgba(232,160,69,0.2);
+  border-top-color: var(--c-gold); border-radius: 50%; animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.pdf-overlay-text { color: var(--c-text2); font-size: 0.9rem; font-family: var(--font-mono); }
 
-  /* ── CV CARD ── */
-  .cv-card {
-    background: var(--c-surface);
-    border: 0.5px solid var(--c-border);
-    border-radius: clamp(16px,3vw,20px);
-    overflow: hidden;
-    box-shadow: 0 4px 40px rgba(0,0,0,0.25);
-    display: grid;
-    grid-template-columns: 260px 1fr;
-  }
+/* ════ CV CARD ════ */
+#cv-card {
+  background: #ffffff;
+  border-radius: clamp(12px,2vw,18px);
+  overflow: hidden;
+  box-shadow: 0 6px 48px rgba(0,0,0,0.3);
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  border: 0.5px solid var(--c-border);
+}
 
-  /* ── SIDEBAR ── */
-  .cv-sidebar {
-    background: linear-gradient(180deg, #0c1220 0%, #0a0f1a 100%);
-    border-right: 0.5px solid var(--c-border);
-    padding: 2.5rem 1.75rem;
-    display: flex; flex-direction: column; gap: 0;
-  }
-  body.light-mode .cv-sidebar { background: linear-gradient(180deg, #1a2035 0%, #141929 100%); }
+/* ── SIDEBAR ── */
+#cv-sidebar {
+  background: #0c1220;
+  padding: 2.25rem 1.6rem;
+  display: flex; flex-direction: column;
+}
 
-  .cv-avatar {
-    width: 80px; height: 80px; border-radius: 16px;
-    background: var(--c-gold); display: flex; align-items: center; justify-content: center;
-    font-size: 1.3rem; font-weight: 900; color: #000;
-    font-family: var(--font-mono); letter-spacing: 0.05em;
-    margin-bottom: 0.85rem;
-    box-shadow: 0 4px 16px rgba(232,160,69,0.3);
-  }
-  .cv-name-sm { font-size: 1rem; font-weight: 800; color: #fff; line-height: 1.2; margin-bottom: 3px; }
-  .cv-role-sm { font-size: 0.7rem; color: rgba(255,255,255,0.45); font-family: var(--font-mono); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 2rem; }
+.cv-av {
+  width: 72px; height: 72px; border-radius: 14px;
+  background: #e8a045; display: flex; align-items: center; justify-content: center;
+  font-size: 1.15rem; font-weight: 900; color: #000; font-family: monospace;
+  margin-bottom: 0.75rem; box-shadow: 0 4px 16px rgba(232,160,69,0.35);
+  flex-shrink: 0;
+}
+.cv-nm { font-size: 0.92rem; font-weight: 800; color: #fff; line-height: 1.25; margin-bottom: 2px; }
+.cv-rl { font-size: 0.65rem; color: rgba(255,255,255,0.4); font-family: monospace; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 1.75rem; }
 
-  .sb-section { margin-bottom: 1.75rem; }
-  .sb-heading {
-    font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase;
-    color: var(--c-gold); font-family: var(--font-mono); font-weight: 700;
-    margin-bottom: 0.85rem; padding-bottom: 0.5rem;
-    border-bottom: 1px solid rgba(232,160,69,0.2);
-  }
+.sbs { margin-bottom: 1.5rem; }
+.sbh {
+  font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase;
+  color: #e8a045; font-family: monospace; font-weight: 700;
+  margin-bottom: 0.75rem; padding-bottom: 0.4rem;
+  border-bottom: 1px solid rgba(232,160,69,0.18);
+}
 
-  .sb-contact-item {
-    display: flex; align-items: flex-start; gap: 8px;
-    margin-bottom: 0.7rem; text-decoration: none;
-  }
-  .sb-contact-icon { font-size: 0.8rem; color: var(--c-gold); flex-shrink: 0; margin-top: 2px; }
-  .sb-contact-text { font-size: 0.75rem; color: rgba(255,255,255,0.65); line-height: 1.4; word-break: break-word; }
-  .sb-contact-item:hover .sb-contact-text { color: var(--c-gold); }
+.sbc { display: flex; align-items: flex-start; gap: 7px; margin-bottom: 0.6rem; text-decoration: none; }
+.sbi { font-size: 0.75rem; color: #e8a045; flex-shrink: 0; margin-top: 2px; }
+.sbt { font-size: 0.72rem; color: rgba(255,255,255,0.6); line-height: 1.4; word-break: break-word; }
+.sbc:hover .sbt { color: #e8a045; }
 
-  .tag-cloud { display: flex; flex-wrap: wrap; gap: 5px; }
-  .sb-tag {
-    background: rgba(255,255,255,0.06); border: 0.5px solid rgba(255,255,255,0.1);
-    color: rgba(255,255,255,0.7); padding: 3px 9px;
-    border-radius: 6px; font-size: 0.68rem; font-family: var(--font-mono);
-    transition: all 0.2s;
-  }
-  .sb-tag:hover { border-color: var(--c-gold); color: var(--c-gold); }
-  .sb-tag.primary { background: rgba(232,160,69,0.12); border-color: rgba(232,160,69,0.3); color: var(--c-gold); }
+.tcl { display: flex; flex-wrap: wrap; gap: 4px; }
+.stg {
+  background: rgba(255,255,255,0.05); border: 0.5px solid rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.65); padding: 2px 8px; border-radius: 5px;
+  font-size: 0.65rem; font-family: monospace;
+}
+.stg.hi { background: rgba(232,160,69,0.12); border-color: rgba(232,160,69,0.3); color: #e8a045; }
 
-  .lang-item { margin-bottom: 0.7rem; }
-  .lang-label { display: flex; justify-content: space-between; font-size: 0.72rem; color: rgba(255,255,255,0.6); margin-bottom: 4px; }
-  .lang-bar { height: 3px; background: rgba(255,255,255,0.08); border-radius: 2px; }
-  .lang-fill { height: 100%; background: linear-gradient(90deg, var(--c-gold), var(--c-gold2)); border-radius: 2px; }
+.lgi { margin-bottom: 0.6rem; }
+.lgl { display: flex; justify-content: space-between; font-size: 0.68rem; color: rgba(255,255,255,0.55); margin-bottom: 4px; }
+.lgb { height: 3px; background: rgba(255,255,255,0.07); border-radius: 2px; }
+.lgf { height: 100%; background: linear-gradient(90deg,#e8a045,#f5c070); border-radius: 2px; }
 
-  /* ── MAIN CONTENT ── */
-  .cv-main {
-    padding: 2.5rem clamp(1.5rem,4vw,2.5rem);
-    background: var(--c-surface);
-    display: flex; flex-direction: column; gap: 0;
-  }
-  body.light-mode .cv-main { background: #fff; }
+/* ── MAIN ── */
+#cv-main {
+  background: #ffffff;
+  padding: 2.25rem clamp(1.5rem,3.5vw,2.25rem);
+  color: #111827;
+}
 
-  .cv-header { margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 0.5px solid var(--c-border); }
-  .cv-header h1 { font-size: clamp(1.5rem,4vw,2.2rem); font-weight: 900; letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 6px; }
-  body.light-mode .cv-header h1 { color: #0c0f17; }
-  .cv-header-role {
-    font-size: clamp(0.78rem,2vw,0.88rem); font-weight: 600;
-    color: var(--c-gold); letter-spacing: 0.04em; text-transform: uppercase;
-    font-family: var(--font-mono); margin-bottom: 1rem;
-  }
-  .cv-header-meta { display: flex; flex-wrap: wrap; gap: 0.75rem; }
-  .meta-pill {
-    display: inline-flex; align-items: center; gap: 5px;
-    background: rgba(232,160,69,0.08); border: 0.5px solid rgba(232,160,69,0.2);
-    color: var(--c-text2); padding: 4px 12px; border-radius: 100px;
-    font-size: 0.73rem; font-family: var(--font-mono);
-  }
-  body.light-mode .meta-pill { color: #4a5168; }
+.cvh { margin-bottom: 1.75rem; padding-bottom: 1.4rem; border-bottom: 1px solid #e5e7eb; }
+.cvh h1 {
+  font-size: clamp(1.4rem,3.5vw,2rem); font-weight: 900;
+  letter-spacing: -0.025em; line-height: 1.1; color: #0c0f17; margin-bottom: 5px;
+}
+.cvh-role {
+  font-size: 0.82rem; font-weight: 700; color: #e8a045;
+  letter-spacing: 0.05em; text-transform: uppercase;
+  font-family: monospace; margin-bottom: 0.9rem;
+}
+.cvh-meta { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.mpl {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(232,160,69,0.07); border: 0.5px solid rgba(232,160,69,0.2);
+  color: #555; padding: 3px 11px; border-radius: 100px;
+  font-size: 0.7rem; font-family: monospace;
+}
 
-  /* Sections */
-  .cv-section { margin-bottom: 1.75rem; }
-  .cv-section-title {
-    font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase;
-    color: var(--c-gold); font-family: var(--font-mono); font-weight: 700;
-    margin-bottom: 1rem; display: flex; align-items: center; gap: 10px;
-  }
-  .cv-section-title::after { content:''; flex:1; height:0.5px; background:var(--c-border); }
-  body.light-mode .cv-section-title::after { background: #e0e2ea; }
+.cvs { margin-bottom: 1.5rem; }
+.cvst {
+  font-size: 0.63rem; letter-spacing: 0.15em; text-transform: uppercase;
+  color: #e8a045; font-family: monospace; font-weight: 700;
+  margin-bottom: 0.85rem; display: flex; align-items: center; gap: 8px;
+}
+.cvst::after { content:''; flex:1; height:1px; background:#e5e7eb; }
 
-  /* Summary */
-  .cv-summary { font-size: 0.88rem; color: var(--c-text2); line-height: 1.8; }
-  body.light-mode .cv-summary { color: #3d4560; }
+.cvsum { font-size: 0.84rem; color: #374151; line-height: 1.78; }
 
-  /* Experience */
-  .exp-item { margin-bottom: 1.5rem; }
-  .exp-row { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 3px; }
-  .exp-title { font-size: 0.92rem; font-weight: 700; color: var(--c-text); }
-  body.light-mode .exp-title { color: #0c0f17; }
-  .exp-period {
-    font-size: 0.7rem; font-family: var(--font-mono);
-    background: rgba(232,160,69,0.1); border: 0.5px solid rgba(232,160,69,0.25);
-    color: var(--c-gold); padding: 2px 10px; border-radius: 100px;
-    white-space: nowrap;
-  }
-  .exp-org { font-size: 0.78rem; color: var(--c-text3); font-style: italic; margin-bottom: 0.6rem; font-family: var(--font-mono); }
-  .exp-bullets { margin: 0; padding-left: 1.1rem; list-style: none; }
-  .exp-bullets li {
-    font-size: 0.84rem; color: var(--c-text2); line-height: 1.7;
-    margin-bottom: 0.35rem; position: relative; padding-left: 0.25rem;
-  }
-  body.light-mode .exp-bullets li { color: #3d4560; }
-  .exp-bullets li::before { content:'▸'; color: var(--c-gold); position: absolute; left: -1rem; font-size: 0.7rem; top: 3px; }
+/* Experience */
+.exi { margin-bottom: 1.35rem; }
+.exr { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 2px; }
+.ext { font-size: 0.88rem; font-weight: 700; color: #0c0f17; }
+.exp {
+  font-size: 0.67rem; font-family: monospace;
+  background: rgba(232,160,69,0.08); border: 0.5px solid rgba(232,160,69,0.25);
+  color: #c07c1a; padding: 2px 9px; border-radius: 100px; white-space: nowrap;
+}
+.exo { font-size: 0.74rem; color: #9ca3af; font-style: italic; margin-bottom: 0.5rem; font-family: monospace; }
+.exu { margin: 0; padding-left: 1rem; list-style: none; }
+.exu li { font-size: 0.8rem; color: #374151; line-height: 1.65; margin-bottom: 0.3rem; position: relative; padding-left: 0.2rem; }
+.exu li::before { content:'▸'; color: #e8a045; position: absolute; left: -0.9rem; font-size: 0.65rem; top: 3px; }
 
-  /* Projects */
-  .proj-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
-  .proj-card {
-    background: var(--c-bg); border: 0.5px solid var(--c-border);
-    border-radius: 10px; padding: 0.85rem 1rem; transition: all 0.25s;
-    text-decoration: none; display: block; position: relative; overflow: hidden;
-  }
-  body.light-mode .proj-card { background: #f5f6fa; border-color: #e0e2ea; }
-  .proj-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,var(--c-gold),transparent); opacity:0; transition:opacity 0.25s; }
-  .proj-card:hover { border-color: var(--c-gold); transform: translateY(-2px); }
-  .proj-card:hover::before { opacity:1; }
-  .proj-title { font-size: 0.82rem; font-weight: 700; color: var(--c-gold); margin-bottom: 4px; display: flex; align-items: center; justify-content: space-between; }
-  .proj-desc { font-size: 0.75rem; color: var(--c-text3); line-height: 1.5; }
-  body.light-mode .proj-desc { color: #6b7288; }
-  .proj-tech { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 6px; }
-  .proj-tech span { font-size: 0.62rem; background: rgba(232,160,69,0.1); color: var(--c-gold); padding: 1px 7px; border-radius: 4px; font-family: var(--font-mono); }
+/* Projects */
+.prg { display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; }
+.prc {
+  background: #f9fafb; border: 1px solid #e5e7eb;
+  border-radius: 9px; padding: 0.8rem 0.9rem;
+  text-decoration: none; display: block;
+  border-top: 2px solid #e8a045;
+}
+.prc:hover { border-color: #e8a045; background: #fffbf5; }
+.prt { font-size: 0.78rem; font-weight: 700; color: #e8a045; margin-bottom: 4px; }
+.prd { font-size: 0.71rem; color: #6b7280; line-height: 1.45; }
+.prk { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 5px; }
+.prk span { font-size: 0.6rem; background: rgba(232,160,69,0.08); color: #c07c1a; padding: 1px 6px; border-radius: 4px; font-family: monospace; }
 
-  /* Education */
-  .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
-  .edu-card { background: var(--c-bg); border: 0.5px solid var(--c-border); border-radius: 10px; padding: 0.85rem 1rem; }
-  body.light-mode .edu-card { background: #f5f6fa; border-color: #e0e2ea; }
-  .edu-degree { font-size: 0.84rem; font-weight: 700; color: var(--c-text); margin-bottom: 3px; }
-  body.light-mode .edu-degree { color: #0c0f17; }
-  .edu-inst { font-size: 0.75rem; color: var(--c-text3); font-family: var(--font-mono); }
+/* Education */
+.edg { display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; }
+.edc { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 9px; padding: 0.8rem 0.9rem; }
+.edd { font-size: 0.8rem; font-weight: 700; color: #0c0f17; margin-bottom: 3px; }
+.edi { font-size: 0.71rem; color: #9ca3af; font-family: monospace; }
 
-  /* Footer strip */
-  .cv-footer-strip {
-    margin-top: 1.5rem; padding-top: 1rem;
-    border-top: 0.5px solid var(--c-border);
-    font-size: 0.72rem; color: var(--c-text3);
-    text-align: center; font-family: var(--font-mono);
-    font-style: italic;
-  }
+.cvfoot {
+  margin-top: 1.25rem; padding-top: 0.9rem;
+  border-top: 1px solid #e5e7eb;
+  font-size: 0.68rem; color: #9ca3af; text-align: center;
+  font-family: monospace; font-style: italic;
+}
 
-  /* ── LIGHT MODE CARD ── */
-  body.light-mode .cv-card { box-shadow: 0 4px 32px rgba(0,0,0,0.1); border-color: #e0e2ea; }
-  body.light-mode .cv-main { border-left: 0.5px solid #e0e2ea; }
+/* ════ RESPONSIVE ════ */
+@media (max-width: 820px) {
+  #cv-card { grid-template-columns: 1fr; }
+  #cv-sidebar { border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .prg { grid-template-columns: 1fr; }
+  .edg { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .resume-topbar { flex-direction: column; align-items: flex-start; }
+  .resume-topbar-btns { width: 100%; }
+  .rbtn { flex: 1; justify-content: center; }
+  #cv-main { padding: 1.4rem; }
+  .cvh h1 { font-size: 1.3rem; }
+}
 
-  /* ── RESPONSIVE ── */
-  @media (max-width: 820px) {
-    .cv-card { grid-template-columns: 1fr; }
-    .cv-sidebar {
-      border-right: none; border-bottom: 0.5px solid var(--c-border);
-      padding: 2rem 1.5rem;
-    }
-    .cv-avatar { width: 64px; height: 64px; font-size: 1.1rem; }
-    .proj-grid { grid-template-columns: 1fr; }
-    .edu-grid { grid-template-columns: 1fr; }
+/* ════ PRINT — matches screen exactly ════ */
+@media print {
+  @page {
+    size: A4;
+    margin: 0;
   }
-  @media (max-width: 640px) {
-    .resume-topbar { flex-direction: column; align-items: flex-start; }
-    .resume-topbar-actions { width: 100%; }
-    .btn-download, .btn-print { flex: 1; justify-content: center; }
-    .cv-main { padding: 1.5rem; }
-    .cv-header h1 { font-size: 1.4rem; }
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
+  html, body { margin: 0 !important; padding: 0 !important; background: #fff !important; }
+  #site-nav, #site-footer, .resume-topbar, .pdf-overlay { display: none !important; }
+  main { padding-top: 0 !important; }
+  .resume-page { padding: 0 !important; max-width: 100% !important; margin: 0 !important; }
+  #cv-card {
+    border-radius: 0 !important; box-shadow: none !important;
+    border: none !important;
+    display: grid !important;
+    grid-template-columns: 250px 1fr !important;
+    min-height: 297mm !important;
+    width: 210mm !important;
   }
-  @media (max-width: 400px) {
-    .cv-header-meta { flex-direction: column; gap: 0.4rem; }
+  #cv-sidebar {
+    background: #0c1220 !important;
+    padding: 2.25rem 1.6rem !important;
   }
-
-  /* ── PRINT ── */
-  @media print {
-    body { background: #fff !important; color: #000 !important; }
-    #site-nav, #site-footer, .resume-topbar, .nav-controls { display: none !important; }
-    main { padding-top: 0 !important; }
-    .resume-page { padding: 0; max-width: 100%; }
-    .cv-card { box-shadow: none; border: none; border-radius: 0; }
-    .cv-sidebar { background: #1a2035 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    .sb-tag, .sb-contact-text, .cv-name-sm, .cv-role-sm, .sb-heading, .lang-label { color: inherit !important; }
-    .proj-card, .edu-card { break-inside: avoid; }
-    .exp-item { break-inside: avoid; }
-  }
+  .cv-av { background: #e8a045 !important; }
+  .lgf { background: #e8a045 !important; }
+  .stg.hi { background: rgba(232,160,69,0.15) !important; color: #e8a045 !important; border-color: rgba(232,160,69,0.35) !important; }
+  .sbh { color: #e8a045 !important; border-bottom-color: rgba(232,160,69,0.25) !important; }
+  .sbi, .cv-nm, .cv-av { color: inherit; }
+  #cv-main { background: #ffffff !important; }
+  .cvst { color: #e8a045 !important; }
+  .ext, .cvh h1 { color: #0c0f17 !important; }
+  .exp { color: #c07c1a !important; border-color: rgba(232,160,69,0.3) !important; }
+  .cvsum, .exu li { color: #374151 !important; }
+  .prc { border-top-color: #e8a045 !important; background: #f9fafb !important; border-color: #e5e7eb !important; }
+  .edc { background: #f9fafb !important; border-color: #e5e7eb !important; }
+  .prt { color: #e8a045 !important; }
+  .prk span { color: #c07c1a !important; }
+  .exi { break-inside: avoid; }
+  .prg, .edg { break-inside: avoid; }
+}
 </style>
 
-<div class="resume-page">
+<!-- PDF overlay -->
+<div class="pdf-overlay" id="pdfOverlay">
+  <div class="pdf-spinner"></div>
+  <div class="pdf-overlay-text">Generating your PDF&hellip;</div>
+</div>
 
+<div class="resume-page">
   <!-- TOP BAR -->
   <div class="resume-topbar">
     <div class="resume-topbar-left">
-      <div class="resume-topbar-label">Professional Profile</div>
+      <div class="resume-topbar-eyebrow">Professional Profile</div>
       <div class="resume-topbar-title">Resume &amp; CV</div>
     </div>
-    <div class="resume-topbar-actions">
-      <a href="{% static 'core/downloads/Muhammedmustapha Abdullahi - Solutions Architect CV-Remote.pdf' %}"
-         download="Muhammedmustapha_Abdullahi_Solutions_Architect_CV.pdf"
-         class="btn-download">
-        <i class="bi bi-download"></i> Download PDF
-      </a>
-      <button onclick="window.print()" class="btn-print">
+    <div class="resume-topbar-btns">
+      <button class="rbtn rbtn-primary" id="btnDownload" onclick="generatePDF()">
+        <i class="bi bi-file-earmark-pdf"></i> Download PDF
+      </button>
+      <button class="rbtn rbtn-secondary" onclick="window.print()">
         <i class="bi bi-printer"></i> Print
       </button>
     </div>
   </div>
 
-  <!-- CV CARD -->
-  <div class="cv-card">
+  <!-- ════ CV CARD ════ -->
+  <div id="cv-card">
 
-    <!-- ─ SIDEBAR ─ -->
-    <aside class="cv-sidebar">
-      <div class="cv-avatar">USTY</div>
-      <div class="cv-name-sm">Muhammedmustapha<br>Abdullahi</div>
-      <div class="cv-role-sm">Founder &bull; UASE Tech Studio</div>
+    <!-- SIDEBAR -->
+    <div id="cv-sidebar">
+      <div class="cv-av">USTY</div>
+      <div class="cv-nm">Muhammedmustapha<br>Abdullahi</div>
+      <div class="cv-rl">Founder &bull; UASE Tech Studio</div>
 
-      <div class="sb-section">
-        <div class="sb-heading">Contact</div>
-        <span class="sb-contact-item">
-          <i class="bi bi-geo-alt-fill sb-contact-icon"></i>
-          <span class="sb-contact-text">Remote &mdash; Nigeria &amp; USA</span>
+      <div class="sbs">
+        <div class="sbh">Contact</div>
+        <span class="sbc">
+          <i class="bi bi-geo-alt-fill sbi"></i>
+          <span class="sbt">Remote &mdash; Nigeria &amp; USA</span>
         </span>
-        <a href="https://wa.me/12135579829" target="_blank" class="sb-contact-item">
-          <i class="bi bi-whatsapp sb-contact-icon"></i>
-          <span class="sb-contact-text">+1 213 557 9829</span>
+        <a href="https://wa.me/12135579829" class="sbc">
+          <i class="bi bi-whatsapp sbi"></i>
+          <span class="sbt">+1 213 557 9829</span>
         </a>
-        <a href="https://wa.me/2349133549399" target="_blank" class="sb-contact-item">
-          <i class="bi bi-telephone-fill sb-contact-icon"></i>
-          <span class="sb-contact-text">+234 913 354 9399</span>
+        <a href="https://wa.me/2349133549399" class="sbc">
+          <i class="bi bi-telephone-fill sbi"></i>
+          <span class="sbt">+234 913 354 9399</span>
         </a>
-        <a href="mailto:uasetechstudio@gmail.com" class="sb-contact-item">
-          <i class="bi bi-envelope-fill sb-contact-icon"></i>
-          <span class="sb-contact-text">uasetechstudio@gmail.com</span>
+        <a href="mailto:uasetechstudio@gmail.com" class="sbc">
+          <i class="bi bi-envelope-fill sbi"></i>
+          <span class="sbt">uasetechstudio@gmail.com</span>
         </a>
-        <a href="https://uase.tech/portfolio" target="_blank" class="sb-contact-item">
-          <i class="bi bi-globe2 sb-contact-icon"></i>
-          <span class="sb-contact-text">uase.tech/portfolio</span>
+        <a href="https://uase.tech/portfolio" class="sbc">
+          <i class="bi bi-globe2 sbi"></i>
+          <span class="sbt">uase.tech/portfolio</span>
         </a>
-        <a href="https://github.com/Mr-Usty" target="_blank" class="sb-contact-item">
-          <i class="bi bi-github sb-contact-icon"></i>
-          <span class="sb-contact-text">github.com/Mr-Usty</span>
+        <a href="https://github.com/Mr-Usty" class="sbc">
+          <i class="bi bi-github sbi"></i>
+          <span class="sbt">github.com/Mr-Usty</span>
         </a>
-        <a href="https://linkedin.com/in/muhammedmustapha-abdullahi-bb897a309/" target="_blank" class="sb-contact-item">
-          <i class="bi bi-linkedin sb-contact-icon"></i>
-          <span class="sb-contact-text">LinkedIn Profile</span>
+        <a href="https://linkedin.com/in/muhammedmustapha-abdullahi-bb897a309/" class="sbc">
+          <i class="bi bi-linkedin sbi"></i>
+          <span class="sbt">LinkedIn Profile</span>
         </a>
       </div>
 
-      <div class="sb-section">
-        <div class="sb-heading">Core Stack</div>
-        <div class="tag-cloud">
-          <span class="sb-tag primary">Next.js 15</span>
-          <span class="sb-tag primary">Django</span>
-          <span class="sb-tag primary">FastAPI</span>
-          <span class="sb-tag primary">TypeScript</span>
-          <span class="sb-tag">Python</span>
-          <span class="sb-tag">PostgreSQL</span>
-          <span class="sb-tag">MongoDB</span>
-          <span class="sb-tag">React</span>
-          <span class="sb-tag">Node.js</span>
-          <span class="sb-tag">Capacitor</span>
-          <span class="sb-tag">REST APIs</span>
-          <span class="sb-tag">Tailwind CSS</span>
-          <span class="sb-tag">Docker</span>
-          <span class="sb-tag">Git / CI/CD</span>
+      <div class="sbs">
+        <div class="sbh">Core Stack</div>
+        <div class="tcl">
+          <span class="stg hi">Next.js 15</span>
+          <span class="stg hi">Django</span>
+          <span class="stg hi">FastAPI</span>
+          <span class="stg hi">TypeScript</span>
+          <span class="stg">Python</span>
+          <span class="stg">PostgreSQL</span>
+          <span class="stg">MongoDB</span>
+          <span class="stg">React</span>
+          <span class="stg">Node.js</span>
+          <span class="stg">Capacitor</span>
+          <span class="stg">REST APIs</span>
+          <span class="stg">Tailwind CSS</span>
+          <span class="stg">Docker</span>
+          <span class="stg">Git / CI/CD</span>
         </div>
       </div>
 
-      <div class="sb-section">
-        <div class="sb-heading">Design Patterns</div>
-        <div class="tag-cloud">
-          <span class="sb-tag">MVC</span>
-          <span class="sb-tag">Facade</span>
-          <span class="sb-tag">Singleton</span>
-          <span class="sb-tag">Observer</span>
-          <span class="sb-tag">Adapter</span>
-          <span class="sb-tag">Repository</span>
-          <span class="sb-tag">Scrum</span>
+      <div class="sbs">
+        <div class="sbh">Design Patterns</div>
+        <div class="tcl">
+          <span class="stg">MVC</span>
+          <span class="stg">Facade</span>
+          <span class="stg">Singleton</span>
+          <span class="stg">Observer</span>
+          <span class="stg">Adapter</span>
+          <span class="stg">Repository</span>
+          <span class="stg">Scrum</span>
         </div>
       </div>
 
-      <div class="sb-section">
-        <div class="sb-heading">Also Skilled In</div>
-        <div class="tag-cloud">
-          <span class="sb-tag">IT Administration</span>
-          <span class="sb-tag">System Design</span>
-          <span class="sb-tag">SEO Strategy</span>
-          <span class="sb-tag">Graphic Design</span>
-          <span class="sb-tag">CorelDRAW</span>
-          <span class="sb-tag">MS Office Suite</span>
-          <span class="sb-tag">Solar/Starlink</span>
+      <div class="sbs">
+        <div class="sbh">Also Skilled In</div>
+        <div class="tcl">
+          <span class="stg">IT Admin</span>
+          <span class="stg">System Design</span>
+          <span class="stg">SEO Strategy</span>
+          <span class="stg">Graphic Design</span>
+          <span class="stg">CorelDRAW</span>
+          <span class="stg">MS Office</span>
+          <span class="stg">Solar/Starlink</span>
         </div>
       </div>
 
-      <div class="sb-section">
-        <div class="sb-heading">Languages</div>
-        <div class="lang-item">
-          <div class="lang-label"><span>English</span><span style="color:var(--c-gold)">C1 — Advanced</span></div>
-          <div class="lang-bar"><div class="lang-fill" style="width:85%"></div></div>
+      <div class="sbs">
+        <div class="sbh">Languages</div>
+        <div class="lgi">
+          <div class="lgl"><span>English</span><span style="color:#e8a045">C1 &mdash; Advanced</span></div>
+          <div class="lgb"><div class="lgf" style="width:85%"></div></div>
         </div>
-        <div class="lang-item">
-          <div class="lang-label"><span>Hausa</span><span>Native</span></div>
-          <div class="lang-bar"><div class="lang-fill" style="width:100%"></div></div>
+        <div class="lgi">
+          <div class="lgl"><span>Hausa</span><span>Native</span></div>
+          <div class="lgb"><div class="lgf" style="width:100%"></div></div>
         </div>
       </div>
-    </aside>
+    </div>
 
-    <!-- ─ MAIN ─ -->
-    <main class="cv-main">
-
-      <!-- Header -->
-      <div class="cv-header">
+    <!-- MAIN -->
+    <div id="cv-main">
+      <div class="cvh">
         <h1>Muhammedmustapha Abdullahi</h1>
-        <div class="cv-header-role">Solutions Architect &bull; Full-Stack Engineer &bull; Founder</div>
-        <div class="cv-header-meta">
-          <span class="meta-pill"><i class="bi bi-briefcase-fill"></i> 10 Yrs IT &bull; 5 Yrs Full-Stack</span>
-          <span class="meta-pill"><i class="bi bi-globe2"></i> Remote-Ready</span>
-          <span class="meta-pill"><i class="bi bi-building"></i> UASE Tech Studio</span>
-          <span class="meta-pill"><i class="bi bi-mortarboard-fill"></i> BSc CS &bull; ABU Zaria</span>
+        <div class="cvh-role">Solutions Architect &bull; Full-Stack Engineer &bull; Founder</div>
+        <div class="cvh-meta">
+          <span class="mpl"><i class="bi bi-briefcase-fill"></i> 10 Yrs IT &bull; 5 Yrs Full-Stack</span>
+          <span class="mpl"><i class="bi bi-globe2"></i> Remote-Ready</span>
+          <span class="mpl"><i class="bi bi-building"></i> UASE Tech Studio</span>
+          <span class="mpl"><i class="bi bi-mortarboard-fill"></i> BSc CS &bull; ABU Zaria</span>
         </div>
       </div>
 
-      <!-- Summary -->
-      <div class="cv-section">
-        <div class="cv-section-title">Professional Summary</div>
-        <p class="cv-summary">
-          Strategically driven <strong>Solutions Architect</strong> with a 10-year professional trajectory in Information Technology,
-          specialising in Full-Stack Engineering since 2020. Founder of <strong>UASE Tech Studio</strong> — a software engineering
-          company that architects complex digital ecosystems across healthcare, judiciary, automotive, and logistics sectors.
-          Expert in building multi-tenant SaaS platforms using <strong>Next.js 15 and Django/FastAPI</strong>, converting
-          high-performance PWAs into Native Android APKs via Capacitor, and bridging infrastructure gaps through
-          Solar/Starlink integration. My background in IT administration, education, and business management enables me to
-          build software that is not just technically sound but operationally efficient and commercially viable.
+      <div class="cvs">
+        <div class="cvst">Professional Summary</div>
+        <p class="cvsum">
+          Strategically driven <strong>Solutions Architect</strong> with a 10-year professional trajectory in IT,
+          specialising in Full-Stack Engineering since 2020. Founder of <strong>UASE Tech Studio</strong> &mdash;
+          architecting complex digital ecosystems across healthcare, judiciary, automotive, and logistics.
+          Expert in multi-tenant SaaS platforms with <strong>Next.js 15 and Django/FastAPI</strong>, converting
+          PWAs into native Android APKs via Capacitor, and bridging infrastructure gaps through Solar/Starlink.
+          Background in IT administration and education enables me to build software that is operationally efficient
+          and commercially viable.
         </p>
       </div>
 
-      <!-- Experience -->
-      <div class="cv-section">
-        <div class="cv-section-title">Experience &amp; Leadership</div>
+      <div class="cvs">
+        <div class="cvst">Experience &amp; Leadership</div>
 
-        <div class="exp-item">
-          <div class="exp-row">
-            <span class="exp-title">Founder &amp; Lead Solutions Architect</span>
-            <span class="exp-period">2020 &ndash; Present</span>
+        <div class="exi">
+          <div class="exr">
+            <span class="ext">Founder &amp; Lead Solutions Architect &mdash; UASE Tech Studio</span>
+            <span class="exp">2020 &ndash; Present</span>
           </div>
-          <div class="exp-org">UASE Tech Studio &mdash; Remote / Hybrid, Nigeria</div>
-          <ul class="exp-bullets">
-            <li>Architected and delivered <strong>12+ enterprise-grade systems</strong> for Healthcare, Judiciary, Automotive, and Logistics sectors.</li>
-            <li>Built <strong>CARSTRIMS</strong> — a full multi-tenant SaaS connecting car dealers, partners, staff, and buyers with 5 role-based dashboards, inventory management, financial reporting, and live push notifications.</li>
-            <li>Engineered <strong>BloodLink</strong> — a production blood donor management platform with automated email workflows, real-time donor matching, and admin coordination across Nigerian states.</li>
-            <li>Implemented a Facade Pattern service layer for scalable email and API management across production systems.</li>
-            <li>Deployed a dedicated Web-to-Mobile pipeline using <strong>Capacitor</strong> for cross-platform APK distribution.</li>
-            <li>Mentored <strong>150+ students</strong> on SIWES placements and final-year software projects across Nigerian universities.</li>
+          <div class="exo">Remote / Hybrid, Nigeria</div>
+          <ul class="exu">
+            <li>Architected and delivered <strong>12+ enterprise-grade systems</strong> for Healthcare, Judiciary, Automotive, and Logistics.</li>
+            <li>Built <strong>CARSTRIMS</strong> &mdash; full multi-tenant SaaS with 5 role-based dashboards, inventory, sales tracking, financial reports, and push notifications.</li>
+            <li>Engineered <strong>BloodLink</strong> &mdash; healthcare platform with automated email workflows, real-time donor matching, and admin coordination.</li>
+            <li>Implemented Facade Pattern service layer for scalable email and API management across production systems.</li>
+            <li>Deployed Web-to-Mobile pipeline using <strong>Capacitor</strong> for cross-platform APK distribution.</li>
+            <li>Mentored <strong>150+ students</strong> on SIWES and final-year software projects across Nigerian universities.</li>
           </ul>
         </div>
 
-        <div class="exp-item">
-          <div class="exp-row">
-            <span class="exp-title">Technical IT Assistant</span>
-            <span class="exp-period">2021 &ndash; 2023</span>
+        <div class="exi">
+          <div class="exr">
+            <span class="ext">Technical IT Assistant &mdash; Edge Meter / T4U / Sunstar</span>
+            <span class="exp">2021 &ndash; 2023</span>
           </div>
-          <div class="exp-org">Edge Meter / T4U / Sunstar &mdash; Contract Consulting</div>
-          <ul class="exp-bullets">
+          <div class="exo">Contract Consulting</div>
+          <ul class="exu">
             <li>Consulted on technical documentation and system audits for AY Global Integrated Services.</li>
             <li>Architected secure data handling procedures for institutional engineering audits.</li>
-            <li>Delivered Solar/Starlink integration projects to bridge infrastructure connectivity gaps.</li>
+            <li>Delivered Solar/Starlink integration projects bridging infrastructure connectivity gaps.</li>
           </ul>
         </div>
 
-        <div class="exp-item">
-          <div class="exp-row">
-            <span class="exp-title">IT Instructor</span>
-            <span class="exp-period">2016 &ndash; 2020</span>
+        <div class="exi">
+          <div class="exr">
+            <span class="ext">IT Instructor &mdash; Heritage Computers / Ligo Computers</span>
+            <span class="exp">2016 &ndash; 2020</span>
           </div>
-          <div class="exp-org">Heritage Computers / Ligo Computers &mdash; Zaria, Nigeria</div>
-          <ul class="exp-bullets">
+          <div class="exo">Zaria, Nigeria</div>
+          <ul class="exu">
             <li>Trained over <strong>150 students</strong> in MS Office, CorelDRAW, and UI/UX design fundamentals.</li>
             <li>Developed and delivered structured curriculum for computing diploma programmes.</li>
           </ul>
         </div>
       </div>
 
-      <!-- Featured Projects -->
-      <div class="cv-section">
-        <div class="cv-section-title">Featured Projects</div>
-        <div class="proj-grid">
-          <a href="https://carstrims-app.vercel.app/" target="_blank" rel="noopener" class="proj-card">
-            <div class="proj-title">CARSTRIMS &mdash; Car Dealer SaaS <i class="bi bi-box-arrow-up-right" style="font-size:0.7rem"></i></div>
-            <div class="proj-desc">Multi-tenant SaaS platform for Nigerian car dealerships. 5 user roles, inventory, sales tracking, financial reports, push notifications, QR codes.</div>
-            <div class="proj-tech"><span>Next.js 14</span><span>FastAPI</span><span>MongoDB</span><span>Cloudinary</span></div>
+      <div class="cvs">
+        <div class="cvst">Featured Projects</div>
+        <div class="prg">
+          <a href="https://carstrims-app.vercel.app/" target="_blank" class="prc">
+            <div class="prt">CARSTRIMS &mdash; Car Dealer SaaS &nearr;</div>
+            <div class="prd">Multi-tenant SaaS for Nigerian car dealerships. 5 user roles, inventory, sales, financial reports, push notifications, QR codes.</div>
+            <div class="prk"><span>Next.js 14</span><span>FastAPI</span><span>MongoDB</span><span>Cloudinary</span></div>
           </a>
-          <a href="https://blood-link-9icw.vercel.app/" target="_blank" rel="noopener" class="proj-card">
-            <div class="proj-title">BloodLink &mdash; Blood Donor Platform <i class="bi bi-box-arrow-up-right" style="font-size:0.7rem"></i></div>
-            <div class="proj-desc">Full-stack healthcare platform connecting donors, beneficiaries, and hospital admins with automated email workflows and real-time matching.</div>
-            <div class="proj-tech"><span>Next.js 14</span><span>MongoDB</span><span>NextAuth</span><span>Resend</span></div>
+          <a href="https://blood-link-9icw.vercel.app/" target="_blank" class="prc">
+            <div class="prt">BloodLink &mdash; Blood Donor Platform &nearr;</div>
+            <div class="prd">Healthcare platform connecting donors, beneficiaries and admins with automated email and real-time matching.</div>
+            <div class="prk"><span>Next.js 14</span><span>MongoDB</span><span>NextAuth</span><span>Resend</span></div>
           </a>
-          <a href="https://uase.tech/portfolio/court-order-management-system/" target="_blank" rel="noopener" class="proj-card">
-            <div class="proj-title">Judiciary Order System <i class="bi bi-box-arrow-up-right" style="font-size:0.7rem"></i></div>
-            <div class="proj-desc">Secure Django-based platform for issuing and tracking digital court orders across legal institutions.</div>
-            <div class="proj-tech"><span>Django</span><span>PostgreSQL</span><span>Python</span></div>
+          <a href="https://uase.tech/portfolio/court-order-management-system/" target="_blank" class="prc">
+            <div class="prt">Judiciary Order System &nearr;</div>
+            <div class="prd">Secure Django platform for issuing and tracking digital court orders across legal institutions.</div>
+            <div class="prk"><span>Django</span><span>PostgreSQL</span><span>Python</span></div>
           </a>
-          <a href="https://uase.tech/portfolio/food-ordering-app/" target="_blank" rel="noopener" class="proj-card">
-            <div class="proj-title">Food E-Commerce + Android APK <i class="bi bi-box-arrow-up-right" style="font-size:0.7rem"></i></div>
-            <div class="proj-desc">Multi-vendor food ordering platform with real-time tracking, converted to a native Android APK using Capacitor.</div>
-            <div class="proj-tech"><span>React</span><span>Node.js</span><span>Capacitor</span><span>Stripe</span></div>
+          <a href="https://uase.tech/portfolio/food-ordering-app/" target="_blank" class="prc">
+            <div class="prt">Food E-Commerce + Android APK &nearr;</div>
+            <div class="prd">Multi-vendor food platform with real-time tracking, converted to native Android APK via Capacitor.</div>
+            <div class="prk"><span>React</span><span>Node.js</span><span>Capacitor</span><span>Stripe</span></div>
           </a>
         </div>
       </div>
 
-      <!-- Education -->
-      <div class="cv-section">
-        <div class="cv-section-title">Education &amp; Credentials</div>
-        <div class="edu-grid">
-          <div class="edu-card">
-            <div class="edu-degree">BSc Computer Science</div>
-            <div class="edu-inst">Ahmadu Bello University (ABU), Zaria</div>
+      <div class="cvs">
+        <div class="cvst">Education &amp; Credentials</div>
+        <div class="edg">
+          <div class="edc">
+            <div class="edd">BSc Computer Science</div>
+            <div class="edi">Ahmadu Bello University (ABU), Zaria</div>
           </div>
-          <div class="edu-card">
-            <div class="edu-degree">Full-Stack Software Development</div>
-            <div class="edu-inst">Brotech Institute &mdash; Certified</div>
+          <div class="edc">
+            <div class="edd">Full-Stack Software Development</div>
+            <div class="edi">Brotech Institute &mdash; Certified</div>
           </div>
-          <div class="edu-card">
-            <div class="edu-degree">English Proficiency &mdash; C1 Advanced</div>
-            <div class="edu-inst">EF SET Score: 68/100</div>
+          <div class="edc">
+            <div class="edd">English Proficiency &mdash; C1 Advanced</div>
+            <div class="edi">EF SET Score: 68/100</div>
           </div>
-          <div class="edu-card">
-            <div class="edu-degree">Diploma in Computing</div>
-            <div class="edu-inst">Heritage Computers, Zaria</div>
+          <div class="edc">
+            <div class="edd">Diploma in Computing</div>
+            <div class="edi">Heritage Computers, Zaria</div>
           </div>
         </div>
       </div>
 
-      <!-- Footer -->
-      <div class="cv-footer-strip">
-        This document represents UASE Tech Studio's technical standards &mdash; 2026.
-        Source codes available for commercial licensing &bull; <a href="https://uase.tech" style="color:var(--c-gold)">uase.tech</a>
+      <div class="cvfoot">
+        UASE Tech Studio &mdash; Technical Standards 2026 &bull;
+        <a href="https://uase.tech" style="color:#e8a045;text-decoration:none">uase.tech</a>
+        &bull; Source codes available for commercial licensing
       </div>
-
-    </main>
+    </div>
   </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<!-- html2canvas + jsPDF for pixel-perfect PDF export -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+async function generatePDF() {
+  const btn = document.getElementById('btnDownload');
+  const overlay = document.getElementById('pdfOverlay');
+  const card = document.getElementById('cv-card');
+
+  btn.disabled = true;
+  btn.innerHTML = '<i class="bi bi-hourglass-split"></i> Generating…';
+  overlay.classList.add('active');
+
+  // Short delay to let UI update
+  await new Promise(r => setTimeout(r, 80));
+
+  try {
+    // Capture the CV card at high resolution
+    const canvas = await html2canvas(card, {
+      scale: 2,               // 2x for crisp PDF
+      useCORS: true,
+      logging: false,
+      backgroundColor: '#ffffff',
+      windowWidth: card.scrollWidth,
+      windowHeight: card.scrollHeight,
+      // Ensure sidebar dark background renders
+      onclone: function(clonedDoc) {
+        const sidebar = clonedDoc.getElementById('cv-sidebar');
+        if (sidebar) {
+          sidebar.style.background = '#0c1220';
+          sidebar.style.backgroundColor = '#0c1220';
+        }
+      }
+    });
+
+    const { jsPDF } = window.jspdf;
+    const imgData = canvas.toDataURL('image/jpeg', 0.95);
+
+    // A4 dimensions in mm
+    const pdfW = 210;
+    const pdfH = 297;
+
+    // Calculate image dimensions to fit A4
+    const canvasW = canvas.width;
+    const canvasH = canvas.height;
+    const ratio = canvasW / canvasH;
+
+    let imgW = pdfW;
+    let imgH = pdfW / ratio;
+
+    // If taller than A4, scale down to fit
+    if (imgH > pdfH) {
+      imgH = pdfH;
+      imgW = pdfH * ratio;
+    }
+
+    const pdf = new jsPDF({
+      orientation: imgH > imgW ? 'portrait' : 'landscape',
+      unit: 'mm',
+      format: 'a4',
+      compress: true
+    });
+
+    // Centre on page
+    const x = (pdfW - imgW) / 2;
+    const y = 0;
+
+    pdf.addImage(imgData, 'JPEG', x, y, imgW, imgH);
+    pdf.save('Muhammedmustapha_Abdullahi_Solutions_Architect_CV.pdf');
+
+  } catch (err) {
+    console.error('PDF generation failed:', err);
+    alert('PDF generation failed. Please use the Print button and save as PDF instead.');
+  } finally {
+    overlay.classList.remove('active');
+    btn.disabled = false;
+    btn.innerHTML = '<i class="bi bi-file-earmark-pdf"></i> Download PDF';
+  }
+}
+</script>
 {% endblock %}
