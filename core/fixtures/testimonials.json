@@ -1,0 +1,74 @@
+[
+  {
+    "model": "core.testimonial",
+    "pk": 1,
+    "fields": {
+      "author_name": "Rashida Ibrahim",
+      "author_title": "SIWES Student — ABU Zaria",
+      "content": "UASE Tech Studio didn't just help me complete my SIWES project — they actually taught me how to think like a developer. Usty walked me through the entire backend architecture step by step. I submitted the best project in my department.",
+      "rating": 5,
+      "is_approved": true,
+      "created_at": "2026-01-10T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.testimonial",
+    "pk": 2,
+    "fields": {
+      "author_name": "James Okoro",
+      "author_title": "Project Lead — Community Safety Initiative",
+      "content": "We needed a crime tracking system that was both functional and easy for community members to use. UASE Tech Studio delivered exactly that. The platform is fast, accurate, and has genuinely helped our community coordinators respond faster to incidents.",
+      "rating": 5,
+      "is_approved": true,
+      "created_at": "2026-01-20T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.testimonial",
+    "pk": 3,
+    "fields": {
+      "author_name": "Fatima Bello",
+      "author_title": "Business Owner — Lagos",
+      "content": "Before UASE built our platform, we were managing everything on WhatsApp and paper. Now we have a proper system, customers can browse our inventory online, and our sales have doubled in three months. Genuinely life-changing for our business.",
+      "rating": 5,
+      "is_approved": true,
+      "created_at": "2026-02-05T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.testimonial",
+    "pk": 4,
+    "fields": {
+      "author_name": "Aisha Yusuf",
+      "author_title": "Final Year CS Student — UNIZIK",
+      "content": "I came to Usty with a half-built final year project and a week left before submission. He stayed up with me, restructured the entire codebase, added authentication and a proper dashboard, and helped me present it confidently. I passed with distinction.",
+      "rating": 5,
+      "is_approved": true,
+      "created_at": "2026-02-15T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.testimonial",
+    "pk": 5,
+    "fields": {
+      "author_name": "Ibrahim Musa",
+      "author_title": "Dealer Admin — CARSTRIMS Platform",
+      "content": "The CARSTRIMS platform is unbelievable. I can manage my entire inventory, track every sale, handle partner cars, and get financial reports with one click. It replaced at least four different tools we were using before. The mobile experience is also seamless.",
+      "rating": 5,
+      "is_approved": true,
+      "created_at": "2026-03-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "core.testimonial",
+    "pk": 6,
+    "fields": {
+      "author_name": "Dr. Ngozi Okonkwo",
+      "author_title": "Hospital Administrator — Lagos",
+      "content": "BloodLink transformed how we coordinate blood donations. Before, we were making phone calls for hours trying to find compatible donors during emergencies. Now the system matches donors instantly and notifies everyone automatically. This platform saves lives.",
+      "rating": 5,
+      "is_approved": true,
+      "created_at": "2026-03-18T10:00:00Z"
+    }
+  }
+]
